@@ -1,6 +1,6 @@
 
 
-module gr2340.javafx.gr2340 {
+module gr.javafx.gr {
     requires javafx.controls;
     requires javafx.fxml;
     exports gr2340.javafx.gr2340;
