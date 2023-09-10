@@ -1,9 +1,9 @@
-module itp.gr2340.itpmal {
+
+
+module gr.javafx.gr {
     requires javafx.controls;
     requires javafx.fxml;
-
-    requires org.controlsfx.controls;
-
-    opens itp.gr2340.itpmal to javafx.fxml;
-    exports itp.gr2340.itpmal;
+    exports gr2340.javafx.gr2340;
+    opens gr2340.javafx.gr2340 to javafx.fxml;
 }
+
