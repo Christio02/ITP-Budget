@@ -1,4 +1,4 @@
-package gr2340.javafx.gr2340;
+package gr2340;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
