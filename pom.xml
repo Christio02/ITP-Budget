@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>gr2340.javafx</groupId>
+    <groupId>gr2340</groupId>
     <artifactId>gr2340</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -54,7 +54,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>gr2340.javafx.gr2340/gr2340.javafx.gr2340.HelloApplication</mainClass>
+                            <mainClass>gr2340/gr2340.javafx.gr2340.HelloApplication</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
