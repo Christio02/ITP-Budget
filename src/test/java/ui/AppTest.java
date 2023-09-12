@@ -1,4 +1,4 @@
-package gr2340;
+package ui;
 import org.junit.jupiter.api.*;
 
 

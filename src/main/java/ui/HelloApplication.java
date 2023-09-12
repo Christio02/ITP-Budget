@@ -1,4 +1,4 @@
-package gr2340;
+package ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

@@ -1,4 +1,4 @@
-package gr2340;
+package ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
