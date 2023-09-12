@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab453f13-e4f4-494f-a537-c4115fa6ed9c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/ui/HelloApplicationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ui/AppTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +70,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "vcs.Git",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -214,7 +213,7 @@
       <workItem from="1694439839187" duration="373000" />
       <workItem from="1694448130221" duration="37000" />
       <workItem from="1694450561684" duration="716000" />
-      <workItem from="1694507192249" duration="3899000" />
+      <workItem from="1694507192249" duration="4491000" />
     </task>
     <servers />
   </component>
