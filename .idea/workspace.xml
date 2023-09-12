@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab453f13-e4f4-494f-a537-c4115fa6ed9c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/qodana.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,14 +73,20 @@
   <component name="QodanaHighlightedReportService">
     <option name="localRunNotPublishedPersistedInfo">
       <LocalReportPersistedInfo>
-        <option name="path" value="C:\Users\chris\AppData\Local\Temp\qodana_output\qodana.sarif.json" />
-        <option name="reportGuid" value="3579fe6e-8a7e-4f73-8487-2fd7dfc5d345" />
+        <option name="path" value="C:\Users\chris\AppData\Local\Temp\qodana_output1\qodana.sarif.json" />
+        <option name="reportGuid" value="3fd949b6-969d-4975-8ea0-72b04e552815" />
         <option name="reportName" value="IT1901 - ITP/qodana/2023-09-12" />
       </LocalReportPersistedInfo>
     </option>
   </component>
   <component name="QodanaIsSelectedPersistenceService">
     <option name="selectedOrLoading" value="true" />
+  </component>
+  <component name="QodanaReportsService">
+    <option name="descriptions">
+      <ReportDescription localRun="true" path="C:\Users\chris\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="3579fe6e-8a7e-4f73-8487-2fd7dfc5d345" reportId="IT1901 - ITP/qodana/2023-09-12" />
+      <ReportDescription localRun="true" path="C:\Users\chris\AppData\Local\Temp\qodana_output1\qodana.sarif.json" reportGuid="3fd949b6-969d-4975-8ea0-72b04e552815" reportId="IT1901 - ITP/qodana/2023-09-12" />
+    </option>
   </component>
   <component name="RunManager" selected="Application.gr2340.HelloApplication">
     <configuration default="true" type="AZURE_FUNCTION_SUPPORT" factoryName="Run Functions">
@@ -163,7 +168,7 @@
       <workItem from="1694439839187" duration="373000" />
       <workItem from="1694448130221" duration="37000" />
       <workItem from="1694450561684" duration="716000" />
-      <workItem from="1694507192249" duration="2407000" />
+      <workItem from="1694507192249" duration="3164000" />
     </task>
     <servers />
   </component>
