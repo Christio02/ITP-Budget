@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab453f13-e4f4-494f-a537-c4115fa6ed9c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/ui/HelloApplicationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ui/AppTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +18,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -36,7 +39,7 @@
     </option>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -56,6 +59,8 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/Users/chris/Documents/openjfx-19.0.2.1_windows-x64_bin-sdk/javafx-sdk-19.0.2.1/lib",
     "node.js.detected.package.eslint": "true",
@@ -88,7 +93,15 @@
       <ReportDescription localRun="true" path="C:\Users\chris\AppData\Local\Temp\qodana_output1\qodana.sarif.json" reportGuid="3fd949b6-969d-4975-8ea0-72b04e552815" reportId="IT1901 - ITP/qodana/2023-09-12" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.gr2340.HelloApplication">
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="ui" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.HelloApplicationTest">
     <configuration default="true" type="AZURE_FUNCTION_SUPPORT" factoryName="Run Functions">
       <option name="appName" />
       <option name="appServicePlanName" />
@@ -145,8 +158,41 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="HelloApplicationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="gr2340" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ui.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ui" />
+      <option name="MAIN_CLASS_NAME" value="ui.HelloApplicationTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HelloApplicationTest.testAppOpens" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="gr2340" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ui.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ui" />
+      <option name="MAIN_CLASS_NAME" value="ui.HelloApplicationTest" />
+      <option name="METHOD_NAME" value="testAppOpens" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.HelloApplicationTest" />
+        <item itemvalue="JUnit.HelloApplicationTest.testAppOpens" />
         <item itemvalue="Application.gr2340.HelloApplication" />
         <item itemvalue="Application.HelloApplication" />
       </list>
@@ -168,7 +214,7 @@
       <workItem from="1694439839187" duration="373000" />
       <workItem from="1694448130221" duration="37000" />
       <workItem from="1694450561684" duration="716000" />
-      <workItem from="1694507192249" duration="3164000" />
+      <workItem from="1694507192249" duration="3899000" />
     </task>
     <servers />
   </component>
