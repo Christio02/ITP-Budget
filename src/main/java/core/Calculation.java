@@ -57,6 +57,16 @@ public class Calculation {
         return sum;
     }
 
+    private int getTotalSum() {
+        int sum = 0;
+        for (String category : categoriesAndAmount.keySet()) {
+           sum += getSum(category);
+        }
+
+
+        return sum;
+    }
+
     private boolean checkValidCategory(String category) {
         return validCategories.contains(category);
     }
@@ -75,9 +85,11 @@ public class Calculation {
         calc.addAmountToCategory("Food",200);
         calc.addAmountToCategory("Food",200);
         calc.addAmountToCategory("Food",200);
+        calc.addAmountToCategory("Transportation", 300);
 
         System.out.println(calc);
         System.out.println(calc.getSum("Food"));
+        System.out.println(calc.getTotalSum());
     }
 
 
