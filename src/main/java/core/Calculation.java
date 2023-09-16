@@ -57,6 +57,10 @@ public class Calculation {
         return sum;
     }
 
+    public String getCategory(int index) {
+        return validCategories.get(index);
+    }
+
     private int getTotalSum() {
         int sum = 0;
         for (String category : categoriesAndAmount.keySet()) {
