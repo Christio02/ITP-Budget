@@ -35,6 +35,26 @@ public class Calculation {
                 this.categoriesAndAmount.put(category, newCategoryArray);
             }
 
+
+
+
+    }
+
+    private int getSum(String category) {
+        if (!checkValidCategory(category)) {
+            throw new IllegalArgumentException("Invalid category!");
+        }
+
+        if (!categoriesAndAmount.containsKey(category)) {
+            return 0;
+        }
+
+        ArrayList<Integer> tempArray = this.categoriesAndAmount.get(category);
+        int sum = 0;
+        for (Integer categoryValue : tempArray) {
+            sum += categoryValue;
+        }
+        return sum;
     }
 
     private boolean checkValidCategory(String category) {
@@ -53,7 +73,11 @@ public class Calculation {
     public static void main(String[] args) {
         Calculation calc= new Calculation();
         calc.addAmountToCategory("Food",200);
+        calc.addAmountToCategory("Food",200);
+        calc.addAmountToCategory("Food",200);
+
         System.out.println(calc);
+        System.out.println(calc.getSum("Food"));
     }
 
 
