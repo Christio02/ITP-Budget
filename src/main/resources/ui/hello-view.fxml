@@ -24,7 +24,7 @@
                   <Font size="24.0" />
                </font>
             </Text>
-            <Button fx:id="inputBtn" layoutX="456.0" layoutY="106.0" mnemonicParsing="false" text="Legg til" />
+            <Button fx:id="inputBtn" layoutX="456.0" layoutY="106.0" mnemonicParsing="false" text="Legg til" onAction="#addAmount" />
             <TextField fx:id="input" layoutX="423.0" layoutY="68.0" promptText="Skriv beløp" />
             <ComboBox fx:id="selector" layoutX="5.0" layoutY="68.0" prefWidth="150.0" promptText="Velg kategori" />
          </children></AnchorPane>

@@ -11,7 +11,6 @@ public class HelloController {
     private TableView<Calculation> table;
 
     @FXML
-    private TableColumn<Calculation, Integer> brukt;
 
     @FXML
     private TextField input;
@@ -20,7 +19,9 @@ public class HelloController {
     private Button inputBtn;
 
     @FXML
-    private TableColumn<Calculation, Integer> kategori;
+    private TableColumn<Calculation, Integer> Category;
+    private TableColumn<Calculation, Integer> amountUsed;
+
 
     @FXML
     private ComboBox<String> selector;
@@ -37,7 +38,20 @@ public class HelloController {
 
     }
 
+    @FXML
+    public void addAmount() {
+        // Get the input values
+        Integer amountToAdd = Integer.parseInt(input.getText());
+        String category = selector.getValue();
 
+        // Create a new Calculation object with the values
+        Calculation newCalc = new Calculation();
 
+        // Add the newCalc to your TableView's data source
+        table.getItems().add(newCalc);
+    }
 }
+
+
+
 

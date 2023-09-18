@@ -40,7 +40,7 @@ public class Calculation {
 
     }
 
-    private int getSum(String category) {
+    public int getSum(String category) {
         if (!checkValidCategory(category)) {
             throw new IllegalArgumentException("Invalid category!");
         }
@@ -57,11 +57,11 @@ public class Calculation {
         return sum;
     }
 
-    public String getCategory(int index) {
-        return validCategories.get(index);
+    public String getCategory() {
+        return validCategories.get(0);
     }
 
-    private int getTotalSum() {
+    public int getTotalSum() {
         int sum = 0;
         for (String category : categoriesAndAmount.keySet()) {
            sum += getSum(category);
