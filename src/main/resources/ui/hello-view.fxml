@@ -14,7 +14,7 @@
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
          <children>
-            <Text layoutX="35.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kategori">
+            <Text layoutX="99.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kategori">
                <font>
                   <Font size="24.0" />
                </font>
@@ -26,7 +26,12 @@
             </Text>
             <Button fx:id="inputBtn" layoutX="456.0" layoutY="106.0" mnemonicParsing="false" text="Legg til" />
             <TextField fx:id="input" layoutX="423.0" layoutY="68.0" promptText="Skriv beløp" />
-            <ComboBox fx:id="selector" layoutX="5.0" layoutY="68.0" prefWidth="150.0" promptText="Velg kategori" />
+            <ComboBox fx:id="selector" layoutX="69.0" layoutY="68.0" prefWidth="150.0" promptText="Velg kategori" />
+            <Button fx:id="returnMenuBtn" layoutX="14.0" layoutY="21.0" mnemonicParsing="false" onAction="#loadMainMenu" prefHeight="39.0" prefWidth="60.0" text="←">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
          <children>
