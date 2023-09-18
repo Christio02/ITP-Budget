@@ -13,6 +13,7 @@ public class Utility {
     public static void changeToScene(Class className, Event buttonEvent, String sceneName) throws Exception {
         Parent root = FXMLLoader.load(className.getResource(sceneName)); // loads fxml for main budget scene
         Scene scene = new Scene(root); // creat new scene from root
+        scene.getStylesheets().add(className.getResource("style/style.css").toExternalForm());
         Stage stage = (Stage) ((Node) buttonEvent.getSource()).getScene().getWindow(); // load window from scene
         stage.setScene(scene); // set scene for stage
         stage.show(); // show the stage

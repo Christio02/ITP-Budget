@@ -26,6 +26,8 @@ public class BudgetController {
     @FXML
     private TableColumn<Category, Integer> amountUsed;
 
+    @FXML
+    private SplitPane splitPane;
 
     @FXML
     private ComboBox<String> selector;
@@ -48,6 +50,11 @@ public class BudgetController {
         table.setItems(categoryList); // set the table to display the list
 
 
+        // Set the divider position to 50% of the screen and make it non-resizable
+        double absolutePosition = 0.4;
+        splitPane.getDividers().get(0).positionProperty().addListener((observable,oldValue,newValue) -> {
+            splitPane.setDividerPosition(0, absolutePosition);
+        });
     }
     @FXML
     private void loadMainMenu(ActionEvent event) throws Exception {

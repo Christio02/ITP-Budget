@@ -16,7 +16,6 @@ public class Calculation {
         this.categoriesList.add(new Category("Entertainment"));
         this.categoriesList.add(new Category("Clothing"));
         this.categoriesList.add(new Category("Other"));
-        this.categoriesList.add(new Category("Sum"));
     }
 
     public void addAmountToCategory(Category category, int amount) {
