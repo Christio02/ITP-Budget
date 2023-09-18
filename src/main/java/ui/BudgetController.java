@@ -3,6 +3,7 @@ import core.Calculation;
 import core.Category;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.*;
@@ -47,6 +48,10 @@ public class BudgetController {
         table.setItems(categoryList); // set the table to display the list
 
 
+    }
+    @FXML
+    private void loadMainMenu(ActionEvent event) throws Exception {
+        Utility.changeToScene(getClass(), event,"startmenu-fxml.fxml");
     }
 
 

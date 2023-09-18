@@ -10,7 +10,7 @@ import java.io.IOException;
 public class BudgetApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(BudgetApplication.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(BudgetApplication.class.getResource("startmenu-fxml.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 600);
         stage.setScene(scene);
         stage.show();
