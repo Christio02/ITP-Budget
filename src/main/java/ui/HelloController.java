@@ -1,16 +1,17 @@
 package ui;
 import core.Calculation;
+import core.Category;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.*;
 
 public class HelloController {
 
     @FXML
-    private TableView<Calculation> table;
+    private TableView<Category> table;
 
-    @FXML
 
     @FXML
     private TextField input;
@@ -19,13 +20,14 @@ public class HelloController {
     private Button inputBtn;
 
     @FXML
-    private TableColumn<Calculation, Integer> Category;
-    private TableColumn<Calculation, Integer> amountUsed;
+    private TableColumn<Category, String> category;
+
+    @FXML
+    private TableColumn<Category, Integer> amountUsed;
 
 
     @FXML
     private ComboBox<String> selector;
-
 
 
     @FXML
@@ -35,6 +37,15 @@ public class HelloController {
                 , "Clothing", "Other"
         );
         selector.setItems(categoryOptions);
+
+        category.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
+        amountUsed.setCellValueFactory(new PropertyValueFactory<>("amount"));
+
+        table.getItems().add(new Category("Food"));
+
+
+
+
 
     }
 
@@ -48,7 +59,9 @@ public class HelloController {
         Calculation newCalc = new Calculation();
 
         // Add the newCalc to your TableView's data source
-        table.getItems().add(newCalc);
+
+
+
     }
 }
 

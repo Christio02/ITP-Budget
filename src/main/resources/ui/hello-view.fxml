@@ -32,8 +32,8 @@
          <children>
             <TableView fx:id="table" layoutY="-4.0" prefHeight="204.0" prefWidth="598.0">
                <columns>
-                  <TableColumn id="kategori" fx:id="kategori" prefWidth="301.0" text="Kategori" />
-                  <TableColumn id="brukt" fx:id="brukt" prefWidth="296.0" text="Brukt" />
+                  <TableColumn id="kategori" fx:id="category" prefWidth="301.0" text="Kategori" />
+                  <TableColumn id="brukt" fx:id="amountUsed" prefWidth="296.0" text="Brukt" />
                </columns>
             </TableView>
          </children></AnchorPane>
