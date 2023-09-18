@@ -56,6 +56,10 @@ public class Calculation {
         return amount >= 0;
     }
 
+    public ArrayList<Category> getCategoriesList() {
+        return categoriesList;
+    }
+
 
     public static void main(String[] args) {
         Calculation calc = new Calculation();

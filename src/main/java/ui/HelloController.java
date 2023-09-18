@@ -30,6 +30,9 @@ public class HelloController {
     private ComboBox<String> selector;
 
 
+    private ObservableList<Category> categoryList = FXCollections.observableArrayList();
+    private Calculation calc = new Calculation();
+
     @FXML
     public void initialize() {
         ObservableList<String> categoryOptions = FXCollections.observableArrayList(
@@ -40,12 +43,8 @@ public class HelloController {
         category.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
         amountUsed.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
-        for (String category: categoryOptions) {
-            table.getItems().add(new Category(category));
-        }
-
-
-
+        categoryList.addAll(calc.getCategoriesList()); // add all categories to the list
+        table.setItems(categoryList); // set the table to display the list
 
 
     }
@@ -53,14 +52,18 @@ public class HelloController {
     @FXML
     public void addAmount() {
         // Get the input values
-        Integer amountToAdd = Integer.parseInt(input.getText());
+        int amountToAdd = Integer.parseInt(input.getText());
         String category = selector.getValue();
 
-        // Create a new Calculation object with the values
-        Calculation newCalc = new Calculation();
 
-        // Add the newCalc to your TableView's data source
-
+        for (Category cat : categoryList) {
+            if (cat.getCategoryName().equals(category)) {
+                calc.addAmountToCategory(cat, amountToAdd);
+                table.refresh();
+                input.clear();
+                return;
+            }
+        }
 
 
     }
