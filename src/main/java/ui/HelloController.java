@@ -33,15 +33,16 @@ public class HelloController {
     @FXML
     public void initialize() {
         ObservableList<String> categoryOptions = FXCollections.observableArrayList(
-                "Food", "Entertainment"
-                , "Clothing", "Other"
+                "Food", "Entertainment", "Transportation", "Clothing", "Other"
         );
         selector.setItems(categoryOptions);
 
         category.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
         amountUsed.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
-        table.getItems().add(new Category("Food"));
+        for (String category: categoryOptions) {
+            table.getItems().add(new Category(category));
+        }
 
 
 

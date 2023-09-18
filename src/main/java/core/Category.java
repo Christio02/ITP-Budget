@@ -1,9 +1,12 @@
 package core;
 
+import java.util.ArrayList;
+
 public class Category {
 
     private final String categoryName;
     private int amount;
+    private ArrayList<Integer> addedAmounts = new ArrayList<>();
 
     public Category(String categoryName) {
         this.categoryName = categoryName;
@@ -17,6 +20,17 @@ public class Category {
     public int getAmount() {
         return amount;
     }
+
+    public void addAmount(int amount) {
+        this.addedAmounts.add(amount);
+        this.amount += amount;
+    }
+
+    public ArrayList<Integer> getBudgetHistory() {
+        return this.addedAmounts;
+    }
+
+
     @Override
     public String toString() {
         return getCategoryName();
