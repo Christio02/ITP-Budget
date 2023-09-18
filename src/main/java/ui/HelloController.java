@@ -49,6 +49,7 @@ public class HelloController {
 
     }
 
+
     @FXML
     public void addAmount() {
         // Get the input values
@@ -61,10 +62,11 @@ public class HelloController {
                 calc.addAmountToCategory(cat, amountToAdd);
                 table.refresh();
                 input.clear();
-                return;
             }
         }
 
+        Category sum = categoryList.stream().filter(cat -> cat.getCategoryName().equals("Sum")).findFirst().get();
+        sum.addAmount(amountToAdd);
 
     }
 }
