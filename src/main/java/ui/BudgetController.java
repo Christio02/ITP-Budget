@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.*;
 
-public class HelloController {
+public class BudgetController {
 
     @FXML
     private TableView<Category> table;
