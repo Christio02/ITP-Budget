@@ -8,94 +8,63 @@ import java.util.Map;
 
 public class Calculation {
 
-    private Map<String, ArrayList<Integer>> categoriesAndAmount;
-    private ArrayList<String> validCategories = new ArrayList<>(Arrays.asList("Food", "Transportation", "Entertainment", "Clothing", "Other"));
+    private final ArrayList<Category> categoriesList = new ArrayList<>();
 
     public Calculation() {
-        categoriesAndAmount = new HashMap<>();
+        this.categoriesList.add(new Category("Food"));
+        this.categoriesList.add(new Category("Transportation"));
+        this.categoriesList.add(new Category("Entertainment"));
+        this.categoriesList.add(new Category("Clothing"));
+        this.categoriesList.add(new Category("Other"));
+        this.categoriesList.add(new Category("Sum"));
     }
 
-    public void addAmountToCategory(String category, int amount) {
-        if (!checkAmountIscorrect(amount))  {
+    public void addAmountToCategory(Category category, int amount) {
+        if (!checkAmountIscorrect(amount)) {
             throw new IllegalArgumentException("Cannot add non-positive values!");
         }
 
-        if (!checkValidCategory(category)) {
-            throw new IllegalArgumentException("Invalid category!");
-        }
-
-
-            if (categoriesAndAmount.containsKey(category)) {
-                ArrayList<Integer> tempArray = this.categoriesAndAmount.get(category);
-                tempArray.add(amount);
-                this.categoriesAndAmount.put(category, tempArray);
-            } else {
-                ArrayList<Integer> newCategoryArray = new ArrayList<>();
-                newCategoryArray.add(amount);
-                this.categoriesAndAmount.put(category, newCategoryArray);
-            }
-
-
-
+        category.addAmount(amount);
 
     }
 
-    public int getSum(String category) {
-        if (!checkValidCategory(category)) {
-            throw new IllegalArgumentException("Invalid category!");
-        }
-
-        if (!categoriesAndAmount.containsKey(category)) {
-            return 0;
-        }
-
-        ArrayList<Integer> tempArray = this.categoriesAndAmount.get(category);
-        int sum = 0;
-        for (Integer categoryValue : tempArray) {
-            sum += categoryValue;
-        }
-        return sum;
+    public int getSum(Category category) {
+        return category.getAmount();
     }
 
-    public String getCategory(int index) {
-        return validCategories.get(index);
+
+    public Category getCategory(Category category) {
+
+        int catIndex = categoriesList.indexOf(category);
+
+        return categoriesList.get(catIndex);
     }
 
     public int getTotalSum() {
+
         int sum = 0;
-        for (String category : categoriesAndAmount.keySet()) {
-           sum += getSum(category);
+
+        for (Category cat : categoriesList) {
+            sum += cat.getAmount();
         }
 
-
         return sum;
+
     }
 
-    private boolean checkValidCategory(String category) {
-        return validCategories.contains(category);
-    }
 
     private boolean checkAmountIscorrect(int amount) {
         return amount >= 0;
     }
 
-    @Override
-    public String toString() {
-        return this.categoriesAndAmount.toString();
+    public ArrayList<Category> getCategoriesList() {
+        return categoriesList;
     }
+
 
     public static void main(String[] args) {
-        Calculation calc= new Calculation();
-        calc.addAmountToCategory("Food",200);
-        calc.addAmountToCategory("Food",200);
-        calc.addAmountToCategory("Food",200);
-        calc.addAmountToCategory("Transportation", 300);
+        Calculation calc = new Calculation();
 
-        System.out.println(calc);
-        System.out.println(calc.getSum("Food"));
-        System.out.println(calc.getTotalSum());
     }
-
-
 
 }

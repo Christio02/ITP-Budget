@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.HelloController">
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.BudgetController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
          <children>
@@ -24,7 +24,7 @@
                   <Font size="24.0" />
                </font>
             </Text>
-            <Button fx:id="inputBtn" layoutX="456.0" layoutY="106.0" mnemonicParsing="false" text="Legg til" />
+            <Button fx:id="inputBtn" layoutX="456.0" layoutY="106.0" mnemonicParsing="false" text="Legg til" onAction="#addAmount" />
             <TextField fx:id="input" layoutX="423.0" layoutY="68.0" promptText="Skriv beløp" />
             <ComboBox fx:id="selector" layoutX="5.0" layoutY="68.0" prefWidth="150.0" promptText="Velg kategori" />
          </children></AnchorPane>
@@ -32,8 +32,8 @@
          <children>
             <TableView fx:id="table" layoutY="-4.0" prefHeight="204.0" prefWidth="598.0">
                <columns>
-                  <TableColumn id="kategori" fx:id="kategori" prefWidth="301.0" text="Kategori" />
-                  <TableColumn id="brukt" fx:id="brukt" prefWidth="296.0" text="Brukt" />
+                  <TableColumn id="kategori" fx:id="category" prefWidth="301.0" text="Kategori" />
+                  <TableColumn id="brukt" fx:id="amountUsed" prefWidth="296.0" text="Brukt" />
                </columns>
             </TableView>
          </children></AnchorPane>
