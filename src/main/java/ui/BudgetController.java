@@ -12,8 +12,21 @@ import utility.ChangeScene;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import utility.FileUtility;
+import utility.FileUtility;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class BudgetController {
+
+    // Static field to hold the instance
+    private static BudgetController instance;
+
+    // Method to get the instance
+    public static BudgetController getInstance() {
+        return instance;
+    }
+
 
     @FXML
     private TableView<Category> table;
@@ -45,12 +58,16 @@ public class BudgetController {
     @FXML
     private Text totalSum;
 
+    @FXML
+    private Button returnMenuBtn;
+
 
     private ObservableList<Category> categoryList = FXCollections.observableArrayList();
     private Calculation calc = new Calculation();
 
     @FXML
     public void initialize() {
+        instance = this;
         ObservableList<String> categoryOptions = FXCollections.observableArrayList(
                 "Food", "Entertainment", "Transportation", "Clothing", "Other"
         );
@@ -64,7 +81,7 @@ public class BudgetController {
 
 
         // Set the divider position to 40% of the screen and make it non-resizable
-        splitPane.getDividers().get(0).positionProperty().addListener((observable,oldValue,newValue) -> {
+        splitPane.getDividers().get(0).positionProperty().addListener((observable, oldValue, newValue) -> {
             splitPane.setDividerPosition(0, 0.4);
         });
 
@@ -83,8 +100,9 @@ public class BudgetController {
 
     @FXML
     private void loadMainMenu(ActionEvent event) throws Exception {
-        ChangeScene.changeToScene(getClass(), event,"startmenu-fxml.fxml");
+        ChangeScene.changeToScene(getClass(), event, "startmenu-fxml.fxml");
     }
+
 
     @FXML
     public void addAmount() {
@@ -103,6 +121,15 @@ public class BudgetController {
 
         totalSum.setText(Integer.toString(calc.getTotalSum()));
 
+    }
+
+    @FXML
+    public void saveBudget() {
+        try {
+            FileUtility.writeToFile(calc);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
