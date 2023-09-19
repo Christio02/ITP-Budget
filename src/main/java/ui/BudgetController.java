@@ -1,6 +1,7 @@
 package ui;
 import core.Calculation;
 import core.Category;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -68,6 +69,16 @@ public class BudgetController {
     @FXML
     public void initialize() {
         instance = this;
+        if (FileUtility.getLoad())   {
+            try {
+                FileUtility.readFromFile(this.calc);
+                totalSum.setText(Integer.toString(calc.getTotalSum()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
         ObservableList<String> categoryOptions = FXCollections.observableArrayList(
                 "Food", "Entertainment", "Transportation", "Clothing", "Other"
         );
@@ -131,6 +142,8 @@ public class BudgetController {
             e.printStackTrace();
         }
     }
+
+
 }
 
 
