@@ -1,6 +1,6 @@
 # Release 1 dokumentasjon
 
-## Gruppefordeling
+## Arbeidsfordeling: 
 
 Christopher: 
 - Initiel opprettelse av prosjektet
@@ -27,5 +27,7 @@ Ettersom prosjektet har blitt delt opp i issues, har vi kunne brukt branches for
 Uten å møte på overskrivning av andres kode. 
 
 Vi har også tatt i bruk merge requests for å kvalitetssikre at koden som blir lagt til i master er godkjent av en annen i gruppen.
+
+
 
 
