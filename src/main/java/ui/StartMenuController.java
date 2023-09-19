@@ -39,7 +39,6 @@ public class StartMenuController {
     @FXML
     private void loadPrevBudget(ActionEvent event) throws Exception {
         System.out.println(calc.getTotalSum());
-        this.budgetController.setCalculationFromFile(this.calc);
         ChangeScene.changeToScene(getClass(), event,"hello-view.fxml");
 
     }
