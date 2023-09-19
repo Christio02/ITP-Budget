@@ -37,7 +37,7 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="saveBtn" layoutX="538.0" layoutY="11.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="46.0">
+            <Button fx:id="saveBtn" layoutX="538.0" layoutY="11.0" mnemonicParsing="false" onAction="#saveBudget" prefHeight="29.0" prefWidth="46.0">
                <graphic>
                   <ImageView fx:id="saveIcon" fitHeight="20.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>

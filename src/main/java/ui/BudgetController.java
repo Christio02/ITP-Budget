@@ -104,6 +104,14 @@ public class BudgetController {
         totalSum.setText(Integer.toString(calc.getTotalSum()));
 
     }
+
+    @FXML
+    public void saveBudget() {
+        try {
+            FileUtility.writeToFile(calc);
+        } catch (Exception e) {
+            e.printStackTrace();
+    }
 }
 
 

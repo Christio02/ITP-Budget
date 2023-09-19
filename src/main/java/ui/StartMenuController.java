@@ -18,5 +18,6 @@ public class StartMenuController {
     @FXML
     private void loadPrevBudget(ActionEvent event) throws Exception {
         ChangeScene.changeToScene(getClass(), event,"hello-view.fxml");
+
     }
 }
