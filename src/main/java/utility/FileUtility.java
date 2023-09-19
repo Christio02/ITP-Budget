@@ -9,10 +9,13 @@ import java.util.Scanner;
 
 public class FileUtility {
 
+    public static boolean load;
+
     public static void writeToFile(Calculation calc) throws IOException{
         File folder = new File("src/main/resources");
 
         PrintWriter writer = new PrintWriter(new FileWriter(new File(folder, "savedBudget.txt")));
+
 
         ArrayList<Category> tempArray = new ArrayList<>(calc.getCategoriesList());
 
@@ -54,6 +57,10 @@ public class FileUtility {
 
 
 
+    }
+
+    public static boolean getLoad() {
+        return load;
     }
 
     public static void main(String[] args) {

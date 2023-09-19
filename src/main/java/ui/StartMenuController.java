@@ -21,11 +21,6 @@ public class StartMenuController {
     @FXML
     public void initialize() {
         budgetController = BudgetController.getInstance(); // gets current budgetController
-        try {
-            FileUtility.readFromFile(calc);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -33,11 +28,13 @@ public class StartMenuController {
 
     @FXML
     private void loadNewBudget(ActionEvent event) throws Exception {
+        FileUtility.load = false;
         ChangeScene.changeToScene(getClass(), event,"hello-view.fxml");
     }
 
     @FXML
     private void loadPrevBudget(ActionEvent event) throws Exception {
+        FileUtility.load = true;
         System.out.println(calc.getTotalSum());
         ChangeScene.changeToScene(getClass(), event,"hello-view.fxml");
 
