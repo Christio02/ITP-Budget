@@ -6,5 +6,6 @@ module gr.javafx.gr {
 
     opens ui to javafx.fxml, javafx.graphics;
     opens core to javafx.base;
+    opens utility to javafx.fxml, javafx.graphics;
 }
 
