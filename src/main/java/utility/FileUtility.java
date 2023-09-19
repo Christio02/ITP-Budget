@@ -27,8 +27,8 @@ public class FileUtility {
         writer.close();
     }
 
-    public static void readFromFile() throws FileNotFoundException {
-        Calculation calc = new Calculation();
+    public static void readFromFile(Calculation calculation) throws FileNotFoundException {
+//        Calculation calc = new Calculation();
         Scanner scanner = new Scanner(new File("src/main/resources/savedBudget.txt"));
 
         while (scanner.hasNextLine()) {
@@ -41,16 +41,16 @@ public class FileUtility {
             String amountString = scanner.nextLine();
             int amount = Integer.parseInt(amountString.split(": ")[1]);
 
-            Category cat = calc.getCategory(catName);
+            Category cat = calculation.getCategory(catName);
 
             if (cat != null) {
-                calc.addAmountToCategory(cat, amount);
+                calculation.addAmountToCategory(cat, amount);
 //            System.out.println(catName + " " + amount)
             }
 
 
         }
-        System.out.println(calc.getTotalSum());
+//        System.out.println(calc.getTotalSum());
 
 
 
@@ -66,14 +66,14 @@ public class FileUtility {
         calc.addAmountToCategory(transport, 500);
         calc.addAmountToCategory(transport, 2000);
 
-
+        Calculation calc2 = new Calculation();
         try {
             writeToFile(calc);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            readFromFile();
+            readFromFile(calc2);
         } catch(FileNotFoundException e) {
             e.printStackTrace();
         }
