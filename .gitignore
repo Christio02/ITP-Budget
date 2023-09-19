@@ -12,6 +12,9 @@ target/
 *.iml
 *.ipr
 
+### Ignore txt files ###
+/src/main/resources/*.txt
+
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
