@@ -13,7 +13,7 @@ target/
 *.ipr
 
 ### Ignore txt files ###
-/src/main/resources/*.txt
+/src/main/resources/savedBudget.txt
 
 # User-specific stuff
 .idea/**/workspace.xml
