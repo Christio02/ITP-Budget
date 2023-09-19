@@ -1,10 +1,6 @@
 package core;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Calculation {
 
@@ -16,7 +12,6 @@ public class Calculation {
         this.categoriesList.add(new Category("Entertainment"));
         this.categoriesList.add(new Category("Clothing"));
         this.categoriesList.add(new Category("Other"));
-        this.categoriesList.add(new Category("Sum"));
     }
 
     public void addAmountToCategory(Category category, int amount) {

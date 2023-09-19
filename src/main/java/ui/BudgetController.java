@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.*;
+import javafx.scene.text.Text;
 
 public class BudgetController {
 
@@ -26,9 +27,14 @@ public class BudgetController {
     @FXML
     private TableColumn<Category, Integer> amountUsed;
 
+    @FXML
+    private SplitPane splitPane;
 
     @FXML
     private ComboBox<String> selector;
+
+    @FXML
+    private Text totalSum;
 
 
     private ObservableList<Category> categoryList = FXCollections.observableArrayList();
@@ -48,6 +54,10 @@ public class BudgetController {
         table.setItems(categoryList); // set the table to display the list
 
 
+        // Set the divider position to 40% of the screen and make it non-resizable
+        splitPane.getDividers().get(0).positionProperty().addListener((observable,oldValue,newValue) -> {
+            splitPane.setDividerPosition(0, 0.4);
+        });
     }
     @FXML
     private void loadMainMenu(ActionEvent event) throws Exception {
@@ -70,8 +80,7 @@ public class BudgetController {
             }
         }
 
-        Category sum = categoryList.stream().filter(cat -> cat.getCategoryName().equals("Sum")).findFirst().get();
-        sum.addAmount(amountToAdd);
+        totalSum.setText(Integer.toString(calc.getTotalSum()));
 
     }
 }

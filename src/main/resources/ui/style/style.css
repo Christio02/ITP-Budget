@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+#splitPane, #container{
+    -fx-background-color: #284B63;
+    -fx-font-family: 'Poppins', sans-serif;
+}
+
+/* Removes divider border*/
+.split-pane *.split-pane-divider {
+    -fx-padding: 0 1 0 1;
+}
+
+/* Removes default blue border around table */
+#table:focused {
+    -fx-background-color: transparent,-fx-box-border,-fx-control-inner-background;
+}
+
+/* Makes table non-resizeable */
+#table .scroll-bar * {
+    -fx-min-width: 0;
+    -fx-pref-width: 0;
+    -fx-max-width: 0;
+
+    -fx-min-height: 0;
+    -fx-pref-height: 0;
+    -fx-max-height: 0;
+}
+
+/* Removes default blue border on table-cells */
+.table-view .table-row-cell {
+    -fx-background-insets: 0 0 0 0;
+    -fx-table-cell-border-color: transparent;
+}
+
+/* Set background-color on table headers to lightgray */
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color: #d9d9d9;
+}
+
+.table-view .column-header .label {
+    -fx-padding: 12px;
+    -fx-font-family: 'Poppins', sans-serif;
+    -fx-font-weight: 700;
+    -fx-font-size: 15px;
+}
+
+.table-view .column-header:hover {
+    -fx-cursor: hand;
+    -fx-background-color: #c9c9c9;
+}
+
+/* Make table-cells non-selectable */
+.table-row-cell:filled:selected {
+    -fx-background: -fx-control-inner-background ;
+    -fx-background-color: -fx-table-cell-border-color, -fx-background ;
+    -fx-background-insets: 0, 0 0 1 0 ;
+    -fx-table-cell-border-color: derive(-fx-color, 5%);
+}
+
+.table-row-cell:odd:filled:selected {
+    -fx-background: -fx-control-inner-background-alt ;
+}
+
+.table-cell {
+    -fx-alignment: center;
+    -fx-font-size: 14px;
+}
+
+.header {
+    -fx-fill: white;
+    -fx-font-weight: 400;
+}
+
+.button {
+    -fx-box-sizing: border-box;
+    -fx-border-color: white;
+    -fx-background-color: white;
+    -fx-text-fill: #284B63;
+    -fx-border-width: 1;
+    -fx-border-radius: 2;
+    -fx-text-align:center;
+}
+
+.button:hover{
+    -fx-cursor: hand;
+    -fx-background-color: #284B63;
+    -fx-text-fill: white;
+}
+
+.sumLabel {
+    -fx-font-weight: 700;
+    -fx-font-family: 'Poppins', sans-serif;
+    -fx-font-size: 14px;
+}
+
+.combo-box-popup .list-cell:hover, .combo-box-popup .list-cell:selected {
+    -fx-background-color: #284B63;
+}

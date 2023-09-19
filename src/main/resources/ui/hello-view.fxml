@@ -10,37 +10,46 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.BudgetController">
+<SplitPane fx:id="splitPane" dividerPositions="0.4" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.BudgetController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
          <children>
-            <Text layoutX="99.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kategori">
+            <Text layoutX="93.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header" text="Category">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text layoutX="467.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Beløp">
+            <Text layoutX="299.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header" text="Amount">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Button fx:id="inputBtn" layoutX="456.0" layoutY="106.0" mnemonicParsing="false" text="Legg til" onAction="#addAmount" />
-            <TextField fx:id="input" layoutX="423.0" layoutY="68.0" promptText="Skriv beløp" />
-            <ComboBox fx:id="selector" layoutX="69.0" layoutY="68.0" prefWidth="150.0" promptText="Velg kategori" />
-            <Button fx:id="returnMenuBtn" layoutX="14.0" layoutY="21.0" mnemonicParsing="false" onAction="#loadMainMenu" prefHeight="39.0" prefWidth="60.0" text="←">
+            <Button fx:id="inputBtn" layoutX="452.0" layoutY="64.0" mnemonicParsing="false" onAction="#addAmount" prefHeight="28.0" prefWidth="80.0" text="Add">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <TextField fx:id="input" layoutX="299.0" layoutY="65.0" prefHeight="26.0" prefWidth="118.0" promptText="Write amount" />
+            <ComboBox fx:id="selector" layoutX="93.0" layoutY="65.0" prefWidth="150.0" promptText="Select category" />
+            <Button fx:id="returnMenuBtn" layoutX="6.0" layoutY="6.0" mnemonicParsing="false" onAction="#loadMainMenu" prefHeight="39.0" prefWidth="46.0" text="←">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
          </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="229.0" prefWidth="598.0">
          <children>
-            <TableView fx:id="table" layoutY="-4.0" prefHeight="204.0" prefWidth="598.0">
+            <TableView fx:id="table" fixedCellSize="0.0" layoutY="-4.0">
                <columns>
-                  <TableColumn id="kategori" fx:id="category" prefWidth="301.0" text="Kategori" />
-                  <TableColumn id="brukt" fx:id="amountUsed" prefWidth="296.0" text="Brukt" />
+                  <TableColumn id="kategori" fx:id="category" prefWidth="301.0" text="Category" />
+                  <TableColumn id="brukt" fx:id="amountUsed" prefWidth="296.0" text="Expenses" />
                </columns>
             </TableView>
+            <AnchorPane layoutY="209.0" prefHeight="26.0" prefWidth="600.0">
+               <children>
+                  <Text layoutX="133.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sumLabel" text="Total" />
+                  <Text fx:id="totalSum" fill="#363636" layoutX="446.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sumLabel" text="0" />
+               </children>
+            </AnchorPane>
          </children></AnchorPane>
   </items>
 </SplitPane>
