@@ -21,13 +21,21 @@ Fredrik:
 
 - Lage tester for core logikken
 - Sette opp maven og eclipse che for prosjektet
-
+---
 ## Bruk av git
 Ettersom prosjektet har blitt delt opp i issues, har vi kunne brukt branches for å jobbe med hver vår del av prosjektet.
 Uten å møte på overskrivning av andres kode. 
 
 Vi har også tatt i bruk merge requests for å kvalitetssikre at koden som blir lagt til i master er godkjent av en annen i gruppen.
 
+---
+## Design
+Når vi fant ut av ide til hva vi ville at appen skulle være, valgte vi å designe den i Figma først.
+Slik at vi var enige om hvordan vi ville at appen skulle fungere 
+og at vi kunne se for oss hva som trengtes å impementeres i koden.
 
 
 
+Designet kan sees her:
+
+![img.png](figma-design.png)
