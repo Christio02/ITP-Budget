@@ -1,1 +1,15 @@
-Hello world
+CategoryName: Food
+CategoryAmount: 500
+------------------------------
+CategoryName: Transportation
+CategoryAmount: 2500
+------------------------------
+CategoryName: Entertainment
+CategoryAmount: 0
+------------------------------
+CategoryName: Clothing
+CategoryAmount: 0
+------------------------------
+CategoryName: Other
+CategoryAmount: 0
+------------------------------
