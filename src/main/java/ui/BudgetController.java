@@ -8,12 +8,21 @@ import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import utility.ChangeScene;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
+import utility.FileUtility;
 
 public class BudgetController {
 
     @FXML
     private TableView<Category> table;
 
+    @FXML
+    private Button saveBtn;
+
+    @FXML
+    private ImageView saveIcon;
 
     @FXML
     private TextField input;
@@ -58,12 +67,24 @@ public class BudgetController {
         splitPane.getDividers().get(0).positionProperty().addListener((observable,oldValue,newValue) -> {
             splitPane.setDividerPosition(0, 0.4);
         });
-    }
-    @FXML
-    private void loadMainMenu(ActionEvent event) throws Exception {
-        Utility.changeToScene(getClass(), event,"startmenu-fxml.fxml");
+
+
+        // Set the save button to change image when hovered over
+        saveBtn.setOnMouseEntered(event -> {
+            Image hoverImage = new Image(getClass().getResource("/images/saveIconHover.png").toString());
+            saveIcon.setImage(hoverImage);
+        });
+
+        saveBtn.setOnMouseExited(event -> {
+            Image normalImage = new Image(getClass().getResource("/images/saveIcon.png").toString());
+            saveIcon.setImage(normalImage);
+        });
     }
 
+    @FXML
+    private void loadMainMenu(ActionEvent event) throws Exception {
+        ChangeScene.changeToScene(getClass(), event,"startmenu-fxml.fxml");
+    }
 
     @FXML
     public void addAmount() {

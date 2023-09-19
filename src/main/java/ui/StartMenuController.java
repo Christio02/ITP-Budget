@@ -1,14 +1,7 @@
 package ui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.stage.Stage;
-
-import java.io.IOException;
+import utility.ChangeScene;
 
 public class StartMenuController {
 
@@ -19,6 +12,11 @@ public class StartMenuController {
 
     @FXML
     private void loadNewBudget(ActionEvent event) throws Exception {
-        Utility.changeToScene(getClass(), event,"hello-view.fxml");
+        ChangeScene.changeToScene(getClass(), event,"hello-view.fxml");
+    }
+
+    @FXML
+    private void loadPrevBudget(ActionEvent event) throws Exception {
+        ChangeScene.changeToScene(getClass(), event,"hello-view.fxml");
     }
 }
