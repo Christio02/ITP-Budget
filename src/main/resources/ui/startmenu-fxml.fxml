@@ -13,7 +13,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Button layoutX="239.0" layoutY="273.0" mnemonicParsing="false" onAction="#loadPrevBudget" prefHeight="48.0" prefWidth="122.0" text="Load budget">
+      <Button fx:id="loadBudgetBtn" layoutX="239.0" layoutY="273.0" mnemonicParsing="false" onAction="#loadPrevBudget" prefHeight="48.0" prefWidth="122.0" text="Load budget">
          <font>
             <Font size="14.0" />
          </font>

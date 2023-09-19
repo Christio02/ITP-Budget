@@ -22,7 +22,7 @@ public class Category {
     }
 
     public void addAmount(int amount) {
-        this.addedAmounts.add(amount);
+        this.addedAmounts.add(amount); // list is only used in case we want access to the history of the budget later
         this.amount += amount;
     }
 
