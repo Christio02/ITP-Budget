@@ -1,4 +1,4 @@
-package ui;
+package utility;
 
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -7,7 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Utility {
+public class ChangeScene {
 
     // Example call: Utility.changeToScene(class, event, "Myfxml.fxml")
     public static void changeToScene(Class className, Event buttonEvent, String sceneName) throws Exception {
