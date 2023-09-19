@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import utility.ChangeScene;
 
 public class BudgetController {
 
@@ -61,7 +62,7 @@ public class BudgetController {
     }
     @FXML
     private void loadMainMenu(ActionEvent event) throws Exception {
-        Utility.changeToScene(getClass(), event,"startmenu-fxml.fxml");
+        ChangeScene.changeToScene(getClass(), event,"startmenu-fxml.fxml");
     }
 
 
