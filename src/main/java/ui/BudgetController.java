@@ -9,8 +9,21 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import utility.ChangeScene;
+import utility.FileUtility;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class BudgetController {
+
+    // Static field to hold the instance
+    private static BudgetController instance;
+
+    // Method to get the instance
+    public static BudgetController getInstance() {
+        return instance;
+    }
+
 
     @FXML
     private TableView<Category> table;
@@ -37,12 +50,16 @@ public class BudgetController {
     @FXML
     private Text totalSum;
 
+    @FXML
+    private Button returnMenuBtn;
+
 
     private ObservableList<Category> categoryList = FXCollections.observableArrayList();
     private Calculation calc = new Calculation();
 
     @FXML
     public void initialize() {
+        instance = this;
         ObservableList<String> categoryOptions = FXCollections.observableArrayList(
                 "Food", "Entertainment", "Transportation", "Clothing", "Other"
         );
@@ -62,6 +79,7 @@ public class BudgetController {
     }
     @FXML
     private void loadMainMenu(ActionEvent event) throws Exception {
+        this.saveToFile();
         ChangeScene.changeToScene(getClass(), event,"startmenu-fxml.fxml");
     }
 
@@ -84,6 +102,11 @@ public class BudgetController {
         totalSum.setText(Integer.toString(calc.getTotalSum()));
 
     }
+
+
+
+
+
 }
 
 
