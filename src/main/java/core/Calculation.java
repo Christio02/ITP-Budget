@@ -28,11 +28,9 @@ public class Calculation {
     }
 
 
-    public Category getCategory(Category category) {
-
-        int catIndex = categoriesList.indexOf(category);
-
-        return categoriesList.get(catIndex);
+    public Category getCategory(String CategoryName) {
+        return this.categoriesList.stream().filter(cat -> cat.getCategoryName().
+                equals(CategoryName)).findAny().orElse(null);
     }
 
     public int getTotalSum() {
@@ -59,6 +57,7 @@ public class Calculation {
 
     public static void main(String[] args) {
         Calculation calc = new Calculation();
+
 
     }
 
