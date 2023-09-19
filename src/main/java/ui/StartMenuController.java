@@ -1,4 +1,5 @@
 package ui;
+import core.Calculation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import utility.ChangeScene;
@@ -18,5 +19,6 @@ public class StartMenuController {
     @FXML
     private void loadPrevBudget(ActionEvent event) throws Exception {
         ChangeScene.changeToScene(getClass(), event,"hello-view.fxml");
+
     }
 }
