@@ -2,6 +2,9 @@ package core;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class Calculation {
 
     private final ArrayList<Category> categoriesList = new ArrayList<>();
