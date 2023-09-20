@@ -1,6 +1,12 @@
 # Beskrivelse av appen
+Appen er laget for åorganisere utgiftene til en bruker etter kategorier 
+og få en klar oversikt over 
+hvor mye penger de har brukt i hver kategori.
+
 
 ## Appens forbruk
+Appen skal brukes av privatpersoner som ønsker å få en oversikt over sine utgifter innenfor ulike kategorier, 
+og kunne ha en oversikt over hvor mye de totalt har brukt.
 
 ## Appens funksjonalitet
 Vår app baserer seg på et budsjett, hvor brukeren kan velge/legge til ulike kategorier
