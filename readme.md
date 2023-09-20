@@ -8,3 +8,8 @@ koden til applikasjonen befinner seg.
 - I java-folderen har vi delt inn i core og ui, hvor "core" viser til backend-delen, mens "ui" er frontend delen som starter applikasjonen og kobler "core" med fxml'en (i "kontrolleren").
 - Link til Eclipse che: https://che.stud.ntnu.no/christgh-stud-ntnu-no/gr2340/3100/
 
+### Java- og Maven versjon
+Vi bruker java 17.0.5 og maven 3.11.0 for å kjøre prosjektet.
+
+
+
