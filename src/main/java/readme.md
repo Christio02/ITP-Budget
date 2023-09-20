@@ -1,5 +1,5 @@
 # Beskrivelse av appen
-Appen er laget for åorganisere utgiftene til en bruker etter kategorier 
+Appen er laget for å organisere utgiftene til en bruker etter kategorier 
 og få en klar oversikt over 
 hvor mye penger de har brukt i hver kategori.
 
