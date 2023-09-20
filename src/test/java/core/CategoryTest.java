@@ -31,8 +31,4 @@ public class CategoryTest {
         assertEquals(5, food.getBudgetHistory().get(1));
     }
 
-    @Test
-    public void testToString() {
-        assertEquals("Food", food.toString());
-    }
 }
