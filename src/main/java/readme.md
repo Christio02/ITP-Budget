@@ -16,7 +16,8 @@ Dette skal da lagres til skyen via REST API, slik at brukeren kan logge seg inn 
 kunne se budsjettet sitt.
 
 Her er en skisse av hvordan appen kan se ut når den er ferdig:
-![img.png](img.png)
+
+![img.png](figma-design.png)
 
 ---
 ## Brukerhistorie
