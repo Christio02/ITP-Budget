@@ -22,8 +22,8 @@ Her er en skisse av hvordan appen kan se ut når den er ferdig:
 ## Brukerhistorie
 Som privatperson ønsker jeg å kunne legge til det jeg har brukt av penger, slik at jeg kan få en oversikt over mine totale utgifter.
 
-Løsningsbeskrivense
-Bruker må kunne:
+### Løsningsbeskrivense
+**Bruker må kunne**:
 
 Velge hvilken kategori utgiften tilhører.
 Skrive inn beløp på utgiften, og legge det til.
