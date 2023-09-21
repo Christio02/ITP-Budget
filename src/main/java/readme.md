@@ -26,9 +26,9 @@ Som privatperson ønsker jeg å kunne legge til det jeg har brukt av penger, sli
 ### Løsningsbeskrivense
 **Bruker må kunne**:
 
-Velge hvilken kategori utgiften tilhører.
-Skrive inn beløp på utgiften, og legge det til.
-Se oversikt over alle utgifter fordelt på kategoriene, samt en totalsum.
+- Velge hvilken kategori utgiften tilhører.
+- Skrive inn beløp på utgiften, og legge det til.
+- Se oversikt over alle utgifter fordelt på kategoriene, samt en totalsum.
 
 
 
