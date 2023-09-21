@@ -12,7 +12,7 @@ public class FileUtility {
     public static boolean load;
 
     public static void writeToFile(Calculation calc) throws IOException{
-        File folder = new File("gr2340/src/main/resources");
+        File folder = new File("src/main/resources");
 
         PrintWriter writer = new PrintWriter(new FileWriter(new File(folder, "savedBudget.txt")));
 
@@ -32,7 +32,7 @@ public class FileUtility {
 
     public static void readFromFile(Calculation calculation) throws FileNotFoundException {
 //        Calculation calc = new Calculation();
-        Scanner scanner = new Scanner(new File("gr2340/src/main/resources/savedBudget.txt"));
+        Scanner scanner = new Scanner(new File("src/main/resources/savedBudget.txt"));
 
         while (scanner.hasNextLine()) {
 
