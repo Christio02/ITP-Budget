@@ -16,14 +16,15 @@ Dette skal da lagres til skyen via REST API, slik at brukeren kan logge seg inn 
 kunne se budsjettet sitt.
 
 Her er en skisse av hvordan appen kan se ut når den er ferdig:
-![img.png](img.png)
+
+![img.png](figma-design.png)
 
 ---
 ## Brukerhistorie
 Som privatperson ønsker jeg å kunne legge til det jeg har brukt av penger, slik at jeg kan få en oversikt over mine totale utgifter.
 
-Løsningsbeskrivense
-Bruker må kunne:
+### Løsningsbeskrivense
+**Bruker må kunne**:
 
 Velge hvilken kategori utgiften tilhører.
 Skrive inn beløp på utgiften, og legge det til.
