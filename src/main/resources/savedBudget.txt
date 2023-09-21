@@ -5,7 +5,7 @@ CategoryName: Transportation
 CategoryAmount: 0
 ------------------------------
 CategoryName: Entertainment
-CategoryAmount: 1000
+CategoryAmount: 2000
 ------------------------------
 CategoryName: Clothing
 CategoryAmount: 0
