@@ -11,5 +11,5 @@ koden til applikasjonen befinner seg.
 ### Java- og Maven versjon
 Vi bruker java 17.0.5 og maven 3.11.0 for å kjøre prosjektet.
 
-
+#### Link til readme.md om appen: [readme.md](src/main/java/readme.md)
 
