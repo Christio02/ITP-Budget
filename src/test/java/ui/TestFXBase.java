@@ -24,7 +24,7 @@ public abstract class TestFXBase extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.show();
+        
     }
 
     @After
