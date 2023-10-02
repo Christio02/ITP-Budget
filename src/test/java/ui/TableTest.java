@@ -46,7 +46,7 @@ public class TableTest extends  TestFXBase{
         clickOn(SELECTOR_ID);
         clickOn(category);
         clickOn(INPUT_ID);
-        write("2000");// type in 2000 in input
+        type(KeyCode.valueOf("2000")); // type in 2000 in input
         moveTo(SUBMIT_BTN_ID);
         clickOn(SUBMIT_BTN_ID);
 
@@ -55,7 +55,7 @@ public class TableTest extends  TestFXBase{
         */
 
         WaitForAsyncUtils.waitForFxEvents(); // wait for mouse/key events to be finished
-        verifyThat(TABLE_ID, TableViewMatchers.containsRow(category, amount));
+        verifyThat(TABLE_ID, TableViewMatchers.containsRow(category, String.valueOf(amount)));
         verifyThat(SUM_ID, TextMatchers.hasText("2000"));
 
     }
