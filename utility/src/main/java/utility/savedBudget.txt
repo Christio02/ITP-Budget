@@ -1,11 +1,11 @@
 CategoryName: Food
-CategoryAmount: 0
+CategoryAmount: 500
 ------------------------------
 CategoryName: Transportation
-CategoryAmount: 200
+CategoryAmount: 2500
 ------------------------------
 CategoryName: Entertainment
-CategoryAmount: 100
+CategoryAmount: 0
 ------------------------------
 CategoryName: Clothing
 CategoryAmount: 0

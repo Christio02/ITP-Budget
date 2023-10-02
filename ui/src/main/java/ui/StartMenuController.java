@@ -6,8 +6,6 @@ import javafx.scene.control.Button;
 import utility.ChangeScene;
 import utility.FileUtility;
 
-import java.io.FileNotFoundException;
-
 
 public class StartMenuController {
 
@@ -29,14 +27,15 @@ public class StartMenuController {
     @FXML
     private void loadNewBudget(ActionEvent event) throws Exception {
         FileUtility.load = false;
-        ChangeScene.changeToScene(getClass(), event,"hello-view.fxml");
+        ChangeScene.changeToScene(getClass(), event, "ui/hello-view.fxml");
     }
 
     @FXML
     private void loadPrevBudget(ActionEvent event) throws Exception {
         FileUtility.load = true;
         System.out.println(calc.getTotalSum());
-        ChangeScene.changeToScene(getClass(), event,"hello-view.fxml");
+        ChangeScene.changeToScene(getClass(), event, "ui/hello-view.fxml");
 
     }
 }
+
