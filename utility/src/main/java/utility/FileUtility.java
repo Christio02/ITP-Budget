@@ -1,5 +1,6 @@
 package utility;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import core.Calculation;
 import core.Category;
 
@@ -12,52 +13,37 @@ public class FileUtility {
     public static boolean load;
 
     public static void writeToFile(Calculation calc) throws IOException{
-        File folder = new File("utility/src/main/java/utility");
+        File folder = new File("utility/src/main/java/utility/savedBudget.json");
 
-        PrintWriter writer = new PrintWriter(new FileWriter(new File(folder, "savedBudget.txt")));
-
-
-        ArrayList<Category> tempArray = new ArrayList<>(calc.getCategoriesList());
-
-
-
-        for (Category category: tempArray) {
-            writer.println("CategoryName: " + category.getCategoryName());
-            writer.println("CategoryAmount: " + category.getAmount());
-            writer.println("------------------------------");
-        }
-        
-        writer.close();
+//        PrintWriter writer = new PrintWriter(new FileWriter(new File(folder, "savedBudget.txt")));
+//
+//
+//        ArrayList<Category> tempArray = new ArrayList<>(calc.getCategoriesList());
+//
+//
+//
+//        for (Category category: tempArray) {
+//            writer.println("CategoryName: " + category.getCategoryName());
+//            writer.println("CategoryAmount: " + category.getAmount());
+//            writer.println("------------------------------");
+//        }
+//
+//        writer.close();
+        Json.getObjectMapper().writeValue(folder, calc);
     }
 
-    public static void readFromFile(Calculation calculation) throws FileNotFoundException {
-//        Calculation calc = new Calculation();
-        Scanner scanner = new Scanner(new File("utility/src/main/java/utility/savedBudget.txt"));
+    public static void readFromFile(Calculation calc) throws IOException {
+        File file = new File("utility/src/main/java/utility/savedBudget.json");
+        Calculation loadCalc = Json.getObjectMapper().readValue(file, Calculation.class);
 
-        while (scanner.hasNextLine()) {
+        calc.getCategoriesList().clear();
 
-            String line = scanner.nextLine();
-            if (line.equals("------------------------------")) {
-                continue;
-            }
-            String catName = line.split(": ")[1];
-            String amountString = scanner.nextLine();
-            int amount = Integer.parseInt(amountString.split(": ")[1]);
-
-            Category cat = calculation.getCategory(catName);
-
-            if (cat != null) {
-                calculation.addAmountToCategory(cat, amount);
-//            System.out.println(catName + " " + amount)
-            }
-
+        for (Category cat : loadCalc.getCategoriesList()) {
+            calc.getCategoriesList().add(cat);
+        }
 
         }
-//        System.out.println(calc.getTotalSum());
 
-
-
-    }
 
     public static boolean getLoad() {
         return load;
@@ -80,8 +66,8 @@ public class FileUtility {
             throw new RuntimeException(e);
         }
         try {
-            readFromFile(calc2);
-        } catch(FileNotFoundException e) {
+            readFromFile(calc);
+        } catch(IOException e) {
             e.printStackTrace();
         }
     }

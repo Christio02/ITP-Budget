@@ -13,6 +13,12 @@ public class Category {
         this.amount = 0;
     }
 
+    public Category() {
+        this.categoryName = "";
+        this.amount = 0;
+    }
+
+
     public String getCategoryName() {
         return categoryName;
     }
