@@ -48,7 +48,7 @@ Testene er skrevet i Junit. Når vi kjører Jacoco får vi god dekningsgrad på 
 
 ## Filhåndtering
 For at appen skal kunne lagre data, og senere vise frem denne dataen. Har vi implementert lesing- og skriving til fil. 
-Logikken finnes inne i [FileUtility](../../src/main/java/utility/FileUtility.java) filen. 
+Logikken finnes inne i FileUtility filen. 
 Fildataen lagres i en txt fil, og vi valgte et enkelt oppsett av filen
 slik at lesing av filen er lett for brukere å lese og forstå.
 

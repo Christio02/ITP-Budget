@@ -7,8 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.text.Text;
-import utility.ChangeScene;
 import javafx.scene.image.ImageView;
 import utility.FileUtility;
 
@@ -94,20 +94,20 @@ public class BudgetController {
 
 
         // Set the save button to change image when hovered over
-//        saveBtn.setOnMouseEntered(event -> {
-//            Image hoverImage = new Image(getClass().getResource("/images/saveIconHover.png").toString());
-//            saveIcon.setImage(hoverImage);
-//        });
-//
-//        saveBtn.setOnMouseExited(event -> {
-//            Image normalImage = new Image(getClass().getResource("/images/saveIcon.png").toString());
-//            saveIcon.setImage(normalImage);
-//        });
+        saveBtn.setOnMouseEntered(event -> {
+            Image hoverImage = new Image(getClass().getResource("/images/saveIconHover.png").toString());
+            saveIcon.setImage(hoverImage);
+        });
+
+        saveBtn.setOnMouseExited(event -> {
+            Image normalImage = new Image(getClass().getResource("/images/saveIcon.png").toString());
+            saveIcon.setImage(normalImage);
+        });
     }
 
     @FXML
     private void loadMainMenu(ActionEvent event) throws Exception {
-        ChangeScene.changeToScene(getClass(), event, "ui/startmenu-fxml.fxml");
+        ChangeScene.changeToScene(getClass(), event, "startmenu-fxml.fxml");
     }
 
 
