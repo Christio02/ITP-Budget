@@ -12,9 +12,12 @@ public class FileUtility {
     public static boolean load;
 
     public static void writeToFile(Calculation calc) throws IOException{
-        File folder = new File("utility/src/main/java/utility");
+        String currentDirectory = System.getProperty("user.dir");
+        String filePath = currentDirectory + "/../utility/src/main/resources/savedBudget.txt";
 
-        PrintWriter writer = new PrintWriter(new FileWriter(new File(folder, "savedBudget.txt")));
+        File folder = new File(filePath);
+
+        PrintWriter writer = new PrintWriter(new FileWriter(folder));
 
 
         ArrayList<Category> tempArray = new ArrayList<>(calc.getCategoriesList());
@@ -32,7 +35,10 @@ public class FileUtility {
 
     public static void readFromFile(Calculation calculation) throws FileNotFoundException {
 //        Calculation calc = new Calculation();
-        Scanner scanner = new Scanner(new File("utility/src/main/java/utility/savedBudget.txt"));
+        String currentDirectory = System.getProperty("user.dir");
+        String filePath = currentDirectory + "/../utility/src/main/resources/savedBudget.txt";
+
+        Scanner scanner = new Scanner(new File(filePath));
 
         while (scanner.hasNextLine()) {
 
