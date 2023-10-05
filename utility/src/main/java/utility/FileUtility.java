@@ -1,5 +1,4 @@
 package utility;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.Calculation;
 import core.Category;
@@ -11,30 +10,29 @@ import java.util.Scanner;
 public class FileUtility {
 
     public static boolean load;
+    private static String pathname = "utility/src/main/resources/budget.json";
 
     public static void writeToFile(Calculation calc) throws IOException{
-        File folder = new File("utility/src/main/java/utility/savedBudget.json");
+        // create file
 
-//        PrintWriter writer = new PrintWriter(new FileWriter(new File(folder, "savedBudget.txt")));
-//
-//
-//        ArrayList<Category> tempArray = new ArrayList<>(calc.getCategoriesList());
-//
-//
-//
-//        for (Category category: tempArray) {
-//            writer.println("CategoryName: " + category.getCategoryName());
-//            writer.println("CategoryAmount: " + category.getAmount());
-//            writer.println("------------------------------");
-//        }
-//
-//        writer.close();
-        Json.getObjectMapper().writeValue(folder, calc);
+
+
+        try{
+            Json.getObjectMapper().writerWithDefaultPrettyPrinter().writeValue(new File(pathname), calc);
+        } catch(IOException e) {
+            System.out.println("An error occurred while writing to file: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+
+
     }
 
     public static void readFromFile(Calculation calc) throws IOException {
-        File file = new File("utility/src/main/java/utility/savedBudget.json");
-        Calculation loadCalc = Json.getObjectMapper().readValue(file, Calculation.class);
+
+
+
+        Calculation loadCalc = Json.getObjectMapper().readValue(new File(pathname), Calculation.class);
 
         calc.getCategoriesList().clear();
 
@@ -48,7 +46,6 @@ public class FileUtility {
     public static boolean getLoad() {
         return load;
     }
-
     public static void main(String[] args) {
         Calculation calc = new Calculation();
         Category food = calc.getCategory("Food");
@@ -63,7 +60,7 @@ public class FileUtility {
         try {
             writeToFile(calc);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
         try {
             readFromFile(calc);

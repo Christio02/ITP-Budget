@@ -33,14 +33,7 @@ public class Json {
 
 
     public static void main(String[] args) {
-//        String src = "{ \"title\": \"Coder from scratch\" \"author\": \"Figma balls\" }";
-//    try {
-//        JsonNode node = Json.parse(src);
-//        System.out.println(node.get("title").asText());
-//    } catch (Exception e) {
-//        e.printStackTrace();
-//    }
-
+//
         Calculation calc = new Calculation();
 
         calc.addAmountToCategory(calc.getCategory("Food"), 2000);
