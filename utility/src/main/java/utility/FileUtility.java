@@ -10,20 +10,14 @@ import java.util.Scanner;
 public class FileUtility {
 
     public static boolean load;
-    private static String pathname = "utility/src/main/resources/budget.json";
+    private static final String currentDirectory = System.getProperty("user.dir");
+    private static final String filePath = currentDirectory + "/../utility/src/main/resources/savedBudget.json";
+
 
     public static void writeToFile(Calculation calc) throws IOException{
         // create file
 
-
-
-        try{
-            Json.getObjectMapper().writerWithDefaultPrettyPrinter().writeValue(new File(pathname), calc);
-        } catch(IOException e) {
-            System.out.println("An error occurred while writing to file: " + e.getMessage());
-            e.printStackTrace();
-        }
-
+        Json.getObjectMapper().writerWithDefaultPrettyPrinter().writeValue(new File(filePath), calc);
 
 
     }
@@ -32,7 +26,7 @@ public class FileUtility {
 
 
 
-        Calculation loadCalc = Json.getObjectMapper().readValue(new File(pathname), Calculation.class);
+        Calculation loadCalc = Json.getObjectMapper().readValue(new File(filePath), Calculation.class);
 
         calc.getCategoriesList().clear();
 

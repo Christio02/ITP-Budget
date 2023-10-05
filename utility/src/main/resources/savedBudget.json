@@ -5,12 +5,12 @@
     "budgetHistory" : [ ]
   }, {
     "categoryName" : "Transportation",
-    "amount" : 2222,
-    "budgetHistory" : [ 2222 ]
-  }, {
-    "categoryName" : "Entertainment",
     "amount" : 0,
     "budgetHistory" : [ ]
+  }, {
+    "categoryName" : "Entertainment",
+    "amount" : 77777,
+    "budgetHistory" : [ 77777 ]
   }, {
     "categoryName" : "Clothing",
     "amount" : 0,
@@ -20,5 +20,5 @@
     "amount" : 0,
     "budgetHistory" : [ ]
   } ],
-  "totalSum" : 2222
+  "totalSum" : 77777
 }
