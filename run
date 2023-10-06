@@ -1,0 +1,32 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] gr2340                                                             [pom]
+[INFO] core                                                               [jar]
+[INFO] utility                                                            [jar]
+[INFO] ui                                                                 [jar]
+[INFO] 
+[INFO] ---------------------------< gr2340:gr2340 >----------------------------
+[INFO] Building gr2340 1.0-SNAPSHOT                                       [1/4]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for gr2340 1.0-SNAPSHOT:
+[INFO] 
+[INFO] gr2340 ............................................. FAILURE [  0.001 s]
+[INFO] core ............................................... SKIPPED
+[INFO] utility ............................................ SKIPPED
+[INFO] ui ................................................. SKIPPED
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  0.121 s
+[INFO] Finished at: 2023-10-02T15:49:56+02:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Unknown lifecycle phase "javafx". You must specify a valid lifecycle phase or a goal in the format <plugin-prefix>:<goal> or <plugin-group-id>:<plugin-artifact-id>[:<plugin-version>]:<goal>. Available lifecycle phases are: validate, initialize, generate-sources, process-sources, generate-resources, process-resources, compile, process-classes, generate-test-sources, process-test-sources, generate-test-resources, process-test-resources, test-compile, process-test-classes, test, prepare-package, package, pre-integration-test, integration-test, post-integration-test, verify, install, deploy, pre-clean, clean, post-clean, pre-site, site, post-site, site-deploy. -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/LifecyclePhaseNotFoundException

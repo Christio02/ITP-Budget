@@ -1,0 +1,24 @@
+{
+  "categoriesList" : [ {
+    "categoryName" : "Food",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  }, {
+    "categoryName" : "Transportation",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  }, {
+    "categoryName" : "Entertainment",
+    "amount" : 77777,
+    "budgetHistory" : [ 77777 ]
+  }, {
+    "categoryName" : "Clothing",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  }, {
+    "categoryName" : "Other",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  } ],
+  "totalSum" : 77777
+}
