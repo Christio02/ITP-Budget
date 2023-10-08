@@ -9,6 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <groupId>gr2340.ui</groupId>
     <artifactId>ui</artifactId>
 
     <dependencies>
@@ -265,13 +266,12 @@
             </plugin>
         </plugins>
 
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
+            <resources>
+                <resource>
+                    <directory>src/main/resources</directory>
+                </resource>
+            </resources>
 
     </build>
 </project>
-
 

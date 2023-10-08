@@ -1,5 +1,5 @@
 package utility;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import core.Calculation;
 import core.Category;
 
@@ -10,65 +10,38 @@ import java.util.Scanner;
 public class FileUtility {
 
     public static boolean load;
+    private static final String currentDirectory = System.getProperty("user.dir");
+    private static final String filePath = currentDirectory + "/../utility/src/main/resources/savedBudget.json";
+
 
     public static void writeToFile(Calculation calc) throws IOException{
-        String currentDirectory = System.getProperty("user.dir");
-        String filePath = currentDirectory + "/../utility/src/main/resources/savedBudget.txt";
-
-        File folder = new File(filePath);
-
-        PrintWriter writer = new PrintWriter(new FileWriter(folder));
-
-
-        ArrayList<Category> tempArray = new ArrayList<>(calc.getCategoriesList());
 
 
 
-        for (Category category: tempArray) {
-            writer.println("CategoryName: " + category.getCategoryName());
-            writer.println("CategoryAmount: " + category.getAmount());
-            writer.println("------------------------------");
-        }
-        
-        writer.close();
-    }
 
-    public static void readFromFile(Calculation calculation) throws FileNotFoundException {
-//        Calculation calc = new Calculation();
-        String currentDirectory = System.getProperty("user.dir");
-        String filePath = currentDirectory + "/../utility/src/main/resources/savedBudget.txt";
-
-        Scanner scanner = new Scanner(new File(filePath));
-
-        while (scanner.hasNextLine()) {
-
-            String line = scanner.nextLine();
-            if (line.equals("------------------------------")) {
-                continue;
-            }
-            String catName = line.split(": ")[1];
-            String amountString = scanner.nextLine();
-            int amount = Integer.parseInt(amountString.split(": ")[1]);
-
-            Category cat = calculation.getCategory(catName);
-
-            if (cat != null) {
-                calculation.addAmountToCategory(cat, amount);
-//            System.out.println(catName + " " + amount)
-            }
-
-
-        }
-//        System.out.println(calc.getTotalSum());
-
+        Json.getObjectMapper().writerWithDefaultPrettyPrinter().writeValue(new File(filePath), calc);
 
 
     }
+
+    public static void readFromFile(Calculation calc) throws IOException {
+
+
+
+        Calculation loadCalc = Json.getObjectMapper().readValue(new File(filePath), Calculation.class);
+
+        calc.getCategoriesList().clear();
+
+        for (Category cat : loadCalc.getCategoriesList()) {
+            calc.getCategoriesList().add(cat);
+        }
+
+        }
+
 
     public static boolean getLoad() {
         return load;
     }
-
     public static void main(String[] args) {
         Calculation calc = new Calculation();
         Category food = calc.getCategory("Food");
@@ -83,11 +56,11 @@ public class FileUtility {
         try {
             writeToFile(calc);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
         try {
-            readFromFile(calc2);
-        } catch(FileNotFoundException e) {
+            readFromFile(calc);
+        } catch(IOException e) {
             e.printStackTrace();
         }
     }

@@ -7,7 +7,7 @@ koden til applikasjonen befinner seg.
 - Vi har igjen delt main inn i resources og java, hvor resources viser til fxml filen som definerer hvordan applikasjonen ser ut. 
 - I java-folderen har vi delt inn i core og ui, hvor "core" viser til backend-delen, mens "ui" er frontend delen som starter applikasjonen og kobler "core" med fxml'en (i "kontrolleren").
 - Vi har også en utility package som inneholder en klasse som har kode til å endre scene (for å opprettholde code-reuse), i tillegg til en fil- og leseklasse
-- Link til Eclipse che: https://che.stud.ntnu.no/christgh-stud-ntnu-no/gr2340/3100/
+- Link til Eclipse che: 
 
 ### Java- og Maven versjon
 Vi bruker java 17.0.5 og maven 3.11.0 for å kjøre prosjektet.'
