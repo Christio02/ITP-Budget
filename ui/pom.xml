@@ -111,7 +111,7 @@
                         <artifactId>javafx-maven-plugin</artifactId>
                         <version>0.0.6</version>
                         <configuration>
-                            <mainClass>todolist.ui/todolist.ui.TodoDocumentApp</mainClass>
+                            <mainClass>ui.BudgetApplication</mainClass>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -126,7 +126,7 @@
                         <artifactId>javafx-maven-plugin</artifactId>
                         <version>0.0.6</version>
                         <configuration>
-                            <mainClass>todolist.ui/todolist.ui.TodoRemoteApp</mainClass>
+                            <mainClass>ui.BudgetApplication</mainClass>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -187,7 +187,7 @@
                     </systemPropertyVariables>
                     <argLine>
                         @{jaCoCoArgLine} -Dtestfx.robot=awt
-                        --add-opens todolist.ui/todolist.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                        --add-opens ui/ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
                         --add-opens javafx.graphics/com.sun.glass.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
                         --add-exports javafx.graphics/com.sun.glass.ui.delegate=ALL-UNNAMED
                     </argLine>
@@ -205,9 +205,9 @@
                     <noHeaderFiles>true</noHeaderFiles>
                     <stripDebug>true</stripDebug>
                     <noManPages>true</noManPages>
-                    <launcher>todolistfx</launcher>
-                    <jlinkImageName>todolistfx</jlinkImageName>
-                    <jlinkZipName>todolistfx</jlinkZipName>
+                    <launcher>ui</launcher>
+                    <jlinkImageName>ui</jlinkImageName>
+                    <jlinkZipName>ui</jlinkZipName>
                 </configuration>
             </plugin>
 
