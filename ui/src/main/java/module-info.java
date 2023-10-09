@@ -4,8 +4,7 @@ module gr2340.ui {
     requires javafx.controls;
     requires javafx.fxml;
 
-    exports ui;
-    opens ui to javafx.fxml;
+    opens ui to javafx.fxml, javafx.graphics;
 
 
 }
