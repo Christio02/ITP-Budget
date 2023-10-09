@@ -60,6 +60,9 @@ public class Calculation {
 
     public static void main(String[] args) {
         Calculation calc = new Calculation();
+        Category food = calc.getCategory("Food");
+        food.addAmount(200);
+        System.out.println(calc.getSum(food));
 
 
     }
