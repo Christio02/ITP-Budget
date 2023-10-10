@@ -6,7 +6,7 @@ Prosjektet er modularisert i de ulike logikkene våre, core, ui og utility. I do
 - ui folderen inneholder all grafisk brukergrensesnitt, og testfilene til denne.
 - utility folderen inneholder hjelpeklasser som brukes i både core og ui, som filskriving og fillagring, og testfilene til denne.
 
-**Link til Eclipse che:** **TODO**
+**Link til Eclipse che:** https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2340/gr2340?new
 
 ### Hvordan kjøre prosjektet
 Man må åpne "gr2340" directory og så kjøre "mvn clean install" i terminalen. Dette fordi filskrivingen
