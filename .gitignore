@@ -20,6 +20,7 @@ target/
 .idea/**/dictionaries
 .idea/**/shelf
 .idea/**/misc.xml
+.idea/**/discord.xml
 
 # AWS User-specific
 .idea/**/aws.xml
