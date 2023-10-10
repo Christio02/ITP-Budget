@@ -2,6 +2,7 @@
 
 Christopher:
 - Fikse modulariseringen
+- Fikse oppsett av TestFX
 - Fikse at testene funker
 
 Mats:
