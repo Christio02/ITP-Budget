@@ -1,6 +1,6 @@
-module gr2340.ui {
-    requires gr2340.core;
-    requires gr2340.utility;
+module budget.ui {
+    requires budget.core;
+    requires budget.utility;
     requires javafx.controls;
     requires javafx.fxml;
 

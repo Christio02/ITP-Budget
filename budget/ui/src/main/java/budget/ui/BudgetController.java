@@ -95,12 +95,12 @@ public class BudgetController {
 
         // Set the save button to change image when hovered over
         saveBtn.setOnMouseEntered(event -> {
-            Image hoverImage = new Image(getClass().getResource("/images/saveIconHover.png").toString());
+            Image hoverImage = new Image(getClass().getResource("/budget/images/saveIconHover.png").toString());
             saveIcon.setImage(hoverImage);
         });
 
         saveBtn.setOnMouseExited(event -> {
-            Image normalImage = new Image(getClass().getResource("/images/saveIcon.png").toString());
+            Image normalImage = new Image(getClass().getResource("/budget/images/saveIcon.png").toString());
             saveIcon.setImage(normalImage);
         });
     }
