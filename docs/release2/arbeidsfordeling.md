@@ -11,9 +11,11 @@ Mats:
 
 Eirik:
 - Lage UML diagram
+- Sette opp eclipse che
 
 Fredrik:
 - Skrive javadoc
+
 
 
 
