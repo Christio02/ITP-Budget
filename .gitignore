@@ -12,8 +12,6 @@ target/
 *.iml
 *.ipr
 
-### Ignore txt files ###
-utility/src/main/resources/*.json
 
 # User-specific stuff
 .idea/**/workspace.xml
