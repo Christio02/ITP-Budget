@@ -15,6 +15,7 @@ Eirik:
 
 Fredrik:
 - Skrive javadoc
+- Opprettet tester etter å ha sjekket testdekningsgrad (Jacoco)
 
 
 
