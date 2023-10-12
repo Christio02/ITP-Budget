@@ -47,11 +47,6 @@
 
 
         <!-- https://mvnrepository.com/artifact/de.jensd/fontawesomefx-controls -->
-        <dependency>
-            <groupId>de.jensd</groupId>
-            <artifactId>fontawesomefx-fontawesome</artifactId>
-            <version>4.7.0-9.1.2</version>
-        </dependency>
 
         <!-- junit testing with jupiter -->
         <dependency>
@@ -98,21 +93,6 @@
 
     <profiles>
         <profile>
-            <id>fontawesome</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.openjfx</groupId>
-                        <artifactId>javafx-maven-plugin</artifactId>
-                        <version>0.0.6</version>
-                        <configuration>
-                            <mainClass>de.jensd.fx.glyphs.fontawesome.demo.FontAwesomeIconsDemoApp</mainClass>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
             <id>budget</id>
             <build>
                 <plugins>
@@ -127,65 +107,33 @@
                 </plugins>
             </build>
         </profile>
-<!--        <profile> This will be edited when we have rest api
-<!-            <id>remoteapp</id>-->
-<!--            <build>-->
-<!--                <plugins>-->
-<!--                    <plugin>-->
-<!--                        <groupId>org.openjfx</groupId>-->
-<!--                        <artifactId>javafx-maven-plugin</artifactId>-->
-<!--                        <version>0.0.6</version>-->
-<!--                        <configuration>-->
-<!--                            <mainClass>ui.BudgetApplication</mainClass>-->
-<!--                        </configuration>-->
-<!--                    </plugin>-->
-<!--                </plugins>-->
-<!--            </build>-->
-<!--        </profile>-->
-        <profile>
-            <id>jpro</id>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>jpro - sandec repository</id>
-                    <url>https://sandec.bintray.com/repo</url>
-                </pluginRepository>
-            </pluginRepositories>
-            <repositories>
-                <repository>
-                    <id>jpro - sandec repository</id>
-                    <url>https://sandec.bintray.com/repo</url>
-                </repository>
-                <repository>
-                    <id>openjfx-monocle-repository</id>
-                    <url>https://mvnrepository.com/artifact/org.testfx/openjfx-monocle</url>
-                </repository>
-            </repositories>
-        </profile>
     </profiles>
 
     <build>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
                 <configuration>
-                    <forkCount>3</forkCount>
-                    <reuseForks>true</reuseForks>
-                    <skipTests>false</skipTests>
-                    <useSystemClassLoader>false</useSystemClassLoader>
-                    <systemPropertyVariables>
-                        <headless>false</headless>
-                    </systemPropertyVariables>
                     <argLine>
-                        -Dtestfx.robot=awt
-                        --add-opens ui/BudgetApplication=ALL-UNNAMED
-                        --add-opens javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
-                        --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                        @{jaCoCoArgLine}
+                        --add-opens budgetApplication/app=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
                     </argLine>
+<!--                    <argLine>-->
+<!--                        -Dtestfx.robot=awt-->
+<!--                        &#45;&#45;add-opens ui/BudgetApplication=ALL-UNNAMED-->
+<!--                        &#45;&#45;add-opens javafx.graphics/com.sun.javafx.application=ALL-UNNAMED-->
+<!--                        &#45;&#45;add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED-->
+<!--                    </argLine>-->
                 </configuration>
             </plugin>
 
@@ -205,33 +153,15 @@
                     <jlinkZipName>ui</jlinkZipName>
                 </configuration>
             </plugin>
-
-            <!-- config above and below taken from https://dev.to/cherrychain/javafx-jlink-and-jpackage-h9 -->
             <plugin>
-                <groupId>org.panteleyev</groupId>
-                <artifactId>jpackage-maven-plugin</artifactId>
-                <version>1.4.0</version>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
                 <configuration>
-                    <name>BudgetFX</name>
-                    <appVersion>1.0.0</appVersion>
-                    <vendor>gr2340</vendor>
-                    <destination>target/dist</destination>
-                    <module>ui</module>
-                    <runtimeImage>target/ui</runtimeImage>
-                    <javaOptions>
-                        <option>-Dfile.encoding=UTF-8</option>
-                    </javaOptions>
-                    <!-- linux options -->
-                    <linuxShortcut>true</linuxShortcut>
-                    <linuxMenuGroup>ui</linuxMenuGroup>
-
-                    <!-- windows options -->
-                    <winDirChooser>true</winDirChooser>
-                    <winShortcut>true</winShortcut>
-                    <winMenu>true</winMenu>
-                    <winMenuGroup>ui</winMenuGroup>
+                    <propertyName>jaCoCoArgLine</propertyName>
                 </configuration>
             </plugin>
+
+
 
             <!-- Run the checkstyle code quality tool -->
             <plugin>
@@ -244,20 +174,9 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.7.2.0</version>
+                <version>4.7.3.2</version>
                 <configuration>
                     <excludeFilterFile>config/spotbugs/exclude.xml</excludeFilterFile>
-                </configuration>
-            </plugin>
-
-
-            <!-- Configure jacoco code coverage -->
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.8</version>
-                <configuration>
-                    <propertyName>jaCoCoArgLine</propertyName>
                 </configuration>
             </plugin>
         </plugins>

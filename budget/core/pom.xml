@@ -19,18 +19,6 @@
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
-<!--        <dependency>-->
-<!--            <groupId>com.fasterxml.jackson.budget</groupId>-->
-<!--            <artifactId>jackson-budget</artifactId>-->
-<!--            <version>2.12.5</version> &lt;!&ndash; Specify the Jackson Core version &ndash;&gt;-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.fasterxml.jackson.budget</groupId>-->
-<!--            <artifactId>jackson-databind</artifactId>-->
-<!--            <version>2.12.5</version> &lt;!&ndash; Specify the Jackson Databind version &ndash;&gt;-->
-<!--        </dependency>-->
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -57,11 +45,7 @@
             <version>3.12.4</version> <!-- Specify the Mockito version -->
             <scope>test</scope> <!-- Add test scope -->
         </dependency>
-        <dependency>
-            <groupId>com.github.spotbugs</groupId>
-            <artifactId>spotbugs</artifactId>
-            <version>4.7.3</version>
-        </dependency>
+
     </dependencies>
 
     <build>
@@ -78,27 +62,45 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version> <!-- Specify the Surefire Plugin version -->
+                <configuration>
+                    <argLine>
+                        @{jaCoCoArgLine}
+                        --add-opens budgetApplication/app=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                    </argLine>
+                </configuration>
             </plugin>
             <!-- Run the checkstyle code quality tool -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.1.1</version> <!-- Specify the Checkstyle Plugin version -->
+                <version>3.1.2</version> <!-- Specify the Checkstyle Plugin version -->
             </plugin>
 
             <!-- Run the spotbugs code quality tool -->
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.7.2.1</version> <!-- Specify the Spotbugs Plugin version -->
+                <version>4.7.3.2</version>
+                <configuration>
+                    <excludeFilterFile>config/spotbugs/exclude.xml</excludeFilterFile>
+                </configuration>
             </plugin>
+
 
             <!-- Configure jacoco code coverage -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.7</version> <!-- Specify the JaCoCo Plugin version -->
+              <configuration>
+                  <propertyName>jaCoCoArgLine</propertyName>
+              </configuration>
+
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
     </build>
 </project>
