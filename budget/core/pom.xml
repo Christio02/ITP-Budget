@@ -73,13 +73,17 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.1.1</version> <!-- Specify the Checkstyle Plugin version -->
+                <version>3.1.2</version> <!-- Specify the Checkstyle Plugin version -->
             </plugin>
 
             <!-- Run the spotbugs code quality tool -->
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.7.3.2</version>
+                <configuration>
+                    <excludeFilterFile>config/spotbugs/exclude.xml</excludeFilterFile>
+                </configuration>
             </plugin>
 
 
@@ -93,5 +97,10 @@
 
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
     </build>
 </project>

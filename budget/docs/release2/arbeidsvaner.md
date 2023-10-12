@@ -18,3 +18,15 @@ Måten vi lagrer data i appen er med at brukeren velger å trykke lagre,
 så vi bruker mer en dokumentmetafor for lagringen vår. Det skjer derfor ingen lagring
 automatisk. 
 
+
+## Arbeidsvaner
+Vi har valgt å bruke issues og milestones for å organisere arbeidet vårt. Disse diskuterer vi i gruppen
+under det faste møtet i uken. Der bestemmer vi oss for hva som skal først prioriteres, og hvem som skal
+jobbe med hva. Vi har også valgt å bruke branches for å jobbe med hver vår del av prosjektet. For at branchene
+skal være oversiktelige har vi valgt å navngi dem etter hvilken issue de jobber med
+eks: "reference-category/description-in-kebab-case". Vi har også valgt å bruke merge requests for å kvalitetssikre
+at koden som blir lagt til i master er godkjent av en annen i gruppen. Videre har vi valgt å bruke git tags for å
+markere hver release. Vi har også jobbet i par, dette har vi gjort ved å bruke verktøyet "code with me" i IntelliJ.
+Dette har vært en god måte å jobbe på, da vi har kunnet hjelpe hverandre med å løse problemer, og lært av hverandre.
+Dette har blitt dokumentert i commit meldingene våre med "Co-authored-by:
+
