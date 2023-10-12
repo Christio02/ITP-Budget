@@ -65,13 +65,13 @@ import java.io.IOException;
     @FXML
     public void initialize() {
 <span class="fc" id="L67">        instance = this;</span>
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        if (FileUtility.getLoad())   {</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (FileUtility.getLoad())   {</span>
             try {
-<span class="nc" id="L70">                FileUtility.readFromFile(this.calc);</span>
-<span class="nc" id="L71">                totalSum.setText(Integer.toString(calc.getTotalSum()));</span>
+<span class="fc" id="L70">                FileUtility.readFromFile(this.calc);</span>
+<span class="fc" id="L71">                totalSum.setText(Integer.toString(calc.getTotalSum()));</span>
 <span class="nc" id="L72">            } catch (IOException e) {</span>
 <span class="nc" id="L73">                e.printStackTrace();</span>
-<span class="nc" id="L74">            }</span>
+<span class="fc" id="L74">            }</span>
         }
 
 
@@ -95,20 +95,20 @@ import java.io.IOException;
 
         // Set the save button to change image when hovered over
 <span class="fc" id="L97">        saveBtn.setOnMouseEntered(event -&gt; {</span>
-<span class="nc" id="L98">            Image hoverImage = new Image(getClass().getResource(&quot;/budget/images/saveIconHover.png&quot;).toString());</span>
-<span class="nc" id="L99">            saveIcon.setImage(hoverImage);</span>
-<span class="nc" id="L100">        });</span>
+<span class="fc" id="L98">            Image hoverImage = new Image(getClass().getResource(&quot;/budget/images/saveIconHover.png&quot;).toString());</span>
+<span class="fc" id="L99">            saveIcon.setImage(hoverImage);</span>
+<span class="fc" id="L100">        });</span>
 
 <span class="fc" id="L102">        saveBtn.setOnMouseExited(event -&gt; {</span>
-<span class="nc" id="L103">            Image normalImage = new Image(getClass().getResource(&quot;/budget/images/saveIcon.png&quot;).toString());</span>
-<span class="nc" id="L104">            saveIcon.setImage(normalImage);</span>
-<span class="nc" id="L105">        });</span>
+<span class="fc" id="L103">            Image normalImage = new Image(getClass().getResource(&quot;/budget/images/saveIcon.png&quot;).toString());</span>
+<span class="fc" id="L104">            saveIcon.setImage(normalImage);</span>
+<span class="fc" id="L105">        });</span>
 <span class="fc" id="L106">    }</span>
 
     @FXML
     private void loadMainMenu(ActionEvent event) throws Exception {
-<span class="nc" id="L110">        ChangeScene.changeToScene(getClass(), event, &quot;startmenu-fxml.fxml&quot;);</span>
-<span class="nc" id="L111">    }</span>
+<span class="fc" id="L110">        ChangeScene.changeToScene(getClass(), event, &quot;startmenu-fxml.fxml&quot;);</span>
+<span class="fc" id="L111">    }</span>
 
 
     @FXML
@@ -133,11 +133,11 @@ import java.io.IOException;
     @FXML
     public void saveBudget() {
         try {
-<span class="nc" id="L136">            FileUtility.writeToFile(calc);</span>
+<span class="fc" id="L136">            FileUtility.writeToFile(calc);</span>
 <span class="nc" id="L137">        } catch (Exception e) {</span>
 <span class="nc" id="L138">            e.printStackTrace();</span>
-<span class="nc" id="L139">        }</span>
-<span class="nc" id="L140">    }</span>
+<span class="fc" id="L139">        }</span>
+<span class="fc" id="L140">    }</span>
 
 
 }
