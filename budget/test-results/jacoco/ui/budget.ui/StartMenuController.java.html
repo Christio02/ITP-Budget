@@ -12,7 +12,7 @@ import budget.utility.FileUtility;
     private Button loadBudgetBtn;
 
 <span class="fc" id="L14">    BudgetController budgetController = new BudgetController();</span>
-<span class="fc" id="L15">    Calculation calc = new Calculation();</span>
+
 
 
     @FXML
@@ -31,10 +31,10 @@ import budget.utility.FileUtility;
 
     @FXML
     private void loadPrevBudget(ActionEvent event) throws Exception {
-<span class="nc" id="L34">        FileUtility.load = true;</span>
-<span class="nc" id="L35">        ChangeScene.changeToScene(getClass(), event, &quot;hello-view.fxml&quot;);</span>
+<span class="fc" id="L34">        FileUtility.load = true;</span>
+<span class="fc" id="L35">        ChangeScene.changeToScene(getClass(), event, &quot;hello-view.fxml&quot;);</span>
 
-<span class="nc" id="L37">    }</span>
+<span class="fc" id="L37">    }</span>
 }
 
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

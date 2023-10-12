@@ -12,7 +12,7 @@ public class StartMenuController {
     private Button loadBudgetBtn;
 
     BudgetController budgetController = new BudgetController();
-    Calculation calc = new Calculation();
+
 
 
     @FXML
