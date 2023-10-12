@@ -82,7 +82,7 @@
                 <artifactId>spotbugs-maven-plugin</artifactId>
                 <version>4.7.3.2</version>
                 <configuration>
-                    <excludeFilterFile>config/spotbugs/exclude.xml</excludeFilterFile>
+                    <excludeFilterFile>../config/spotbugs/exclude.xml</excludeFilterFile>
                 </configuration>
             </plugin>
 

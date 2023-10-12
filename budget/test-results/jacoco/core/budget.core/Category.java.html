@@ -2,45 +2,54 @@
 
 import java.util.ArrayList;
 
+/**
+ * This class is responsible for the calculation of the budget.
+ */
 public class Category {
 
     private final String categoryName;
     private int amount;
-<span class="pc" id="L9">    private ArrayList&lt;Integer&gt; addedAmounts = new ArrayList&lt;&gt;();</span>
+<span class="pc" id="L12">    private ArrayList&lt;Integer&gt; addedAmounts = new ArrayList&lt;&gt;();</span>
 
-<span class="fc" id="L11">    public Category(String categoryName) {</span>
-<span class="fc" id="L12">        this.categoryName = categoryName;</span>
-<span class="fc" id="L13">        this.amount = 0;</span>
-<span class="fc" id="L14">    }</span>
+    /**
+     * @param categoryName The name of the category
+     */
+<span class="fc" id="L17">    public Category(String categoryName) {</span>
+<span class="fc" id="L18">        this.categoryName = categoryName;</span>
+<span class="fc" id="L19">        this.amount = 0;</span>
+<span class="fc" id="L20">    }</span>
 
-<span class="nc" id="L16">    public Category() {</span>
-<span class="nc" id="L17">        this.categoryName = &quot;&quot;;</span>
-<span class="nc" id="L18">        this.amount = 0;</span>
-<span class="nc" id="L19">    }</span>
+<span class="nc" id="L22">    public Category() {</span>
+<span class="nc" id="L23">        this.categoryName = &quot;&quot;;</span>
+<span class="nc" id="L24">        this.amount = 0;</span>
+<span class="nc" id="L25">    }</span>
 
 
     public String getCategoryName() {
-<span class="fc" id="L23">        return categoryName;</span>
+<span class="fc" id="L29">        return categoryName;</span>
     }
 
     public int getAmount() {
-<span class="fc" id="L27">        return amount;</span>
+<span class="fc" id="L33">        return amount;</span>
     }
 
+    /**
+     * @param amount The amount to add to the category
+     */
     public void addAmount(int amount) {
-<span class="fc" id="L31">        this.addedAmounts.add(amount); // list is only used in case we want access to the history of the budget later</span>
-<span class="fc" id="L32">        this.amount += amount;</span>
-<span class="fc" id="L33">    }</span>
+<span class="fc" id="L40">        this.addedAmounts.add(amount); // list is only used in case we want access to the history of the budget later</span>
+<span class="fc" id="L41">        this.amount += amount;</span>
+<span class="fc" id="L42">    }</span>
 
     public ArrayList&lt;Integer&gt; getBudgetHistory() {
-<span class="fc" id="L36">        return this.addedAmounts;</span>
+<span class="fc" id="L45">        return this.addedAmounts;</span>
     }
 
 
 
     @Override
     public String toString() {
-<span class="nc" id="L43">        return getCategoryName();</span>
+<span class="nc" id="L52">        return getCategoryName();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

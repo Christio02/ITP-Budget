@@ -42,26 +42,7 @@ public class FileUtility {
         return load;
     }
     public static void main(String[] args) {
-        Calculation calc = new Calculation();
-        Category food = calc.getCategory("Food");
-        Category transport = calc.getCategory("Transportation");
 
-        calc.addAmountToCategory(food, 200);
-        calc.addAmountToCategory(food, 300);
-        calc.addAmountToCategory(transport, 500);
-        calc.addAmountToCategory(transport, 2000);
-
-        Calculation calc2 = new Calculation();
-        try {
-            writeToFile(calc);
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-        try {
-            readFromFile(calc);
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
     }
 
 
