@@ -4,4 +4,6 @@
 - Tatt i bruk konvensjoner for commits og brukt dette til å navngi issues
 - Gått fra monolithic architecture til multi modular architecture
 - Lagt til tester for ui med TestFX
+- Lagt til støtte for jacoco, spotbugs og checkstyle
+- Lagt til mer detaljerte javadoc kommentarer
 
