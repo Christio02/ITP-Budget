@@ -8,9 +8,9 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>budget/core</module>
-        <module>budget/ui</module>
-        <module>budget/utility</module>
+        <module>core</module>
+        <module>ui</module>
+        <module>utility</module>
     </modules>
 
     <properties>
