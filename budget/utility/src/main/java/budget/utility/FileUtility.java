@@ -10,7 +10,7 @@ public class FileUtility {
 
     public static boolean load;
     private static final String currentDirectory = System.getProperty("user.dir");
-    private static final String filePath = currentDirectory + "/../utility/src/main/resources/savedBudget.json";
+    private static final String filePath = currentDirectory + "/../utility/src/main/resources/budget/utility/savedBudget.json";
 
 
     public static void writeToFile(Calculation calc) throws IOException{

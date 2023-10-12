@@ -57,11 +57,7 @@
             <version>3.12.4</version> <!-- Specify the Mockito version -->
             <scope>test</scope> <!-- Add test scope -->
         </dependency>
-        <dependency>
-            <groupId>com.github.spotbugs</groupId>
-            <artifactId>spotbugs</artifactId>
-            <version>4.7.3</version>
-        </dependency>
+
     </dependencies>
 
     <build>
@@ -90,7 +86,15 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.7.2.1</version> <!-- Specify the Spotbugs Plugin version -->
+                <version>4.7.2.1</version>
+                <dependencies>
+                    <!-- overwrite dependency on spotbugs if you want to specify the version of spotbugs -->
+                    <dependency>
+                        <groupId>com.github.spotbugs</groupId>
+                        <artifactId>spotbugs</artifactId>
+                        <version>4.7.3</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <!-- Configure jacoco code coverage -->
