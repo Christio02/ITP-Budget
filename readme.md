@@ -11,12 +11,13 @@ Prosjektet er modularisert i de ulike logikkene våre, core, ui og utility. I do
 ### Hvordan kjøre prosjektet
 Man må åpne "gr2340" directory og så kjøre "mvn clean install" i terminalen. Dette fordi filskrivingen
 bare fungerer når man er inne i riktig directory"
-Du må derretter cd inn i ui mappen, for så å kjøre "mvn javafx:run" for å kjøre applikasjonen.
+Du må derretter cd inn i _ui_ mappen, for så å kjøre "mvn javafx:run" for å kjøre applikasjonen.
 
 
-### Java- og Maven versjon
-Vi bruker java 17.0.5 og maven 3.11.0 for å kjøre prosjektet.'
+### Versjoner
+Vi bruker java 17.0.5 og maven 3.11.0 for å kjøre prosjektet.  
+Vi bruker også versjon 4.7.3.6 av spotbugs, versjon0.8.7 av Jacoco og versjon 10.3.4 av checkstyle.
 
 
-#### Link til readme.md om appen: [readme.md](src/main/java/readme.md)
+#### Link til readme.md om appen: [readme.md](budget/aboutApp.md)
 
