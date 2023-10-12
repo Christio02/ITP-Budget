@@ -25,13 +25,13 @@ public class StartMenuController {
 
     @FXML
     private void loadNewBudget(ActionEvent event) throws Exception {
-        FileUtility.load = false;
+        FileUtility.setLoad(false);
         ChangeScene.changeToScene(getClass(), event, "hello-view.fxml");
     }
 
     @FXML
     private void loadPrevBudget(ActionEvent event) throws Exception {
-        FileUtility.load = true;
+        FileUtility.setLoad(true);
         ChangeScene.changeToScene(getClass(), event, "hello-view.fxml");
 
     }

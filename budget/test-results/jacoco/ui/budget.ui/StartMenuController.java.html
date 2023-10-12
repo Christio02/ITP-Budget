@@ -25,13 +25,13 @@ import budget.utility.FileUtility;
 
     @FXML
     private void loadNewBudget(ActionEvent event) throws Exception {
-<span class="fc" id="L28">        FileUtility.load = false;</span>
+<span class="fc" id="L28">        FileUtility.setLoad(false);</span>
 <span class="fc" id="L29">        ChangeScene.changeToScene(getClass(), event, &quot;hello-view.fxml&quot;);</span>
 <span class="fc" id="L30">    }</span>
 
     @FXML
     private void loadPrevBudget(ActionEvent event) throws Exception {
-<span class="fc" id="L34">        FileUtility.load = true;</span>
+<span class="fc" id="L34">        FileUtility.setLoad(true);</span>
 <span class="fc" id="L35">        ChangeScene.changeToScene(getClass(), event, &quot;hello-view.fxml&quot;);</span>
 
 <span class="fc" id="L37">    }</span>

@@ -7,86 +7,93 @@ import java.util.ArrayList;
  */
 public class Calculation {
 
-<span class="fc" id="L10">    private final ArrayList&lt;Category&gt; categoriesList = new ArrayList&lt;&gt;();</span>
+    /**
+     * This is a list that stores categories.
+     */
+<span class="fc" id="L13">    private final ArrayList&lt;Category&gt; categoriesList = new ArrayList&lt;&gt;();</span>
 
     /**
      * Creates a new Calculation object.
      */
-<span class="fc" id="L15">    public Calculation() {</span>
-<span class="fc" id="L16">        this.categoriesList.add(new Category(&quot;Food&quot;));</span>
-<span class="fc" id="L17">        this.categoriesList.add(new Category(&quot;Transportation&quot;));</span>
-<span class="fc" id="L18">        this.categoriesList.add(new Category(&quot;Entertainment&quot;));</span>
-<span class="fc" id="L19">        this.categoriesList.add(new Category(&quot;Clothing&quot;));</span>
-<span class="fc" id="L20">        this.categoriesList.add(new Category(&quot;Other&quot;));</span>
-<span class="fc" id="L21">    }</span>
+<span class="fc" id="L18">    public Calculation() {</span>
+<span class="fc" id="L19">        this.categoriesList.add(new Category(&quot;Food&quot;));</span>
+<span class="fc" id="L20">        this.categoriesList.add(new Category(&quot;Transportation&quot;));</span>
+<span class="fc" id="L21">        this.categoriesList.add(new Category(&quot;Entertainment&quot;));</span>
+<span class="fc" id="L22">        this.categoriesList.add(new Category(&quot;Clothing&quot;));</span>
+<span class="fc" id="L23">        this.categoriesList.add(new Category(&quot;Other&quot;));</span>
+<span class="fc" id="L24">    }</span>
 
     /**
      * Adds the specified amount to the specified category.
      *
      * @param category The category to add the amount to
-     * @param amount The amount to add to the category
+     * @param amount   The amount to add to the category
      * @throws IllegalArgumentException if the amount is negative
      */
-    public void addAmountToCategory(Category category, int amount) {
-<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (!checkAmountIscorrect(amount)) {</span>
-<span class="fc" id="L32">            throw new IllegalArgumentException(&quot;Cannot add non-positive values!&quot;);</span>
+    public void addAmountToCategory(final Category category, final int amount) {
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (!checkAmountIsCorrect(amount)) {</span>
+<span class="fc" id="L35">            throw new IllegalArgumentException(&quot;Amount cannot be negative.&quot;);</span>
         }
-
-<span class="fc" id="L35">        category.addAmount(amount);</span>
-
-<span class="fc" id="L37">    }</span>
-
-    public int getSum(Category category) {
-<span class="fc" id="L40">        return category.getAmount();</span>
-    }
-
+<span class="fc" id="L37">        category.addAmount(amount);</span>
+<span class="fc" id="L38">    }</span>
 
     /**
-     * @param CategoryName The name of the category to get
-     * @return The category with the specified name
+     * Retrieves sum for a specific category.
+     *
+     * @param category The category for retrieving the sum
+     * @return The sum of all amounts added to the specified category
      */
-    public Category getCategory(String CategoryName) {
-<span class="fc" id="L49">        return this.categoriesList.stream().filter(cat -&gt; cat.getCategoryName().</span>
-<span class="fc" id="L50">                equals(CategoryName)).findAny().orElse(null);</span>
+    public int getSum(final Category category) {
+<span class="fc" id="L47">        return category.getAmount();</span>
     }
 
     /**
+     * Get a category by name.
+     *
+     * @param categoryName The name of the category to get
+     * @return The category with the specified name or null if not found
+     */
+    public Category getCategory(final String categoryName) {
+<span class="fc" id="L57">        return this.categoriesList.stream()</span>
+<span class="fc" id="L58">                .filter(cat -&gt; cat.getCategoryName().equals(categoryName))</span>
+<span class="fc" id="L59">                .findAny()</span>
+<span class="fc" id="L60">                .orElse(null);</span>
+    }
+
+    /**
+     * Get the total sum of all categories.
+     *
      * @return The total sum of all categories
      */
     public int getTotalSum() {
+<span class="fc" id="L69">        int sum = 0;</span>
 
-<span class="fc" id="L58">        int sum = 0;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        for (Category cat : categoriesList) {</span>
+<span class="fc" id="L72">            sum += cat.getAmount();</span>
+<span class="fc" id="L73">        }</span>
 
-<span class="fc bfc" id="L60" title="All 2 branches covered.">        for (Category cat : categoriesList) {</span>
-<span class="fc" id="L61">            sum += cat.getAmount();</span>
-<span class="fc" id="L62">        }</span>
-
-<span class="fc" id="L64">        return sum;</span>
-
+<span class="fc" id="L75">        return sum;</span>
     }
 
-
     /**
+     * Check if the amount is positive.
+     *
      * @param amount The amount to check
      * @return True if the amount is positive, false otherwise
      */
-    private boolean checkAmountIscorrect(int amount) {
-<span class="fc bfc" id="L74" title="All 2 branches covered.">        return amount &gt;= 0;</span>
+    private boolean checkAmountIsCorrect(final int amount) {
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        return amount &gt;= 0;</span>
     }
 
+    /**
+     * Get the list of categories.
+     *
+     * @return The list of categories
+     */
     public ArrayList&lt;Category&gt; getCategoriesList() {
-<span class="fc" id="L78">        return categoriesList;</span>
+<span class="fc" id="L94">        return categoriesList;</span>
     }
 
-
-    public static void main(String[] args) {
-<span class="nc" id="L83">        Calculation calc = new Calculation();</span>
-<span class="nc" id="L84">        Category food = calc.getCategory(&quot;Food&quot;);</span>
-<span class="nc" id="L85">        food.addAmount(200);</span>
-<span class="nc" id="L86">        System.out.println(calc.getSum(food));</span>
-
-
-<span class="nc" id="L89">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

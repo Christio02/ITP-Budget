@@ -1,52 +1,80 @@
 package budget.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 
 /**
- * This class is responsible for the calculation of the budget.
+ * This class is responsible for representing a budget category.
  */
 public class Category {
 
+    /**
+     * The name of the category.
+     */
     private final String categoryName;
+    /**
+     * Current amount of the category.
+     */
     private int amount;
+    /**
+     * List of added amounts to the category.
+     */
     private ArrayList<Integer> addedAmounts = new ArrayList<>();
 
     /**
-     * @param categoryName The name of the category
+     * Creates a new Category with the specified name and initial amount of 0.
+     *
+     * @param pCategoryName The name of the category
      */
-    public Category(String categoryName) {
-        this.categoryName = categoryName;
+    @JsonCreator
+    public Category(@JsonProperty("categoryName")final String pCategoryName) {
+        this.categoryName = pCategoryName;
         this.amount = 0;
     }
 
-    public Category() {
-        this.categoryName = "";
-        this.amount = 0;
-    }
-
-
+    /**
+     * Get the name of the category.
+     *
+     * @return The name of the category
+     */
     public String getCategoryName() {
         return categoryName;
     }
 
+    /**
+     * Get the current budget amount for the category.
+     *
+     * @return The current budget amount
+     */
     public int getAmount() {
         return amount;
     }
 
     /**
-     * @param amount The amount to add to the category
+     * Add the specified amount to the category.
+     *
+     * @param pAmount The amount to add to the category
      */
-    public void addAmount(int amount) {
-        this.addedAmounts.add(amount); // list is only used in case we want access to the history of the budget later
-        this.amount += amount;
+    public void addAmount(final int pAmount) {
+        this.addedAmounts.add(pAmount);
+        this.amount += pAmount;
     }
 
+    /**
+     * Get the history of added amounts to the category.
+     *
+     * @return List of added amounts
+     */
     public ArrayList<Integer> getBudgetHistory() {
         return this.addedAmounts;
     }
 
-
-
+    /**
+     * Returns a string representation of the object.
+     *
+     * @return String representation of the object
+     */
     @Override
     public String toString() {
         return getCategoryName();
