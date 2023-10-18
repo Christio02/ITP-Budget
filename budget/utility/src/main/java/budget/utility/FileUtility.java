@@ -41,9 +41,10 @@ public final class FileUtility {
      * @throws IOException If an input or output exception occurred
      */
     public static void writeToFile(final Calculation calc) throws IOException {
+        String name = calc.getName();
         Json.getMapper().
                 writerWithDefaultPrettyPrinter().
-                writeValue(new File(FILE_PATH), calc);
+                writeValue(new File(FILE_PATH), name + calc);
     }
 
     /**
