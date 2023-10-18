@@ -1,8 +1,8 @@
 {
   "categoriesList" : [ {
     "categoryName" : "Food",
-    "amount" : 23232,
-    "budgetHistory" : [ 23232 ]
+    "amount" : 23435,
+    "budgetHistory" : [ 23435 ]
   }, {
     "categoryName" : "Transportation",
     "amount" : 0,
@@ -13,13 +13,13 @@
     "budgetHistory" : [ ]
   }, {
     "categoryName" : "Clothing",
-    "amount" : 0,
-    "budgetHistory" : [ ]
+    "amount" : 400,
+    "budgetHistory" : [ 400 ]
   }, {
     "categoryName" : "Other",
     "amount" : 0,
     "budgetHistory" : [ ]
   } ],
-  "name" : "sss",
-  "totalSum" : 23232
+  "name" : "Hello!",
+  "totalSum" : 23835
 }

@@ -29,6 +29,10 @@ public class StartMenuController {
     }
     private Calculation test = new Calculation();
 
+    public Calculation getCalculation() {
+        return instance.test;
+    }
+
     @FXML
     public void initialize() {
         instance = this;

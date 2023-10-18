@@ -69,22 +69,25 @@ public class BudgetController {
 
 
 
+
     @FXML
     public void initialize() {
         instance = this;
-        calc = new Calculation();
+        calc = StartMenuController.getInstance().getCalculation();
         budgets = new Budgets(calc);
+
         if (FileUtility.getLoad())   {
             try {
                 FileUtility.readFromFile(this.calc);
                 totalSum.setText(Integer.toString(calc.getTotalSum()));
-                this.budgetTitle.setText(this.calc.getName());
+                budgetTitle.setText(StartMenuController.getInstance().getCalcName());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
-        budgetTitle.setText(StartMenuController.getInstance().getCalcName());
+        budgetTitle.setText(this.calc.getName());
+
 
         ObservableList<String> categoryOptions = FXCollections.observableArrayList(
                 "Food", "Entertainment", "Transportation", "Clothing", "Other"
