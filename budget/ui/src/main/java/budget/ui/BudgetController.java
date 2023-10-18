@@ -78,6 +78,7 @@ public class BudgetController {
             try {
                 FileUtility.readFromFile(this.calc);
                 totalSum.setText(Integer.toString(calc.getTotalSum()));
+                this.budgetTitle.setText(this.calc.getName());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -142,7 +143,7 @@ public class BudgetController {
 
     @FXML
     public void saveBudget() {
-
+        calc.setName(budgetTitle.getText());
         try {
             FileUtility.writeToFile(calc);
         } catch (Exception e) {
