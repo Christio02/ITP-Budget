@@ -1,8 +1,8 @@
 {
   "categoriesList" : [ {
     "categoryName" : "Food",
-    "amount" : 222,
-    "budgetHistory" : [ 222 ]
+    "amount" : 23232,
+    "budgetHistory" : [ 23232 ]
   }, {
     "categoryName" : "Transportation",
     "amount" : 0,
@@ -20,5 +20,6 @@
     "amount" : 0,
     "budgetHistory" : [ ]
   } ],
-  "totalSum" : 222
+  "name" : "sss",
+  "totalSum" : 23232
 }
