@@ -1,8 +1,5 @@
 package budget.core;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.ArrayList;
 
 /**
@@ -11,20 +8,37 @@ import java.util.ArrayList;
 public class Calculation {
 
     /**
-     * This cis a list that stores categories.
+     * This is a list that stores categories.
      */
     private final ArrayList<Category> categoriesList = new ArrayList<>();
-    /*
+
+    /**
+     * Name/id of object
+     */
+    public String name;
+    /**
      * Creates a new Calculation object.
      */
-    @JsonCreator
-    public Calculation() {
+    public Calculation(String name) {
+        setName(name);
         this.categoriesList.add(new Category("Food"));
         this.categoriesList.add(new Category("Transportation"));
         this.categoriesList.add(new Category("Entertainment"));
         this.categoriesList.add(new Category("Clothing"));
         this.categoriesList.add(new Category("Other"));
 
+    }
+
+//    public Calculation() {
+//        this("Default name");
+//    }
+
+    public Calculation() {
+        this.categoriesList.add(new Category("Food"));
+        this.categoriesList.add(new Category("Transportation"));
+        this.categoriesList.add(new Category("Entertainment"));
+        this.categoriesList.add(new Category("Clothing"));
+        this.categoriesList.add(new Category("Other"));
     }
 
     /**
@@ -98,7 +112,36 @@ public class Calculation {
         return categoriesList;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        String name = this.name;
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.getName());
+        sb.append(" ");
+        for (Category cat: categoriesList) {
+            sb.append(cat.getCategoryName());
+            sb.append(" ");
+            sb.append(cat.getAmount());
+            sb.append(" ");
+        }
+        return sb.toString();
+    }
+
     public static void main(String[] args) {
+        Calculation calc = new Calculation("test1");
+        calc.addAmountToCategory(calc.getCategory("Food"), 2000);
+//        Calculation calc2 = new Calculation();
+//        calc2.setName("Hello world");
+//        calc2.addAmountToCategory(calc2.getCategory("Food"), 4000);
+//        System.out.println(calc + "\n" + calc2);
 
 
     }

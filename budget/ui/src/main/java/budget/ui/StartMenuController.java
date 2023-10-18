@@ -1,14 +1,10 @@
 package budget.ui;
 import budget.core.Calculation;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import budget.utility.FileUtility;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 
@@ -16,19 +12,28 @@ import java.util.Optional;
 public class StartMenuController {
     private Dialog<String> dialog;
 
+    private static StartMenuController instance;
+    public static StartMenuController getInstance() {
+        return instance;
+    }
+
+    private String calcName;
+
     @FXML
     private Button loadBudgetBtn;
-    private DataSingleton data = DataSingleton.getInstance();
+
+    BudgetController budgetController = new BudgetController();
+
+    public String getCalcName(){
+        return this.calcName;
+    }
+    private Calculation test = new Calculation();
+
     @FXML
     public void initialize() {
+        instance = this;
 
-        try {
-            Map<String, Calculation> tempMap = new HashMap<>();
-            FileUtility.readFile(tempMap);
-            data.updateMap(tempMap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        budgetController = BudgetController.getInstance(); // gets current budgetController
         dialog = new Dialog<>();
         dialog.setTitle("Set calculation name");
         dialog.setHeaderText("Please provide a unique name for budget");
@@ -49,54 +54,41 @@ public class StartMenuController {
         });
 
     }
-    public void popUpOnLoadBudgets(ActionEvent event) {
+
+    public void popUpOnLoadBudgets() {
         // Create and show the dialog
         Optional<String> result = dialog.showAndWait();
+
         // Further processing
-        var ref = new Object() {
-            String thisKey = "";
-        };
-        result.ifPresent(s -> ref.thisKey = s);
-        boolean budgetExists = false;
-        for (Map.Entry<String, Calculation> entry : data.getCalculations().entrySet()) {
-            String presentKey = entry.getKey();
-            if (ref.thisKey.equals(presentKey)) {
-                budgetExists = true;
-                break;
-
-            }
-        }
-        if (budgetExists) {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Error, could not create new budget");
-            errorAlert.setContentText("Budget with that name already exists!");
-            errorAlert.showAndWait();
-
-            errorAlert.setOnCloseRequest(Event::consume);
-        } else {
-            data.setCalculation(new Calculation());
-            data.setCalcName(ref.thisKey);
-            FileUtility.setLoad(false);
-
-            try {
-                ChangeScene.changeToScene(getClass(), event, "budget-view.fxml");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
+        result.ifPresent(s -> this.calcName = s);
+        System.out.println(this.getCalcName());
+        this.test.setName(this.getCalcName());
+        System.out.println(this.test.getName());
 
     }
+
+
+
     @FXML
     private void loadNewBudget(ActionEvent event) throws Exception {
         FileUtility.setLoad(false);
-        popUpOnLoadBudgets(event);
+        popUpOnLoadBudgets();
+        ChangeScene.changeToScene(getClass(), event, "hello-view.fxml");
+
 
     }
+
     @FXML
     private void loadPrevBudget(ActionEvent event) throws Exception {
         FileUtility.setLoad(true);
-        ChangeScene.changeToScene(getClass(), event, "load-budgets.fxml");
+        ChangeScene.changeToScene(getClass(), event, "hello-view.fxml");
+
+    }
+
+    @FXML
+    private void loadSavedBudgets(ActionEvent event) throws Exception {
+        FileUtility.setLoad(true);
+        ChangeScene.changeToScene(getClass(), event, "budgets-view.fxml");
     }
 }
 

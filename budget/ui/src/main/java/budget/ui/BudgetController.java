@@ -1,4 +1,5 @@
 package budget.ui;
+import budget.core.Budgets;
 import budget.core.Calculation;
 import budget.core.Category;
 import javafx.collections.FXCollections;
@@ -10,21 +11,19 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
-import budget.utility.*;
+import budget.utility.FileUtility;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class BudgetController {
 
     // Static field to hold the instance
-//    private static BudgetController instance;
-//
-//    // Method to get the instance
-//    public static BudgetController getInstance() {
-//        return instance;
-//    }
+    private static BudgetController instance;
+
+    // Method to get the instance
+    public static BudgetController getInstance() {
+        return instance;
+    }
 
 
     @FXML
@@ -63,38 +62,48 @@ public class BudgetController {
     @FXML
     private Text budgetTitle;
 
+
     private final ObservableList<Category> categoryList = FXCollections.observableArrayList();
     private Calculation calc;
+    private Budgets budgets;
 
-    private final DataSingleton data = DataSingleton.getInstance();
+
 
     @FXML
     public void initialize() {
-        calc = data.getCalculation();
-        setupUI();
-    }
+        instance = this;
+        calc = new Calculation();
+        budgets = new Budgets(calc);
+        if (FileUtility.getLoad())   {
+            try {
+                FileUtility.readFromFile(this.calc);
+                totalSum.setText(Integer.toString(calc.getTotalSum()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-    private void setupUI() {
-        // Set up the category selection ComboBox
+        budgetTitle.setText(StartMenuController.getInstance().getCalcName());
+
         ObservableList<String> categoryOptions = FXCollections.observableArrayList(
                 "Food", "Entertainment", "Transportation", "Clothing", "Other"
         );
         selector.setItems(categoryOptions);
 
-        // Set up the table columns
         category.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
         amountUsed.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
-        // Add categories to the list and set the table
-        categoryList.addAll(calc.getCategoriesList());
-        table.setItems(categoryList);
+        categoryList.addAll(calc.getCategoriesList()); // add all categories to the list
+        table.setItems(categoryList); // set the table to display the list
 
-        // Set the divider position for the SplitPane
+
+        // Set the divider position to 40% of the screen and make it non-resizable
         splitPane.getDividers().get(0).positionProperty().addListener((observable, oldValue, newValue) -> {
             splitPane.setDividerPosition(0, 0.4);
         });
 
-        // Set hover effects for the save button
+
+        // Set the save button to change image when hovered over
         saveBtn.setOnMouseEntered(event -> {
             Image hoverImage = new Image(getClass().getResource("/budget/images/saveIconHover.png").toString());
             saveIcon.setImage(hoverImage);
@@ -104,8 +113,6 @@ public class BudgetController {
             Image normalImage = new Image(getClass().getResource("/budget/images/saveIcon.png").toString());
             saveIcon.setImage(normalImage);
         });
-        budgetTitle.setText(data.getCalcName());
-        totalSum.setText(Integer.toString(calc.getTotalSum()));
     }
 
     @FXML
@@ -113,18 +120,6 @@ public class BudgetController {
         ChangeScene.changeToScene(getClass(), event, "startmenu-fxml.fxml");
     }
 
-    public void receiveSelectedCalculation(Calculation receivedCalculation) {
-        addCalculation(receivedCalculation);
-    };
-
-    public void addCalculation(Calculation calc) {
-        String name = this.budgetTitle.getText();
-        data.addCalculation(name, calc);
-    }
-
-    public Map<String, Calculation> getCalculations() {
-        return data.getCalculations();
-    }
 
     @FXML
     public void addAmount() {
@@ -145,13 +140,11 @@ public class BudgetController {
 
     }
 
-
-
     @FXML
     public void saveBudget() {
-        addCalculation(this.calc);
+
         try {
-            FileUtility.writeToFile(getCalculations());
+            FileUtility.writeToFile(calc);
         } catch (Exception e) {
             e.printStackTrace();
         }
