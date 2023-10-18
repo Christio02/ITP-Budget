@@ -1,4 +1,5 @@
 package budget.ui;
+import budget.core.Budgets;
 import budget.core.Calculation;
 import budget.core.Category;
 import javafx.collections.FXCollections;
@@ -58,13 +59,21 @@ public class BudgetController {
     @FXML
     private Button returnMenuBtn;
 
+    @FXML
+    private Text budgetTitle;
+
 
     private final ObservableList<Category> categoryList = FXCollections.observableArrayList();
-    private Calculation calc = new Calculation();
+    private Calculation calc;
+    private Budgets budgets;
+
+
 
     @FXML
     public void initialize() {
         instance = this;
+        calc = new Calculation();
+        budgets = new Budgets(calc);
         if (FileUtility.getLoad())   {
             try {
                 FileUtility.readFromFile(this.calc);
@@ -74,6 +83,7 @@ public class BudgetController {
             }
         }
 
+        budgetTitle.setText(StartMenuController.getInstance().getCalcName());
 
         ObservableList<String> categoryOptions = FXCollections.observableArrayList(
                 "Food", "Entertainment", "Transportation", "Clothing", "Other"
@@ -132,6 +142,7 @@ public class BudgetController {
 
     @FXML
     public void saveBudget() {
+
         try {
             FileUtility.writeToFile(calc);
         } catch (Exception e) {

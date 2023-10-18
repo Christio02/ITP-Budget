@@ -46,6 +46,11 @@
                         </ImageView>
                     </graphic>
                 </Button>
+            <Text fx:id="budgetTitle" layoutX="276.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
             </children></AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="229.0" prefWidth="598.0">
             <children>
@@ -64,4 +69,3 @@
             </children></AnchorPane>
     </items>
 </SplitPane>
-
