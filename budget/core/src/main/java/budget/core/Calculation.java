@@ -117,8 +117,7 @@ public class Calculation {
     }
 
     public String getName() {
-        String name = this.name;
-        return name;
+        return this.name;
     }
 
     @Override

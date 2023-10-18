@@ -41,12 +41,10 @@ public final class FileUtility {
      * @throws IOException If an input or output exception occurred
      */
     public static void writeToFile(final Calculation calc) throws IOException {
-        String name = calc.getName();
         Json.getMapper().
                 writerWithDefaultPrettyPrinter().
-                writeValue(new File(FILE_PATH), name + calc);
+                writeValue(new File(FILE_PATH),  calc);
     }
-
     /**
      * Sets the load status.
      *
@@ -67,11 +65,17 @@ public final class FileUtility {
                 getMapper().
                 readValue(new File(FILE_PATH), Calculation.class);
 
+
+        System.out.println(loadCalc.getName());
+
         calc.getCategoriesList().clear();
 
         for (Category cat : loadCalc.getCategoriesList()) {
             calc.getCategoriesList().add(cat);
         }
+//        String nameFromFile = loadCalc.getName();
+//        System.out.println(nameFromFile);
+//        calc.setName(nameFromFile);
     }
 
     /**

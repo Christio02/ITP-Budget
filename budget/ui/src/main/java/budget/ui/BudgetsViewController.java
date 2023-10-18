@@ -33,6 +33,7 @@ public class BudgetsViewController {
             if (FileUtility.getLoad()) {
                 FileUtility.readFromFile(calc1);
                 String name = menuController.getCalcName();
+                calc1.setName(name);
                 budgets = new Budgets(calc1);
 
             }
