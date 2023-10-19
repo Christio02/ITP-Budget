@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import budget.utility.FileUtility;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class BudgetController {
 
@@ -72,22 +73,22 @@ public class BudgetController {
 
     @FXML
     public void initialize() {
+        ArrayList<Calculation> calculations = new ArrayList<>();
         instance = this;
-        calc = StartMenuController.getInstance().getCalculation();
-        budgets = new Budgets(calc);
+        budgets = StartMenuController.getInstance().getBudget();
+        calculations.add(calc);
+        budgets.addBudget(calculations);
 
         if (FileUtility.getLoad())   {
             try {
-                FileUtility.readFromFile(this.calc);
-                totalSum.setText(Integer.toString(calc.getTotalSum()));
-                budgetTitle.setText(StartMenuController.getInstance().getCalcName());
+                budgets = FileUtility.readFromFile();
+                totalSum.setText(Integer.toString(calc.getTotalSum())); // kan feile
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
         budgetTitle.setText(this.calc.getName());
-
 
         ObservableList<String> categoryOptions = FXCollections.observableArrayList(
                 "Food", "Entertainment", "Transportation", "Clothing", "Other"
@@ -105,7 +106,6 @@ public class BudgetController {
         splitPane.getDividers().get(0).positionProperty().addListener((observable, oldValue, newValue) -> {
             splitPane.setDividerPosition(0, 0.4);
         });
-
 
         // Set the save button to change image when hovered over
         saveBtn.setOnMouseEntered(event -> {
@@ -148,7 +148,7 @@ public class BudgetController {
     public void saveBudget() {
         calc.setName(budgetTitle.getText());
         try {
-            FileUtility.writeToFile(calc);
+            FileUtility.writeToFile(budgets);
         } catch (Exception e) {
             e.printStackTrace();
         }

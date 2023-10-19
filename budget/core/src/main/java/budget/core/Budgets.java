@@ -1,6 +1,11 @@
 package budget.core;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.lang.reflect.Array;
+import java.net.CacheRequest;
 import java.util.ArrayList;
 
 
@@ -11,16 +16,17 @@ public class Budgets {
     /**
      * List of calculation objects.
      */
+    @JsonProperty("calculations")
     private ArrayList<Calculation> budgetsList = new ArrayList<>();
 
     /**
      * Constructs a new Budgets object and adds an initial Calculation.
      *
-     * @param calc The Calculation to add to the Budgets.
+     * @param calculations ArrayList of calculation to add to the Budgets.
      */
-    public Budgets(final Calculation calc) {
-        if (calc != null) {
-            addBudget(calc);
+    public Budgets(@JsonProperty("calculations") ArrayList<Calculation> calculations) {
+        if (!calculations.isEmpty()) {
+            addBudget(calculations);
         } else {
             throw new
                     IllegalArgumentException("Cannot add non-existent object!");
@@ -32,6 +38,7 @@ public class Budgets {
      *
      * @return A copy of the list of budgets.
      */
+    @JsonProperty("calculations")
     public ArrayList<Calculation> retrieveBudgets() {
         return new ArrayList<>(this.budgetsList);
     }
@@ -40,11 +47,14 @@ public class Budgets {
      *
      * @param calc The Calculation to add.
      */
-    public void addBudget(final Calculation calc) {
-        if (!retrieveBudgets().contains(calc)) {
-            this.budgetsList.add(calc);
+    @JsonCreator
+    @JsonProperty("calculations")
+    public void addBudget(ArrayList<Calculation> calc) {
+        if (!retrieveBudgets().containsAll(calc)) {
+            this.budgetsList.addAll(calc);
         }
     }
+
 
 
 }

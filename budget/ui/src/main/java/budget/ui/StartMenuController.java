@@ -1,10 +1,12 @@
 package budget.ui;
+import budget.core.Budgets;
 import budget.core.Calculation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import budget.utility.FileUtility;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -17,25 +19,25 @@ public class StartMenuController {
         return instance;
     }
 
-    private String calcName;
-
     @FXML
     private Button loadBudgetBtn;
 
     BudgetController budgetController = new BudgetController();
 
-    public String getCalcName(){
-        return this.calcName;
-    }
-    private Calculation test = new Calculation();
+    private Calculation calc;
+    private Budgets budget;
 
-    public Calculation getCalculation() {
-        return instance.test;
+    public Budgets getBudget() {
+        return this.budget;
     }
 
     @FXML
     public void initialize() {
         instance = this;
+        calc = new Calculation();
+        ArrayList<Calculation> list = new ArrayList<>();
+        list.add(calc);
+        budget = new Budgets(list);
 
         budgetController = BudgetController.getInstance(); // gets current budgetController
         dialog = new Dialog<>();
@@ -64,11 +66,11 @@ public class StartMenuController {
         Optional<String> result = dialog.showAndWait();
 
         // Further processing
-        result.ifPresent(s -> this.calcName = s);
-        System.out.println(this.getCalcName());
-        this.test.setName(this.getCalcName());
-        System.out.println(this.test.getName());
-
+        result.ifPresent(s -> {
+            for (Calculation calc: budget.retrieveBudgets()) {
+                calc.setName(s);
+            }
+        } );
     }
 
 
@@ -85,14 +87,8 @@ public class StartMenuController {
     @FXML
     private void loadPrevBudget(ActionEvent event) throws Exception {
         FileUtility.setLoad(true);
-        ChangeScene.changeToScene(getClass(), event, "hello-view.fxml");
-
-    }
-
-    @FXML
-    private void loadSavedBudgets(ActionEvent event) throws Exception {
-        FileUtility.setLoad(true);
         ChangeScene.changeToScene(getClass(), event, "budgets-view.fxml");
+
     }
 }
 
