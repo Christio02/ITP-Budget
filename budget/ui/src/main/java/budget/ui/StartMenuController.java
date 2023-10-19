@@ -14,6 +14,12 @@ import java.util.Optional;
 public class StartMenuController {
     private Dialog<String> dialog;
 
+    private String calcName;
+    public String getCalcName() {
+        return this.calcName;
+    }
+
+
     private static StartMenuController instance;
     public static StartMenuController getInstance() {
         return instance;
@@ -66,11 +72,7 @@ public class StartMenuController {
         Optional<String> result = dialog.showAndWait();
 
         // Further processing
-        result.ifPresent(s -> {
-            for (Calculation calc: budget.retrieveBudgets()) {
-                calc.setName(s);
-            }
-        } );
+        result.ifPresent(s -> this.calcName = s);
     }
 
 
