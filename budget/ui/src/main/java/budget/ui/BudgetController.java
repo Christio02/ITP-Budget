@@ -65,25 +65,16 @@ public class BudgetController {
 
 
     private final ObservableList<Category> categoryList = FXCollections.observableArrayList();
-    private Calculation calc;
+    private Calculation calc = new Calculation();
+
     private Budgets budgets;
-
-
-
-
     @FXML
     public void initialize() {
+        ArrayList<Calculation> calculationArrayList = new ArrayList<>();
+        calculationArrayList.add(calc);
         instance = this;
-        if (FileUtility.getLoad())   {
-            try {
-                this.budgets = FileUtility.readFromFile();
-                totalSum.setText(Integer.toString(calc.getTotalSum())); // kan feile
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        budgetTitle.setText(this.calc.getName());
+        budgetTitle.setText(StartMenuController.getInstance().getCalcName());
+        budgets = new Budgets(calculationArrayList);
 
         ObservableList<String> categoryOptions = FXCollections.observableArrayList(
                 "Food", "Entertainment", "Transportation", "Clothing", "Other"
@@ -136,14 +127,16 @@ public class BudgetController {
         }
 
         totalSum.setText(Integer.toString(calc.getTotalSum()));
+        ArrayList<Calculation> testList = new ArrayList<>();
+        testList.add(calc);
+        this.budgets.addBudget(testList);
 
     }
 
     @FXML
     public void saveBudget() {
-        calc.setName(budgetTitle.getText());
         try {
-            FileUtility.writeToFile(budgets);
+            FileUtility.writeFile(this.budgets);
         } catch (Exception e) {
             e.printStackTrace();
         }

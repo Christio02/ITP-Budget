@@ -40,7 +40,8 @@ public class BudgetsViewController {
 
         try {
             if (FileUtility.getLoad()) {
-                budgets = FileUtility.readFromFile();
+                budgets = FileUtility.readFile();
+                System.out.println(budgets.retrieveBudgets());
             }
         } catch (IOException e) {
             e.getStackTrace();
