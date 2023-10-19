@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Budgets.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">core</a> &gt; <a href="index.source.html" class="el_package">budget.core</a> &gt; <span class="el_source">Budgets.java</span></div><h1>Budgets.java</h1><pre class="source lang-java linenums">package budget.core;
 
 
+import java.lang.reflect.Array;
+import java.net.CacheRequest;
 import java.util.ArrayList;
 
 
@@ -11,21 +13,21 @@ public class Budgets {
     /**
      * List of calculation objects.
      */
-<span class="nc" id="L14">    private ArrayList&lt;Calculation&gt; budgetsList = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L16">    private ArrayList&lt;Calculation&gt; budgetsList = new ArrayList&lt;&gt;();</span>
 
     /**
      * Constructs a new Budgets object and adds an initial Calculation.
      *
-     * @param calc The Calculation to add to the Budgets.
+     * @param calculations ArrayList of calculation to add to the Budgets.
      */
-<span class="nc" id="L21">    public Budgets(final Calculation calc) {</span>
-<span class="nc bnc" id="L22" title="All 2 branches missed.">        if (calc != null) {</span>
-<span class="nc" id="L23">            addBudget(calc);</span>
+<span class="nc" id="L23">    public Budgets(ArrayList&lt;Calculation&gt; calculations) {</span>
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        if (calculations != null) {</span>
+<span class="nc" id="L25">            addBudget(calculations);</span>
         } else {
-<span class="nc" id="L25">            throw new</span>
+<span class="nc" id="L27">            throw new</span>
                     IllegalArgumentException(&quot;Cannot add non-existent object!&quot;);
         }
-<span class="nc" id="L28">    }</span>
+<span class="nc" id="L30">    }</span>
 
     /**
      * Retrieves a copy of the list of budgets.
@@ -33,18 +35,19 @@ public class Budgets {
      * @return A copy of the list of budgets.
      */
     public ArrayList&lt;Calculation&gt; retrieveBudgets() {
-<span class="nc" id="L36">        return new ArrayList&lt;&gt;(this.budgetsList);</span>
+<span class="nc" id="L38">        return new ArrayList&lt;&gt;(this.budgetsList);</span>
     }
     /**
      * Adds a Calculation to the list of budgets if it's not already present.
      *
      * @param calc The Calculation to add.
      */
-    public void addBudget(final Calculation calc) {
-<span class="nc bnc" id="L44" title="All 2 branches missed.">        if (!retrieveBudgets().contains(calc)) {</span>
-<span class="nc" id="L45">            this.budgetsList.add(calc);</span>
+    public void addBudget(ArrayList&lt;Calculation&gt; calc) {
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (!retrieveBudgets().containsAll(calc)) {</span>
+<span class="nc" id="L47">            this.budgetsList.addAll(calc);</span>
         }
-<span class="nc" id="L47">    }</span>
+<span class="nc" id="L49">    }</span>
+
 
 
 }

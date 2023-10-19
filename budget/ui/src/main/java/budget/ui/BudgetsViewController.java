@@ -6,7 +6,9 @@ import budget.core.Category;
 import budget.utility.FileUtility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 
@@ -17,8 +19,14 @@ public class BudgetsViewController {
     @FXML
     private ListView<String> budgetsList;
 
+
     @FXML
-    private Text budgetTitle;
+    private Button returnMenuBtn;
+
+    private static BudgetsViewController instance;
+    public static BudgetsViewController getInstance() {
+        return instance;
+    }
 
 
 
@@ -27,28 +35,23 @@ public class BudgetsViewController {
     private StartMenuController menuController = new StartMenuController();
     @FXML
     public void initialize() {
-        Calculation calc1 = new Calculation();
+        instance = this;
         menuController = StartMenuController.getInstance();
+
         try {
             if (FileUtility.getLoad()) {
-                FileUtility.readFromFile(calc1);
-                String name = menuController.getCalcName();
-                calc1.setName(name);
-                budgets = new Budgets(calc1);
-
+                budgets = FileUtility.readFromFile();
             }
-
         } catch (IOException e) {
             e.getStackTrace();
         }
-
-
 
         ObservableList<String> listOfBudgets = FXCollections.observableArrayList();
 
         if (budgets != null) {
             for (Calculation calc : budgets.retrieveBudgets()) {
-//                listOfBudgets.add("Name :" + calc.getName());
+                String budgetName = calc.getName(); // Get the name of the current budget
+                listOfBudgets.add("Name: " + budgetName);
                 for (Category category : calc.getCategoriesList()) {
                     listOfBudgets.add("Category: " + category.getCategoryName());
                     listOfBudgets.add("Total Amount: " + calc.getSum(category));
@@ -66,6 +69,11 @@ public class BudgetsViewController {
 
         budgetsList.setItems(listOfBudgets);
 
+    }
+
+    @FXML
+    private void loadMainMenu(ActionEvent event) throws Exception {
+        ChangeScene.changeToScene(getClass(), event, "startmenu-fxml.fxml");
     }
 
 
