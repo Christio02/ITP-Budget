@@ -28,8 +28,7 @@ public class Budgets {
         if (!calculations.isEmpty()) {
             addBudget(calculations);
         } else {
-            throw new
-                    IllegalArgumentException("Cannot add non-existent object!");
+            addBudget(new ArrayList<>());
         }
     }
 

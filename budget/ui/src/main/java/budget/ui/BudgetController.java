@@ -73,15 +73,10 @@ public class BudgetController {
 
     @FXML
     public void initialize() {
-        ArrayList<Calculation> calculations = new ArrayList<>();
         instance = this;
-        budgets = StartMenuController.getInstance().getBudget();
-        calculations.add(calc);
-        budgets.addBudget(calculations);
-
         if (FileUtility.getLoad())   {
             try {
-                budgets = FileUtility.readFromFile();
+                this.budgets = FileUtility.readFromFile();
                 totalSum.setText(Integer.toString(calc.getTotalSum())); // kan feile
             } catch (IOException e) {
                 e.printStackTrace();

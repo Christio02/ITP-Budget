@@ -46,7 +46,7 @@ public final class FileUtility {
      */
     public static void writeToFile(final Budgets budget) throws IOException {
           ArrayList<Calculation> calculationList = budget.retrieveBudgets();
-          File file = new File(testFilePath);
+          File file = new File(FILE_PATH);
 
           ArrayList<Calculation> existingCalculations;
 
@@ -79,29 +79,20 @@ public final class FileUtility {
      *
      * @throws IOException If an input or output exception occurred
      */
-    public static Budgets readFromFile() throws IOException {
-        File file = new File(FILE_PATH);
+      public static Budgets readFromFile() throws IOException {
+          File file = new File(FILE_PATH);
 
-        if (file.exists() && file.length() > 0) {
-            ArrayList<Calculation> calculations = Json.getMapper().readValue(file,
-                    Json.getMapper().getTypeFactory()
-                            .constructCollectionType(ArrayList.class, Calculation.class));
-            if (calculations != null) {
-                return new Budgets(new ArrayList<>(calculations));
-            } else {
-                return new Budgets(new ArrayList<>()); // Return an empty list if calculations is null
-            }
-        } else {
-            return new Budgets(null);
-        }
 
-    }
+          if (file.exists() && file.length() > 0) {
+              ArrayList<Calculation> calculations = Json.getMapper().readValue(file,
+                      Json.getMapper().getTypeFactory()
+                              .constructCollectionType(ArrayList.class, Calculation.class));
 
-    /**
-     * Gets the load status.
-     *
-     * @return The load status
-     */
+              return new Budgets(calculations);
+          } else {
+              return new Budgets(new ArrayList<>());
+          }
+      }
     public static boolean getLoad() {
         return load;
     }
@@ -126,6 +117,8 @@ public final class FileUtility {
         }
         try {
             Budgets budget1 = FileUtility.readFromFile();
+
+
         }catch (IOException e) {
             e.printStackTrace();
         }
