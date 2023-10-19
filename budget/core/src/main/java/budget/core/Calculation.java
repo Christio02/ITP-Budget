@@ -1,5 +1,8 @@
 package budget.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 
 /**
@@ -15,11 +18,13 @@ public class Calculation {
     /**
      * Name/id of object
      */
-    public String name;
+    @JsonProperty("name")
+    private String name;
     /**
      * Creates a new Calculation object.
      */
-    public Calculation(String name) {
+    @JsonCreator
+    public Calculation(@JsonProperty("calculationName") String name) {
         setName(name);
         this.categoriesList.add(new Category("Food"));
         this.categoriesList.add(new Category("Transportation"));
@@ -28,10 +33,6 @@ public class Calculation {
         this.categoriesList.add(new Category("Other"));
 
     }
-
-//    public Calculation() {
-//        this("Default name");
-//    }
 
     public Calculation() {
         this.categoriesList.add(new Category("Food"));
@@ -112,7 +113,7 @@ public class Calculation {
         return categoriesList;
     }
 
-    public void setName(String name) {
+    public void setName(@JsonProperty("calculationName") String name) {
         this.name = name;
     }
 
