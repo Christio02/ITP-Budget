@@ -19,12 +19,12 @@ import java.util.ArrayList;
 public class BudgetController {
 
     // Static field to hold the instance
-    private static BudgetController instance;
-
-    // Method to get the instance
-    public static BudgetController getInstance() {
-        return instance;
-    }
+//    private static BudgetController instance;
+//
+//    // Method to get the instance
+//    public static BudgetController getInstance() {
+//        return instance;
+//    }
 
 
     @FXML
@@ -67,12 +67,14 @@ public class BudgetController {
     private final ObservableList<Category> categoryList = FXCollections.observableArrayList();
     private Calculation calc = new Calculation();
 
+    private FileUtility fileutility;
+
     private Budgets budgets;
     @FXML
     public void initialize() {
         ArrayList<Calculation> calculationArrayList = new ArrayList<>();
         calculationArrayList.add(calc);
-        instance = this;
+//        instance = this;
         budgetTitle.setText(StartMenuController.getInstance().getCalcName());
         budgets = new Budgets(calculationArrayList);
 
@@ -136,7 +138,7 @@ public class BudgetController {
     @FXML
     public void saveBudget() {
         try {
-            FileUtility.writeFile(this.budgets);
+            fileutility.writeFile(this.budgets);
         } catch (Exception e) {
             e.printStackTrace();
         }

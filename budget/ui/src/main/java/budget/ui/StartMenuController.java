@@ -32,6 +32,7 @@ public class StartMenuController {
 
     private Calculation calc;
     private Budgets budget;
+    private FileUtility fileUtility;
 
     public Budgets getBudget() {
         return this.budget;
@@ -39,13 +40,14 @@ public class StartMenuController {
 
     @FXML
     public void initialize() {
+        fileUtility = new FileUtility();
         instance = this;
         calc = new Calculation();
         ArrayList<Calculation> list = new ArrayList<>();
         list.add(calc);
         budget = new Budgets(list);
 
-        budgetController = BudgetController.getInstance(); // gets current budgetController
+//        budgetController = BudgetController.getInstance(); // gets current budgetController
         dialog = new Dialog<>();
         dialog.setTitle("Set calculation name");
         dialog.setHeaderText("Please provide a unique name for budget");
@@ -79,7 +81,7 @@ public class StartMenuController {
 
     @FXML
     private void loadNewBudget(ActionEvent event) throws Exception {
-        FileUtility.setLoad(false);
+        fileUtility.setLoad(false);
         popUpOnLoadBudgets();
         ChangeScene.changeToScene(getClass(), event, "hello-view.fxml");
 
@@ -88,7 +90,7 @@ public class StartMenuController {
 
     @FXML
     private void loadPrevBudget(ActionEvent event) throws Exception {
-        FileUtility.setLoad(true);
+        fileUtility.setLoad(true);
         ChangeScene.changeToScene(getClass(), event, "budgets-view.fxml");
 
     }
