@@ -1,85 +1,89 @@
-package budget.utility;
+    package budget.utility;
 
-import budget.core.Calculation;
-import budget.core.Category;
+    import budget.core.Calculation;
+    import budget.core.Category;
+    import com.fasterxml.jackson.core.type.TypeReference;
 
-import java.io.File;
-import java.io.IOException;
-
-/**
- * This class is responsible for file operations.
- */
-public final class FileUtility {
+    import java.io.File;
+    import java.io.IOException;
+    import java.util.Map;
 
     /**
-     * Load status.
+     * This class is responsible for file operations.
      */
-    private static boolean load;
+    public final class FileUtility {
 
-    /**
-     * Current directory path.
-     */
-    private static final String CURRENT_DIR = System.getProperty("user.dir");
+        /**
+         * Load status.
+         */
+        private static boolean load;
 
-    /**
-     * File path for serialization.
-     */
-    private static final String FILE_PATH = CURRENT_DIR
-            + "/../utility/src/main/resources/budget/utility/savedBudget.json";
+        /**
+         * Current directory path.
+         */
+        private static final String CURRENT_DIR = System.getProperty("user.dir");
 
-    /**
-     * Private constructor to hide the implicit public one.
-     */
-    private FileUtility() {
-        throw new IllegalStateException("Utility class");
-    }
+        /**
+         * File path for serialization.
+         */
+        private static final String FILE_PATH = CURRENT_DIR
+                + "/../utility/src/main/resources/budget/utility/savedBudget.json";
 
-    /**
-     * Writes the Calculation object to a file.
-     *
-     * @param calc The Calculation object to save
-     * @throws IOException If an input or output exception occurred
-     */
-    public static void writeToFile(final Calculation calc) throws IOException {
-        String name = calc.getName();
-        Json.getMapper().
-                writerWithDefaultPrettyPrinter().
-                writeValue(new File(FILE_PATH), name + calc);
-    }
+        /**
+         * Private constructor to hide the implicit public one.
+         */
+        private FileUtility() {
+            throw new IllegalStateException("Utility class");
+        }
 
-    /**
-     * Sets the load status.
-     *
-     * @param loadStatus The new load status
-     */
-    public static void setLoad(final boolean loadStatus) {
-        load = loadStatus;
-    }
+        /**
+         * Writes the Calculation object to a file.
+         *
+         * @param calculationMap The map of calculation object to save
+         * @throws IOException If an input or output exception occurred
+         */
+        public static void writeToFile(Map<String, Calculation> calculationMap) throws IOException {
+            File file = new File(FILE_PATH);
+            Json.getMapper()
+                    .writerWithDefaultPrettyPrinter().writeValue(file, calculationMap);
 
-    /**
-     * Reads the Calculation object from a file.
-     *
-     * @param calc The Calculation object to load
-     * @throws IOException If an input or output exception occurred
-     */
-    public static void readFromFile(final Calculation calc) throws IOException {
-        Calculation loadCalc = Json.
-                getMapper().
-                readValue(new File(FILE_PATH), Calculation.class);
+        }
 
-        calc.getCategoriesList().clear();
+        /**
+         * Sets the load status.
+         *
+         * @param loadStatus The new load status
+         */
+        public static void setLoad(final boolean loadStatus) {
+            load = loadStatus;
+        }
 
-        for (Category cat : loadCalc.getCategoriesList()) {
-            calc.getCategoriesList().add(cat);
+        /**
+         * Reads the Calculation object from a file.
+         *
+         * @param calculationMap The map of calculations to update
+         * @throws IOException If an input or output exception occurred
+         */
+        public static void readFromFile(Map<String, Calculation> calculationMap) throws IOException {
+         Map<String, Calculation> mapFromFile = Json.
+                    getMapper().
+                 readValue(new File(FILE_PATH), new TypeReference<Map<String, Calculation>>() {});
+
+            calculationMap.clear();
+
+            for (Map.Entry<String, Calculation> entry : mapFromFile.entrySet()) {
+                String name = entry.getKey();
+                Calculation calcObject = entry.getValue();
+                calculationMap.put(name, calcObject);
+            }
+        }
+
+        /**
+         * Gets the load status.
+         *
+         * @return The load status
+         */
+        public static boolean getLoad() {
+            return load;
         }
     }
-
-    /**
-     * Gets the load status.
-     *
-     * @return The load status
-     */
-    public static boolean getLoad() {
-        return load;
-    }
-}
