@@ -1,5 +1,4 @@
 package budget.ui;
-import budget.core.Budgets;
 import budget.core.Calculation;
 import budget.core.Category;
 import javafx.collections.FXCollections;
@@ -14,6 +13,8 @@ import javafx.scene.image.ImageView;
 import budget.utility.FileUtility;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BudgetController {
 
@@ -62,26 +63,28 @@ public class BudgetController {
     @FXML
     private Text budgetTitle;
 
-
+    private Map<String, Calculation> calculations = new HashMap<>();
     private final ObservableList<Category> categoryList = FXCollections.observableArrayList();
     private Calculation calc;
-    private Budgets budgets;
-
-
 
     @FXML
     public void initialize() {
         instance = this;
         calc = new Calculation();
-        budgets = new Budgets(calc);
+//        calculations = new HashMap<>();
+        addCalculation(calc);
         if (FileUtility.getLoad())   {
             try {
-                FileUtility.readFromFile(this.calc);
+                FileUtility.readFromFile(this.calculations);
                 totalSum.setText(Integer.toString(calc.getTotalSum()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
+        addCalculation(this.calc);
+
+        calc.setName(StartMenuController.getInstance().getCalcName());
 
         budgetTitle.setText(StartMenuController.getInstance().getCalcName());
 
@@ -120,6 +123,10 @@ public class BudgetController {
         ChangeScene.changeToScene(getClass(), event, "startmenu-fxml.fxml");
     }
 
+    public void addCalculation(Calculation calc) {
+        this.calculations.put(this.calc.getName(), calc);
+    }
+
 
     @FXML
     public void addAmount() {
@@ -137,6 +144,7 @@ public class BudgetController {
         }
 
         totalSum.setText(Integer.toString(calc.getTotalSum()));
+        addCalculation(calc);
 
     }
 
@@ -144,7 +152,7 @@ public class BudgetController {
     public void saveBudget() {
 
         try {
-            FileUtility.writeToFile(calc);
+            FileUtility.writeToFile(this.calculations);
         } catch (Exception e) {
             e.printStackTrace();
         }

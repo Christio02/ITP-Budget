@@ -27,7 +27,7 @@ public class StartMenuController {
     public String getCalcName(){
         return this.calcName;
     }
-    private Calculation test = new Calculation();
+    private Calculation calc = new Calculation();
 
     @FXML
     public void initialize() {
@@ -61,9 +61,7 @@ public class StartMenuController {
 
         // Further processing
         result.ifPresent(s -> this.calcName = s);
-        System.out.println(this.getCalcName());
-        this.test.setName(this.getCalcName());
-        System.out.println(this.test.getName());
+        this.calc.setName(this.getCalcName());
 
     }
 
@@ -81,14 +79,8 @@ public class StartMenuController {
     @FXML
     private void loadPrevBudget(ActionEvent event) throws Exception {
         FileUtility.setLoad(true);
-        ChangeScene.changeToScene(getClass(), event, "hello-view.fxml");
-
-    }
-
-    @FXML
-    private void loadSavedBudgets(ActionEvent event) throws Exception {
-        FileUtility.setLoad(true);
         ChangeScene.changeToScene(getClass(), event, "budgets-view.fxml");
+
     }
 }
 

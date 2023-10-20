@@ -23,10 +23,5 @@
             <Image url="@../images/logo.jpg" />
          </image>
       </ImageView>
-      <Button layoutX="239.0" layoutY="295.0" mnemonicParsing="false" onAction="#loadSavedBudgets" prefHeight="48.0" text="Load saved budgets">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>
