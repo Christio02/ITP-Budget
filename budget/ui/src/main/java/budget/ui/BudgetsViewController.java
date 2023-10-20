@@ -33,14 +33,15 @@ public class BudgetsViewController {
     private Budgets budgets;
 
     private StartMenuController menuController = new StartMenuController();
+    private FileUtility fileUtility;
     @FXML
     public void initialize() {
         instance = this;
         menuController = StartMenuController.getInstance();
 
         try {
-            if (FileUtility.getLoad()) {
-                budgets = FileUtility.readFile();
+            if (fileUtility.getLoad()) {
+                budgets = fileUtility.readFile();
                 System.out.println(budgets.retrieveBudgets());
             }
         } catch (IOException e) {

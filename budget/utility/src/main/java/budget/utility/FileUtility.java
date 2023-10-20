@@ -14,7 +14,7 @@ public class FileUtility {
     /**
      * Load status.
      */
-    private static boolean load;
+    private boolean load;
 
     /**
      * Current directory path.
@@ -31,8 +31,8 @@ public class FileUtility {
     /**
      * Private constructor to hide the implicit public one.
      */
-    private FileUtility() {
-        throw new IllegalStateException("Utility class");
+    public  FileUtility() {
+//        throw new IllegalArgumentException("Should not acceess this");
     }
 
     /**
@@ -41,7 +41,7 @@ public class FileUtility {
     //   * @param budget The Calculation object to save
      * @throws IOException If an input or output exception occurred
      */
-    public static void writeFile(Budgets budgets) throws IOException {
+    public void writeFile(Budgets budgets) throws IOException {
         ArrayList<Calculation> calculationList = budgets.retrieveBudgets();
         File file = new File(FILE_PATH);
 
@@ -65,15 +65,15 @@ public class FileUtility {
      *
      * @param loadStatus The new load status
      */
-    public static void setLoad(final boolean loadStatus) {
-        load = loadStatus;
+    public  void setLoad(boolean loadStatus) {
+        this.load = loadStatus;
     }
 
     /**
      * Reads the Calculation object from a file.
      * @throws IOException If an input or output exception occurred
      */
-      public static Budgets readFile() throws IOException {
+      public Budgets readFile() throws IOException {
           File file = new File(FILE_PATH);
           if (file.exists() && file.length() > 0) {
               ArrayList<Calculation> calculations = Json.getMapper().readValue(file,
@@ -85,7 +85,7 @@ public class FileUtility {
               return new Budgets(new ArrayList<>());
           }
       }
-    public static boolean getLoad() {
-        return load;
+    public boolean getLoad() {
+        return this.load;
     }
 }
