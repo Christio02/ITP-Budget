@@ -13,12 +13,13 @@
             <Font size="37.0" />
          </font>
       </Text>
-      <ListView fx:id="budgetsList" layoutX="56.0" layoutY="155.0" prefHeight="200.0" prefWidth="489.0" />
+      <ListView fx:id="nameCalc" layoutX="11.0" layoutY="155.0" prefHeight="200.0" prefWidth="129.0" />
       <Text fx:id="budgetTitle" layoutX="288.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
+      <ListView fx:id="calcObject" layoutX="151.0" layoutY="155.0" prefHeight="200.0" prefWidth="448.0" />
       <Button fx:id="returnMenuBtn" layoutX="16.0" layoutY="16.0" mnemonicParsing="false" onAction="#loadMainMenu" prefHeight="39.0" prefWidth="46.0" text="←">
          <font>
             <Font size="18.0" />
