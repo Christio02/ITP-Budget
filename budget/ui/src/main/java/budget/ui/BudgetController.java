@@ -71,18 +71,8 @@ public class BudgetController {
     public void initialize() {
         instance = this;
         calc = new Calculation();
-//        calculations = new HashMap<>();
-        addCalculation(calc);
-        if (FileUtility.getLoad())   {
-            try {
-                FileUtility.readFromFile(this.calculations);
-                totalSum.setText(Integer.toString(calc.getTotalSum()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
-        addCalculation(this.calc);
+        addCalculation(calc);
 
         calc.setName(StartMenuController.getInstance().getCalcName());
 
@@ -127,6 +117,9 @@ public class BudgetController {
         this.calculations.put(this.calc.getName(), calc);
     }
 
+    public Map<String, Calculation> getCalculations() {
+        return new HashMap<>(this.calculations);
+    }
 
     @FXML
     public void addAmount() {
@@ -144,15 +137,15 @@ public class BudgetController {
         }
 
         totalSum.setText(Integer.toString(calc.getTotalSum()));
-        addCalculation(calc);
+        addCalculation(this.calc);
 
     }
 
     @FXML
     public void saveBudget() {
-
+        addCalculation(this.calc);
         try {
-            FileUtility.writeToFile(this.calculations);
+            FileUtility.writeToFile(calculations);
         } catch (Exception e) {
             e.printStackTrace();
         }

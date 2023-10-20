@@ -46,7 +46,6 @@
             File file = new File(FILE_PATH);
             Json.getMapper()
                     .writerWithDefaultPrettyPrinter().writeValue(file, calculationMap);
-
         }
 
         /**
