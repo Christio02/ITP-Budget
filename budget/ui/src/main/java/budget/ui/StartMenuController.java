@@ -1,12 +1,10 @@
 package budget.ui;
-import budget.core.Budgets;
 import budget.core.Calculation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import budget.utility.FileUtility;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -14,40 +12,28 @@ import java.util.Optional;
 public class StartMenuController {
     private Dialog<String> dialog;
 
-    private String calcName;
-    public String getCalcName() {
-        return this.calcName;
-    }
-
-
     private static StartMenuController instance;
     public static StartMenuController getInstance() {
         return instance;
     }
+
+    private String calcName;
 
     @FXML
     private Button loadBudgetBtn;
 
     BudgetController budgetController = new BudgetController();
 
-    private Calculation calc;
-    private Budgets budget;
-    private FileUtility fileUtility;
-
-    public Budgets getBudget() {
-        return this.budget;
+    public String getCalcName(){
+        return this.calcName;
     }
+    private Calculation calc = new Calculation();
 
     @FXML
     public void initialize() {
-        fileUtility = new FileUtility();
         instance = this;
-        calc = new Calculation();
-        ArrayList<Calculation> list = new ArrayList<>();
-        list.add(calc);
-        budget = new Budgets(list);
 
-//        budgetController = BudgetController.getInstance(); // gets current budgetController
+        budgetController = BudgetController.getInstance(); // gets current budgetController
         dialog = new Dialog<>();
         dialog.setTitle("Set calculation name");
         dialog.setHeaderText("Please provide a unique name for budget");
@@ -75,13 +61,15 @@ public class StartMenuController {
 
         // Further processing
         result.ifPresent(s -> this.calcName = s);
+        this.calc.setName(this.getCalcName());
+
     }
 
 
 
     @FXML
     private void loadNewBudget(ActionEvent event) throws Exception {
-        fileUtility.setLoad(false);
+        FileUtility.setLoad(false);
         popUpOnLoadBudgets();
         ChangeScene.changeToScene(getClass(), event, "hello-view.fxml");
 
@@ -90,7 +78,7 @@ public class StartMenuController {
 
     @FXML
     private void loadPrevBudget(ActionEvent event) throws Exception {
-        fileUtility.setLoad(true);
+        FileUtility.setLoad(true);
         ChangeScene.changeToScene(getClass(), event, "budgets-view.fxml");
 
     }
