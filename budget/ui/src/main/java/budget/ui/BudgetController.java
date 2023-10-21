@@ -19,12 +19,12 @@ import java.util.Map;
 public class BudgetController {
 
     // Static field to hold the instance
-    private static BudgetController instance;
-
-    // Method to get the instance
-    public static BudgetController getInstance() {
-        return instance;
-    }
+//    private static BudgetController instance;
+//
+//    // Method to get the instance
+//    public static BudgetController getInstance() {
+//        return instance;
+//    }
 
 
     @FXML
@@ -63,40 +63,40 @@ public class BudgetController {
     @FXML
     private Text budgetTitle;
 
-    private String name;
-
     private Map<String, Calculation> calculations = new HashMap<>();
     private final ObservableList<Category> categoryList = FXCollections.observableArrayList();
     private Calculation calc;
 
+    DataSingleton data = DataSingleton.getInstance();
+
     @FXML
     public void initialize() {
-        instance = this;
-        calc = new Calculation();
-
+        calc = data.getCalculation();
         addCalculation(calc);
-        name = StartMenuController.getInstance().getCalcName();
-        budgetTitle.setText(name);
+        setupUI();
+    }
 
+    private void setupUI() {
+        // Set up the category selection ComboBox
         ObservableList<String> categoryOptions = FXCollections.observableArrayList(
                 "Food", "Entertainment", "Transportation", "Clothing", "Other"
         );
         selector.setItems(categoryOptions);
 
+        // Set up the table columns
         category.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
         amountUsed.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
-        categoryList.addAll(calc.getCategoriesList()); // add all categories to the list
-        table.setItems(categoryList); // set the table to display the list
+        // Add categories to the list and set the table
+        categoryList.addAll(calc.getCategoriesList());
+        table.setItems(categoryList);
 
-
-        // Set the divider position to 40% of the screen and make it non-resizable
+        // Set the divider position for the SplitPane
         splitPane.getDividers().get(0).positionProperty().addListener((observable, oldValue, newValue) -> {
             splitPane.setDividerPosition(0, 0.4);
         });
 
-
-        // Set the save button to change image when hovered over
+        // Set hover effects for the save button
         saveBtn.setOnMouseEntered(event -> {
             Image hoverImage = new Image(getClass().getResource("/budget/images/saveIconHover.png").toString());
             saveIcon.setImage(hoverImage);
@@ -106,12 +106,18 @@ public class BudgetController {
             Image normalImage = new Image(getClass().getResource("/budget/images/saveIcon.png").toString());
             saveIcon.setImage(normalImage);
         });
+        budgetTitle.setText(data.getCalcName());
+        totalSum.setText(Integer.toString(calc.getTotalSum()));
     }
 
     @FXML
     private void loadMainMenu(ActionEvent event) throws Exception {
         ChangeScene.changeToScene(getClass(), event, "startmenu-fxml.fxml");
     }
+
+    public void receiveSelectedCalculation(Calculation receivedCalculation) {
+        addCalculation(receivedCalculation);
+    };
 
     public void addCalculation(Calculation calc) {
         String name = this.budgetTitle.getText();

@@ -12,6 +12,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class BudgetsViewController {
@@ -29,13 +30,14 @@ public class BudgetsViewController {
 
     private Map<String, Calculation> calculationMap;
 
-    private StartMenuController menuController = new StartMenuController();
+    private DataSingleton data = DataSingleton.getInstance();
+
     @FXML
     public void initialize() {
-        Calculation calc1 = new Calculation();
-        menuController = StartMenuController.getInstance();
-        name = menuController.getCalcName();
-        calculationMap = BudgetController.getInstance().getCalculations();
+        Calculation calc1 = data.getCalculation();
+        calculationMap = new HashMap<>();
+        calculationMap.put(data.getCalcName(), calc1);
+
         try {
             if (FileUtility.getLoad()) {
                 FileUtility.readFile(calculationMap);
@@ -90,16 +92,18 @@ public class BudgetsViewController {
             if (event.getClickCount() == 2) {
                 String selectedCalcName = nameCalc.getSelectionModel().getSelectedItem();
                 if (selectedCalcName != null) {
-                    loadSelectedBudgetScene(ActionEvent event);
+                    Calculation selectedCalc = calculationMap.get(selectedCalcName);
+                    if (selectedCalc != null) {
+                        try {
+                            ChangeScene.changeToScene(getClass(), event, "budget-view.fxml");
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                 }
             }
         });
 
-    }
-
-    @FXML
-    private void loadSelectedBudgetScene(ActionEvent event) throws Exception {
-        ChangeScene.changeToScene(getClass(), event, "budget-view.fxml");
     }
 
     @FXML
