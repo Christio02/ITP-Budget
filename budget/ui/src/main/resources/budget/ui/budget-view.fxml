@@ -46,7 +46,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-            <Text fx:id="budgetTitle" layoutX="276.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+            <Text fx:id="budgetTitle" fill="WHITE" layoutX="276.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
                <font>
                   <Font size="24.0" />
                </font>

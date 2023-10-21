@@ -61,7 +61,6 @@ public class StartMenuController {
 
         // Further processing
         result.ifPresent(s -> this.calcName = s);
-        this.calc.setName(this.getCalcName());
 
     }
 
@@ -71,7 +70,7 @@ public class StartMenuController {
     private void loadNewBudget(ActionEvent event) throws Exception {
         FileUtility.setLoad(false);
         popUpOnLoadBudgets();
-        ChangeScene.changeToScene(getClass(), event, "hello-view.fxml");
+        ChangeScene.changeToScene(getClass(), event, "budget-view.fxml");
 
 
     }
@@ -79,7 +78,7 @@ public class StartMenuController {
     @FXML
     private void loadPrevBudget(ActionEvent event) throws Exception {
         FileUtility.setLoad(true);
-        ChangeScene.changeToScene(getClass(), event, "budgets-view.fxml");
+        ChangeScene.changeToScene(getClass(), event, "load-budgets.fxml");
 
     }
 }

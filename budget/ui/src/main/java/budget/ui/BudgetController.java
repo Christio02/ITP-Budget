@@ -10,7 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
-import budget.utility.FileUtility;
+import budget.utility.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -63,6 +63,8 @@ public class BudgetController {
     @FXML
     private Text budgetTitle;
 
+    private String name;
+
     private Map<String, Calculation> calculations = new HashMap<>();
     private final ObservableList<Category> categoryList = FXCollections.observableArrayList();
     private Calculation calc;
@@ -73,10 +75,8 @@ public class BudgetController {
         calc = new Calculation();
 
         addCalculation(calc);
-
-        calc.setName(StartMenuController.getInstance().getCalcName());
-
-        budgetTitle.setText(StartMenuController.getInstance().getCalcName());
+        name = StartMenuController.getInstance().getCalcName();
+        budgetTitle.setText(name);
 
         ObservableList<String> categoryOptions = FXCollections.observableArrayList(
                 "Food", "Entertainment", "Transportation", "Clothing", "Other"
@@ -114,7 +114,8 @@ public class BudgetController {
     }
 
     public void addCalculation(Calculation calc) {
-        this.calculations.put(this.calc.getName(), calc);
+        String name = this.budgetTitle.getText();
+        this.calculations.put(name, calc);
     }
 
     public Map<String, Calculation> getCalculations() {
@@ -141,11 +142,13 @@ public class BudgetController {
 
     }
 
+
+
     @FXML
     public void saveBudget() {
         addCalculation(this.calc);
         try {
-            FileUtility.writeToFile(calculations);
+            FileUtility.writeToFile(getCalculations());
         } catch (Exception e) {
             e.printStackTrace();
         }
