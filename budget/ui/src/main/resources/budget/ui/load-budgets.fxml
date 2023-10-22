@@ -25,5 +25,16 @@
             <Font size="18.0" />
          </font>
       </Button>
+      <Text layoutX="48.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Navn">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="328.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Budsjett" wrappingWidth="94.28515625">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Button layoutX="480.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#deleteBudget" prefHeight="32.0" prefWidth="94.0" text="Slett budsjett" />
    </children>
 </AnchorPane>
