@@ -7,6 +7,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
@@ -14,6 +16,7 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class BudgetsViewController {
 
@@ -23,31 +26,30 @@ public class BudgetsViewController {
     @FXML
     private ListView<Calculation> calcObject;
 
-    @FXML
-    private Text budgetTitle;
-
     private String name;
 
     private Map<String, Calculation> calculationMap;
 
-    private DataSingleton data = DataSingleton.getInstance();
+    private final DataSingleton data = DataSingleton.getInstance();
+
+    private String selectedName;
 
     @FXML
     public void initialize() {
-        Calculation calc1 = data.getCalculation();
+        System.out.println(data.getCalculations());
         calculationMap = new HashMap<>();
-        calculationMap.put(data.getCalcName(), calc1);
 
-        try {
-            if (FileUtility.getLoad()) {
-                FileUtility.readFile(calculationMap);
-                budgetTitle.setText(name);
-            }
+        calculationMap = data.getCalculations();
 
-        } catch (IOException e) {
-            e.getStackTrace();
-        }
 
+//        try {
+//            if (FileUtility.getLoad()) {
+//                FileUtility.readFile(calculationMap);
+//
+//            }
+//        } catch (IOException e) {
+//            e.getStackTrace();
+//        }
 
         ObservableList<String> listOfCalcNames = FXCollections.observableArrayList();
         ObservableList<Calculation> listOfCalcObjects = FXCollections.observableArrayList();
@@ -62,6 +64,48 @@ public class BudgetsViewController {
 
        nameCalc.setItems(listOfCalcNames); calcObject.setItems(listOfCalcObjects);
 
+
+
+        handleDoubleClickObject();
+        updateView();
+        observerSelectedName();
+
+    }
+
+    private void observerSelectedName() {
+        nameCalc.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                selectedName = newValue;
+                Calculation selectedCalc = calculationMap.get(selectedName);
+                calcObject.getSelectionModel().select(selectedCalc);
+                calcObject.scrollTo(selectedCalc);
+            }
+        });
+    }
+
+    private void handleDoubleClickObject() {
+        nameCalc.setOnMouseClicked(event ->
+        {
+            if (event.getClickCount() == 2) {
+                String selectedCalcName = nameCalc.getSelectionModel().getSelectedItem();
+
+                if (selectedCalcName != null) {
+                    Calculation selectedCalc = data.getCalculations().get(selectedCalcName);
+                    if (selectedCalc != null) {
+                        data.setCalculation(selectedCalc);
+                        data.setCalcName(selectedCalcName);
+                        try {
+                            ChangeScene.changeToScene(getClass(), event, "budget-view.fxml");
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    private void updateView() {
         calcObject.setCellFactory(param -> new ListCell<Calculation>() {
             @Override
             protected void updateItem(Calculation item, boolean empty) {
@@ -87,29 +131,52 @@ public class BudgetsViewController {
             }
         });
 
-        nameCalc.setOnMouseClicked(event ->
-        {
-            if (event.getClickCount() == 2) {
-                String selectedCalcName = nameCalc.getSelectionModel().getSelectedItem();
-                if (selectedCalcName != null) {
-                    Calculation selectedCalc = calculationMap.get(selectedCalcName);
-                    if (selectedCalc != null) {
-                        try {
-                            ChangeScene.changeToScene(getClass(), event, "budget-view.fxml");
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                }
-            }
-        });
-
     }
 
     @FXML
     private void loadMainMenu(ActionEvent event) throws Exception {
         ChangeScene.changeToScene(getClass(), event, "startmenu-fxml.fxml");
 
+    }
+
+    @FXML
+    public void deleteBudget() {
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+
+        confirmationAlert.setHeaderText("Are you sure you want to delete budget?");
+        confirmationAlert.setContentText("Deleting budget, means you'll never be able to retrieve it!");
+
+        ButtonType confirm = new ButtonType("Confirm");
+        ButtonType cancel = new ButtonType("Cancel");
+
+        confirmationAlert.getButtonTypes().setAll(confirm, cancel);
+
+        Optional<ButtonType> result =confirmationAlert.showAndWait();
+
+        int selectedIndex = nameCalc.getSelectionModel().getSelectedIndex();
+
+        if (selectedIndex >= 0 && result.isPresent() && result.get().equals(confirm)) {
+            String selectedCalcName = nameCalc.getItems().get(selectedIndex);
+
+            // Check if the selected item is also in calcObject
+            Calculation selectedCalc = calcObject.getItems().get(selectedIndex);
+
+            if (selectedCalc != null) {
+                // Remove the selected item from the calculationMap
+                calculationMap.remove(selectedCalcName);
+
+                // Remove the selected items from the ListViews
+                nameCalc.getItems().remove(selectedIndex);
+                calcObject.getItems().remove(selectedIndex);
+                data.updateMap(calculationMap);
+
+                // Set the selection back to the first item
+                if (!nameCalc.getItems().isEmpty()) {
+                    nameCalc.getSelectionModel().selectFirst();
+                }
+
+            }
+        }
     }
 
 

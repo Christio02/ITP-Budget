@@ -63,16 +63,14 @@ public class BudgetController {
     @FXML
     private Text budgetTitle;
 
-    private Map<String, Calculation> calculations = new HashMap<>();
     private final ObservableList<Category> categoryList = FXCollections.observableArrayList();
     private Calculation calc;
 
-    DataSingleton data = DataSingleton.getInstance();
+    private final DataSingleton data = DataSingleton.getInstance();
 
     @FXML
     public void initialize() {
         calc = data.getCalculation();
-        addCalculation(calc);
         setupUI();
     }
 
@@ -121,11 +119,11 @@ public class BudgetController {
 
     public void addCalculation(Calculation calc) {
         String name = this.budgetTitle.getText();
-        this.calculations.put(name, calc);
+        data.addCalculation(name, calc);
     }
 
     public Map<String, Calculation> getCalculations() {
-        return new HashMap<>(this.calculations);
+        return data.getCalculations();
     }
 
     @FXML
@@ -144,7 +142,6 @@ public class BudgetController {
         }
 
         totalSum.setText(Integer.toString(calc.getTotalSum()));
-        addCalculation(this.calc);
 
     }
 
