@@ -42,22 +42,23 @@ public final class FileUtility {
      */
     public static void writeToFile(final Map<String, Calculation> calcMap) throws IOException {
         File file = new File(FILE_PATH);
-        Map<String, Calculation> existingDataMap;
-
-        // Read the existing data from the file, if it exists
-        if (file.exists()) {
-            existingDataMap = Json.getMapper().readValue(file, Json.getMapper()
-                    .getTypeFactory().constructMapType(HashMap.class, String.class, Calculation.class));
+        // Check if calcMap is empty
+        if (calcMap.isEmpty()) {
+            // If it's empty, create an empty JSON object and write it to the file
+            Json.getMapper().writeValue(file, new HashMap<>());
         } else {
-            existingDataMap = new HashMap<>();
+            Map<String, Calculation> existingDataMap;
+            if (file.exists()) {
+                existingDataMap = Json.getMapper().readValue(file, Json.getMapper()
+                        .getTypeFactory().constructMapType(HashMap.class, String.class, Calculation.class));
+            } else {
+                existingDataMap = new HashMap<>();
+            }
+            existingDataMap.putAll(calcMap);
+
+            // Write the merged data back to the file
+            Json.getMapper().writerWithDefaultPrettyPrinter().writeValue(file, existingDataMap);
         }
-
-        // Merge the new data into the existing data
-        existingDataMap.putAll(calcMap);
-
-        // Write the merged data back to the file
-        Json.getMapper().writerWithDefaultPrettyPrinter().writeValue(file, existingDataMap);
-
     }
 
     /**
