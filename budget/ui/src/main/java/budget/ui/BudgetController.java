@@ -1,5 +1,4 @@
 package budget.ui;
-import budget.core.Budgets;
 import budget.core.Calculation;
 import budget.core.Category;
 import javafx.collections.FXCollections;
@@ -14,17 +13,18 @@ import javafx.scene.image.ImageView;
 import budget.utility.FileUtility;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BudgetController {
 
     // Static field to hold the instance
-//    private static BudgetController instance;
-//
-//    // Method to get the instance
-//    public static BudgetController getInstance() {
-//        return instance;
-//    }
+    private static BudgetController instance;
+
+    // Method to get the instance
+    public static BudgetController getInstance() {
+        return instance;
+    }
 
 
     @FXML
@@ -63,20 +63,30 @@ public class BudgetController {
     @FXML
     private Text budgetTitle;
 
-
+    private Map<String, Calculation> calculations = new HashMap<>();
     private final ObservableList<Category> categoryList = FXCollections.observableArrayList();
-    private Calculation calc = new Calculation();
+    private Calculation calc;
 
-    private FileUtility fileutility;
-
-    private Budgets budgets;
     @FXML
     public void initialize() {
-        ArrayList<Calculation> calculationArrayList = new ArrayList<>();
-        calculationArrayList.add(calc);
-//        instance = this;
+        instance = this;
+        calc = new Calculation();
+//        calculations = new HashMap<>();
+        addCalculation(calc);
+        if (FileUtility.getLoad())   {
+            try {
+                FileUtility.readFromFile(this.calculations);
+                totalSum.setText(Integer.toString(calc.getTotalSum()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        addCalculation(this.calc);
+
+        calc.setName(StartMenuController.getInstance().getCalcName());
+
         budgetTitle.setText(StartMenuController.getInstance().getCalcName());
-        budgets = new Budgets(calculationArrayList);
 
         ObservableList<String> categoryOptions = FXCollections.observableArrayList(
                 "Food", "Entertainment", "Transportation", "Clothing", "Other"
@@ -95,6 +105,7 @@ public class BudgetController {
             splitPane.setDividerPosition(0, 0.4);
         });
 
+
         // Set the save button to change image when hovered over
         saveBtn.setOnMouseEntered(event -> {
             Image hoverImage = new Image(getClass().getResource("/budget/images/saveIconHover.png").toString());
@@ -110,6 +121,10 @@ public class BudgetController {
     @FXML
     private void loadMainMenu(ActionEvent event) throws Exception {
         ChangeScene.changeToScene(getClass(), event, "startmenu-fxml.fxml");
+    }
+
+    public void addCalculation(Calculation calc) {
+        this.calculations.put(this.calc.getName(), calc);
     }
 
 
@@ -129,16 +144,15 @@ public class BudgetController {
         }
 
         totalSum.setText(Integer.toString(calc.getTotalSum()));
-        ArrayList<Calculation> testList = new ArrayList<>();
-        testList.add(calc);
-        this.budgets.addBudget(testList);
+        addCalculation(calc);
 
     }
 
     @FXML
     public void saveBudget() {
+
         try {
-            fileutility.writeFile(this.budgets);
+            FileUtility.writeToFile(this.calculations);
         } catch (Exception e) {
             e.printStackTrace();
         }
