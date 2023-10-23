@@ -1,18 +1,10 @@
 
 package budget.ui;
 import budget.core.Calculation;
-import budget.ui.BudgetApplication;
-import budget.utility.FileUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseButton;
-import javafx.stage.Stage;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testfx.api.FxToolkit;
-import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.control.TableViewMatchers;
 import org.testfx.matcher.control.TextMatchers;
 import org.testfx.util.WaitForAsyncUtils;
@@ -21,7 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeoutException;
 
 import static org.testfx.api.FxAssert.verifyThat;
 
