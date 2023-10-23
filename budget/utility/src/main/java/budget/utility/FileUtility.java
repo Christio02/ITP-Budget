@@ -24,7 +24,7 @@ public final class FileUtility {
     /**
      * File path for serialization.
      */
-    public static final String FILE_PATH = CURRENT_DIR
+    private static final String FILE_PATH = CURRENT_DIR
             + "/../utility/src/main/resources/budget/utility/savedBudget.json";
 
     /**

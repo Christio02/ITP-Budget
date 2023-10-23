@@ -42,21 +42,12 @@ public class BudgetsViewController {
         calculationMap = data.getCalculations();
 
 
-//        try {
-//            if (FileUtility.getLoad()) {
-//                FileUtility.readFile(calculationMap);
-//
-//            }
-//        } catch (IOException e) {
-//            e.getStackTrace();
-//        }
-
         ObservableList<String> listOfCalcNames = FXCollections.observableArrayList();
         ObservableList<Calculation> listOfCalcObjects = FXCollections.observableArrayList();
         for (Map.Entry<String, Calculation> entry: this.calculationMap.entrySet()) {
             String name = entry.getKey();
             Calculation calc = entry.getValue();
-            if (!name.equals("Text")) {
+            if (!name.equals("overwrite")) {
                 listOfCalcNames.add(name);
                 listOfCalcObjects.add(calc);
             }
