@@ -1,10 +1,14 @@
 package budget.ui;
 import budget.core.Calculation;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
 import budget.utility.FileUtility;
+import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.Alert;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,15 +17,30 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * Controller class for the start menu in the budget application.
+ */
 public class StartMenuController {
+
+    /**
+     * A dialog for entering a unique budget name.
+     */
     private Dialog<String> dialog;
 
+    /**
+     * Button for loading a budget.
+     */
     @FXML
     private Button loadBudgetBtn;
+    /**
+     * A singleton instance for managing data related to budget calculations.
+     */
     private DataSingleton data = DataSingleton.getInstance();
+    /**
+     * Initializes the controller, loading existing budget data if available.
+     */
     @FXML
-    public void initialize() {
+    public final void initialize() {
         System.out.println(data.getCalculations().toString());
 
         try {
@@ -53,16 +72,26 @@ public class StartMenuController {
         });
 
     }
-    public boolean popUpOnLoadBudgets(ActionEvent event) {
+    /**
+     * Displays a dialog for entering a unique budget name.
+     * @return True if the budget can be loaded, false otherwise.
+     */
+    public final boolean popUpOnLoadBudgets() {
         boolean shouldLoad = true;
         Optional<String> result = dialog.showAndWait();
         var ref = new Object() {
-            String thisKey = "";
+            private String thisKey = "";
+            public void setThisKey(final String key) {
+                this.thisKey = key;
+            }
+            public String getThisKey() {
+                return this.thisKey;
+            }
         };
-        result.ifPresent(s -> ref.thisKey = s);
+        result.ifPresent(ref::setThisKey);
         Pattern pattern = Pattern.compile("[^a-zA-Z0-9]*");
-        Matcher matcher = pattern.matcher(ref.thisKey);
-        if (ref.thisKey.isEmpty() || !matcher.find()) {
+        Matcher matcher = pattern.matcher(ref.getThisKey());
+        if (ref.getThisKey().isEmpty() || !matcher.find()) {
             shouldLoad = false;
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Wrong input!");
@@ -98,17 +127,27 @@ public class StartMenuController {
 
 
     }
+    /**
+     * Handles the event when the "Load New Budget" button is clicked.
+     * @param event The ActionEvent triggered by the button click.
+     * @throws Exception if an exception occurs during the operation.
+     */
     @FXML
-    private void loadNewBudget(ActionEvent event) throws Exception {
+    private void loadNewBudget(final ActionEvent event) throws Exception {
         FileUtility.setLoad(false);
-        if (!popUpOnLoadBudgets(event)) {
+        if (!popUpOnLoadBudgets()) {
             return;
         }
         ChangeScene.changeToScene(getClass(), event, "budget-view.fxml");
 
     }
+    /**
+     * Handles the event when the "Load Previous Budget" button is clicked.
+     * @param event The ActionEvent triggered by the button click.
+     * @throws Exception if an exception occurs during the operation.
+     */
     @FXML
-    private void loadPrevBudget(ActionEvent event) throws Exception {
+    private void loadPrevBudget(final ActionEvent event) throws Exception {
         FileUtility.setLoad(true);
         ChangeScene.changeToScene(getClass(), event, "load-budgets.fxml");
     }

@@ -19,12 +19,6 @@ import org.testfx.util.WaitForAsyncUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.AbstractSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
