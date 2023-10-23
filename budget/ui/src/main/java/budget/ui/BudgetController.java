@@ -5,75 +5,122 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.*;
+
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
-import budget.utility.*;
-
-import java.io.IOException;
-import java.util.HashMap;
+import budget.utility.FileUtility;
 import java.util.Map;
 
 public class BudgetController {
-
-    // Static field to hold the instance
-//    private static BudgetController instance;
-//
-//    // Method to get the instance
-//    public static BudgetController getInstance() {
-//        return instance;
-//    }
-
-
+    /**
+     * The table for displaying categories and their amounts.
+     */
     @FXML
     private TableView<Category> table;
 
+    /**
+     * The button for saving the current budget.
+     */
     @FXML
     private Button saveBtn;
 
+    /**
+     * The icon for the save button.
+     */
     @FXML
     private ImageView saveIcon;
+    /**
+     * The divider position for the SplitPane.
+     */
+    private static final double SPLIT_PANE_DIVIDER_POSITION = 0.4;
 
+    /**
+     * The input field for adding amounts to categories.
+     */
     @FXML
     private TextField input;
 
+    /**
+     * The button for adding amounts to categories.
+     */
     @FXML
     private Button inputBtn;
 
+    /**
+     * The table column for category names.
+     */
     @FXML
     private TableColumn<Category, String> category;
 
+    /**
+     * The table column for category amounts.
+     */
     @FXML
     private TableColumn<Category, Integer> amountUsed;
 
+    /**
+     * The SplitPane for the budget view.
+     */
     @FXML
     private SplitPane splitPane;
 
+    /**
+     * The ComboBox for selecting categories.
+     */
     @FXML
     private ComboBox<String> selector;
 
+    /**
+     * The text for displaying the total sum of the budget.
+     */
     @FXML
     private Text totalSum;
-
+    /**
+     *  The button for returning to the main menu.
+     */
     @FXML
     private Button returnMenuBtn;
 
+    /**
+     * Title of the budget.
+     */
     @FXML
     private Text budgetTitle;
 
+    /**
+     * List of categories.
+     */
     private final ObservableList<Category> categoryList = FXCollections.observableArrayList();
+
+    /**
+     * The current calculation.
+     */
     private Calculation calc;
 
+    /**
+     * Singleton for data retrieval and storing.
+     */
     private final DataSingleton data = DataSingleton.getInstance();
-
+    /**
+     * Initialize the controller and set up the UI.
+     */
     @FXML
-    public void initialize() {
+    public final void initialize() {
         calc = data.getCalculation();
         setupUI();
     }
 
+    /**
+     * Set up the UI components and their behaviors.
+     */
     private void setupUI() {
         // Set up the category selection ComboBox
         ObservableList<String> categoryOptions = FXCollections.observableArrayList(
@@ -91,7 +138,7 @@ public class BudgetController {
 
         // Set the divider position for the SplitPane
         splitPane.getDividers().get(0).positionProperty().addListener((observable, oldValue, newValue) -> {
-            splitPane.setDividerPosition(0, 0.4);
+            splitPane.setDividerPosition(0, SPLIT_PANE_DIVIDER_POSITION);
         });
 
         // Set hover effects for the save button
@@ -104,37 +151,52 @@ public class BudgetController {
             Image normalImage = new Image(getClass().getResource("/budget/images/saveIcon.png").toString());
             saveIcon.setImage(normalImage);
         });
+
         budgetTitle.setText(data.getCalcName());
         totalSum.setText(Integer.toString(calc.getTotalSum()));
     }
 
+    /**
+     * Switch to the main menu view.
+     *
+     * @param event The event triggering the action.
+     * @throws Exception If there is an error during scene change.
+     */
     @FXML
-    private void loadMainMenu(ActionEvent event) throws Exception {
+    private void loadMainMenu(final ActionEvent event) throws Exception {
         ChangeScene.changeToScene(getClass(), event, "startmenu-fxml.fxml");
     }
 
-    public void receiveSelectedCalculation(Calculation receivedCalculation) {
-        addCalculation(receivedCalculation);
-    };
-
-    public void addCalculation(Calculation calc) {
+    /**
+     * Add a new calculation to the data.
+     *
+     * @param newCalc The new calculation to add.
+     */
+    public final void addCalculation(final Calculation newCalc) {
         String name = this.budgetTitle.getText();
-        data.addCalculation(name, calc);
+        data.addCalculation(name, newCalc);
     }
 
-    public Map<String, Calculation> getCalculations() {
+    /**
+     * Get the list of calculations.
+     *
+     * @return A map of calculation names to Calculation objects.
+     */
+    public final Map<String, Calculation> getCalculations() {
         return data.getCalculations();
     }
 
+    /**
+     * Add an amount to the selected category.
+     */
     @FXML
-    public void addAmount() {
+    public final void addAmount() {
         // Get the input values
         int amountToAdd = Integer.parseInt(input.getText());
-        String category = selector.getValue();
-
+        String newCategory = selector.getValue();
 
         for (Category cat : categoryList) {
-            if (cat.getCategoryName().equals(category)) {
+            if (cat.getCategoryName().equals(newCategory)) {
                 calc.addAmountToCategory(cat, amountToAdd);
                 table.refresh();
                 input.clear();
@@ -142,13 +204,13 @@ public class BudgetController {
         }
 
         totalSum.setText(Integer.toString(calc.getTotalSum()));
-
     }
 
-
-
+    /**
+     * Save the current budget to a file.
+     */
     @FXML
-    public void saveBudget() {
+    public final void saveBudget() {
         addCalculation(this.calc);
         try {
             FileUtility.writeToFile(getCalculations());

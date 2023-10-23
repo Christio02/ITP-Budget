@@ -2,7 +2,6 @@ package budget.ui;
 
 import budget.core.Calculation;
 import budget.core.Category;
-import budget.utility.FileUtility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,31 +10,41 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.text.Text;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 public class BudgetsViewController {
-
+    /**
+     * Listview for names.
+     */
     @FXML
     private ListView<String> nameCalc;
-
+    /**
+     * Listview for calculation objects.
+     */
     @FXML
     private ListView<Calculation> calcObject;
-
-    private String name;
-
+    /**
+     * Local Map of calcualtion objects.
+     */
     private Map<String, Calculation> calculationMap;
 
+    /**
+     * Singleton for data retrieval and storing.
+     */
     private final DataSingleton data = DataSingleton.getInstance();
 
+    /**
+     * Selected name in listview.
+     */
     private String selectedName;
 
+    /**
+     * Initialize the BudgetsView UI and set up event handling.
+     */
     @FXML
-    public void initialize() {
+    public final void initialize() {
         System.out.println(data.getCalculations());
         calculationMap = new HashMap<>();
 
@@ -45,10 +54,10 @@ public class BudgetsViewController {
         ObservableList<String> listOfCalcNames = FXCollections.observableArrayList();
         ObservableList<Calculation> listOfCalcObjects = FXCollections.observableArrayList();
         for (Map.Entry<String, Calculation> entry: this.calculationMap.entrySet()) {
-            String name = entry.getKey();
+            String entryName = entry.getKey();
             Calculation calc = entry.getValue();
-            if (!name.equals("overwrite")) {
-                listOfCalcNames.add(name);
+            if (!entryName.equals("overwrite")) {
+                listOfCalcNames.add(entryName);
                 listOfCalcObjects.add(calc);
             }
         }
@@ -63,6 +72,9 @@ public class BudgetsViewController {
 
     }
 
+    /**
+     * Observes the selected name in the nameCalc ListView.
+     */
     private void observerSelectedName() {
         nameCalc.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -74,9 +86,11 @@ public class BudgetsViewController {
         });
     }
 
+    /**
+     * Handle double-click on an object in the nameCalc ListView.
+     */
     private void handleDoubleClickObject() {
-        nameCalc.setOnMouseClicked(event ->
-        {
+        nameCalc.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 String selectedCalcName = nameCalc.getSelectionModel().getSelectedItem();
 
@@ -96,10 +110,13 @@ public class BudgetsViewController {
         });
     }
 
+    /**
+     * Update the view for the calcObject ListView.
+     */
     private void updateView() {
         calcObject.setCellFactory(param -> new ListCell<Calculation>() {
             @Override
-            protected void updateItem(Calculation item, boolean empty) {
+            protected void updateItem(final Calculation item, final boolean empty) {
                 super.updateItem(item, empty);
 
                 if (empty || item == null) {
@@ -124,14 +141,21 @@ public class BudgetsViewController {
 
     }
 
+    /**
+     * Load the main menu.
+     * @param event The event triggering the action.
+     */
     @FXML
-    private void loadMainMenu(ActionEvent event) throws Exception {
+    private void loadMainMenu(final ActionEvent event) throws Exception {
         ChangeScene.changeToScene(getClass(), event, "startmenu-fxml.fxml");
 
     }
 
+    /**
+     * Delete the selected budget.
+     */
     @FXML
-    public void deleteBudget() {
+    public final void deleteBudget() {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
 
         confirmationAlert.setHeaderText("Are you sure you want to delete budget?");
@@ -142,7 +166,7 @@ public class BudgetsViewController {
 
         confirmationAlert.getButtonTypes().setAll(confirm, cancel);
 
-        Optional<ButtonType> result =confirmationAlert.showAndWait();
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
 
         int selectedIndex = nameCalc.getSelectionModel().getSelectedIndex();
 

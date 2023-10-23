@@ -26,17 +26,17 @@ public class TableTest extends  TestFXBase{
     /* here put fxid to be used in lookup. Format: "#example"
     Or you can use "example" for getting the text of the component
     */
-    final String TABLE_ID =  "#table";
+    private final String TABLE_ID =  "#table";
 
-    final String SELECTOR_ID = "#selector";
+    private final String SELECTOR_ID = "#selector";
 
-    final String INPUT_ID = "#input";
+    private final String INPUT_ID = "#input";
 
-    final String SUM_ID = "#totalSum";
+    private final String SUM_ID = "#totalSum";
 
-    final String SUBMIT_BTN_ID = "#inputBtn";
+    private final String SUBMIT_BTN_ID = "#inputBtn";
 
-    final String NEW_BUDGET_BTN = "#newBudgetBtn";
+    private final String NEW_BUDGET_BTN = "#newBudgetBtn";
 
     @BeforeEach
     public void setUp() {

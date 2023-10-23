@@ -1,0 +1,122 @@
+{
+  "Hello" : {
+    "categoriesList" : [ {
+      "categoryName" : "Food",
+      "amount" : 2323,
+      "budgetHistory" : [ 2323 ]
+    }, {
+      "categoryName" : "Transportation",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    }, {
+      "categoryName" : "Entertainment",
+      "amount" : 2323,
+      "budgetHistory" : [ 2323 ]
+    }, {
+      "categoryName" : "Clothing",
+      "amount" : 23454,
+      "budgetHistory" : [ 23232, 222 ]
+    }, {
+      "categoryName" : "Other",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    } ],
+    "totalSum" : 28100
+  },
+  "Test6" : {
+    "categoriesList" : [ {
+      "categoryName" : "Food",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    }, {
+      "categoryName" : "Transportation",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    }, {
+      "categoryName" : "Entertainment",
+      "amount" : 2323,
+      "budgetHistory" : [ 2323 ]
+    }, {
+      "categoryName" : "Clothing",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    }, {
+      "categoryName" : "Other",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    } ],
+    "totalSum" : 2323
+  },
+  "hello" : {
+    "categoriesList" : [ {
+      "categoryName" : "Food",
+      "amount" : 23444,
+      "budgetHistory" : [ 23444 ]
+    }, {
+      "categoryName" : "Transportation",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    }, {
+      "categoryName" : "Entertainment",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    }, {
+      "categoryName" : "Clothing",
+      "amount" : 455,
+      "budgetHistory" : [ 455 ]
+    }, {
+      "categoryName" : "Other",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    } ],
+    "totalSum" : 23899
+  },
+  "overwrite" : {
+    "categoriesList" : [ {
+      "categoryName" : "Food",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    }, {
+      "categoryName" : "Transportation",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    }, {
+      "categoryName" : "Entertainment",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    }, {
+      "categoryName" : "Clothing",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    }, {
+      "categoryName" : "Other",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    } ],
+    "totalSum" : 0
+  },
+  "Hello2" : {
+    "categoriesList" : [ {
+      "categoryName" : "Food",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    }, {
+      "categoryName" : "Transportation",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    }, {
+      "categoryName" : "Entertainment",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    }, {
+      "categoryName" : "Clothing",
+      "amount" : 2323,
+      "budgetHistory" : [ 2323 ]
+    }, {
+      "categoryName" : "Other",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    } ],
+    "totalSum" : 2323
+  }
+}
