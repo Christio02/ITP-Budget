@@ -20,6 +20,7 @@ public class Category {
     /**
      * List of added amounts to the category.
      */
+
     private ArrayList<Integer> addedAmounts = new ArrayList<>();
 
     /**

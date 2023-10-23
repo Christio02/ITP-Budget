@@ -8,12 +8,12 @@
 
 <AnchorPane id="container" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="budget.ui.StartMenuController">
    <children>
-      <Button fx:id="newBudgetBtn" layoutX="239.0" layoutY="207.0" mnemonicParsing="false" onAction="#loadNewBudget" prefHeight="48.0" prefWidth="122.0" text="New budget">
+      <Button fx:id="newBudgetBtn" layoutX="239.0" layoutY="152.0" mnemonicParsing="false" onAction="#loadNewBudget" prefHeight="48.0" prefWidth="122.0" text="New budget">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="loadBudgetBtn" layoutX="239.0" layoutY="273.0" mnemonicParsing="false" onAction="#loadPrevBudget" prefHeight="48.0" prefWidth="122.0" text="Load budget">
+      <Button fx:id="loadBudgetBtn" layoutX="240.0" layoutY="252.0" mnemonicParsing="false" onAction="#loadPrevBudget" prefHeight="48.0" prefWidth="122.0" text="Load budget">
          <font>
             <Font size="14.0" />
          </font>
@@ -25,4 +25,3 @@
       </ImageView>
    </children>
 </AnchorPane>
-

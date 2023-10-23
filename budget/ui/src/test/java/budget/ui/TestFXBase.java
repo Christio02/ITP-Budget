@@ -1,5 +1,4 @@
 package budget.ui;
-import budget.ui.BudgetApplication;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -36,6 +35,9 @@ public abstract class TestFXBase extends ApplicationTest {
         release(new MouseButton[]{});
     }
 
+    /**
+     *
+     */
     public <T extends Node> T find(final String query) {
         // Used find java fx GUI component
         return (T) lookup(query).queryAll().iterator().next();
