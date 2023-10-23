@@ -153,6 +153,34 @@
                 <configuration>
                     <propertyName>jaCoCoArgLine</propertyName>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>jacoco-prepare-agent</id>
+                        <phase>process-test-classes</phase>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco-report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.basedir}/../test-results/jacoco/${project.name}
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>jacoco-report-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
 

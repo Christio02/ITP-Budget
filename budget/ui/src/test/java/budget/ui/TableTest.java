@@ -1,12 +1,23 @@
 package budget.ui;
+import budget.core.Calculation;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.control.TableViewMatchers;
 import org.testfx.matcher.control.TextMatchers;
 import org.testfx.util.WaitForAsyncUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.testfx.api.FxAssert.verifyThat;
@@ -27,14 +38,36 @@ public class TableTest extends  TestFXBase{
 
     final String NEW_BUDGET_BTN = "#newBudgetBtn";
 
+    @BeforeEach
+    public void setUp() {
+        Map<String, Calculation> fileMap = new HashMap<>();
+        Calculation overWriteCalc = new Calculation();
+        fileMap.put("overwrite", overWriteCalc);
+        String userDir = System.getProperty("user.dir");
+        String path = userDir + "/../utility/src/main/resources/budget/utility/savedBudget.json";
+        File file = new File(path);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file, fileMap );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Test
     public void checkIfValueWasAddedToCorrectCategory() {
+
         WaitForAsyncUtils.waitForFxEvents();
         Integer amount = 2000;
         String food = "Food";
         clickOn(NEW_BUDGET_BTN);
         WaitForAsyncUtils.waitForFxEvents();
+        clickOn("#nameInput");
+
+        write("Test");
+        clickOn("OK");
+
         clickOn(SELECTOR_ID);
         type(KeyCode.DOWN);
         type(KeyCode.ENTER);

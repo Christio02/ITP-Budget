@@ -1,6 +1,9 @@
 
 package budget.ui;
+import budget.core.Calculation;
 import budget.ui.BudgetApplication;
+import budget.utility.FileUtility;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -14,6 +17,16 @@ import org.testfx.matcher.control.TableViewMatchers;
 import org.testfx.matcher.control.TextMatchers;
 import org.testfx.util.WaitForAsyncUtils;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.AbstractSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 import static org.testfx.api.FxAssert.verifyThat;
@@ -37,16 +50,29 @@ public class WriteToFileTest extends TestFXBase {
      private final String LOAD_BUDGET_BTN = "#loadBudgetBtn";
 
      private  final String SUM_ID = "#totalSum";
+    private final String CURRENT_DIR = System.getProperty("user.dir");
+
+    /**
+     * File path for serialization.
+     */
 
 
+     @BeforeEach
+     public void setUp() {
+     }
      @Test
      public void testCorrectWrittenToFile() {
+
          WaitForAsyncUtils.waitForFxEvents();
          Integer amount1 = 2000;
          Integer amount2 = 3000;
          String food = "Food";
 
          clickOn(NEW_BUDGET_BTN);
+         clickOn("#nameInput");
+
+         write("Test");
+         clickOn("OK");
          WaitForAsyncUtils.waitForFxEvents();
          clickOn(SELECTOR_ID);
          type(KeyCode.DOWN);
@@ -83,14 +109,26 @@ public class WriteToFileTest extends TestFXBase {
          WaitForAsyncUtils.waitForFxEvents();
          clickOn(LOAD_BUDGET_BTN);
          WaitForAsyncUtils.waitForFxEvents();
-
+         doubleClickOn("Test");
+         WaitForAsyncUtils.waitForFxEvents();
          String clothing = "Clothing";
 
          verifyThat(TABLE_ID, TableViewMatchers.containsRow(clothing, amount2));
          verifyThat(TABLE_ID, TableViewMatchers.containsRow(food, amount1));
 
          verifyThat(SUM_ID, TextMatchers.hasText("5000"));
-
+         Map<String, Calculation> fileMap = new HashMap<>();
+         Calculation overWriteCalc = new Calculation();
+         fileMap.put("overwrite", overWriteCalc);
+         String userDir = System.getProperty("user.dir");
+         String path = userDir + "/../utility/src/main/resources/budget/utility/savedBudget.json";
+         File file = new File(path);
+         try {
+             ObjectMapper mapper = new ObjectMapper();
+             mapper.writerWithDefaultPrettyPrinter().writeValue(file, fileMap );
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
      }
 
  }

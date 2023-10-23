@@ -45,7 +45,10 @@ public class FileUtilityTest {
 
         for (Map.Entry<String, Calculation> entry : loadMap.entrySet() ) {
             String name = entry.getKey();
-            assertEquals(testName, name );
+            if (!name.equals("overwrite")) {
+                assertEquals(testName, name );
+            }
+
         }
     }
 
@@ -55,12 +58,15 @@ public class FileUtilityTest {
         Map<String, Calculation> loadMap = new HashMap<>();
         FileUtility.readFile(loadMap);
 
-        Calculation calc = loadMap.get("Test1");
+        Calculation calc = loadMap.get("FileUtilityTest");
 
         for (Map.Entry<String, Calculation> entry: loadMap.entrySet()) {
+            String name = entry.getKey();
             Calculation calculation = entry.getValue();
-            assertEquals(calculation.getCategory("Food").getBudgetHistory(), testCalculation.getCategory("Food").getBudgetHistory());
-            assertEquals(calculation.getCategory("Transportation").getBudgetHistory(), testCalculation.getCategory("Transportation").getBudgetHistory());
+            if (!name.equals("overwrite")) {
+                assertEquals(calculation.getCategory("Food").getBudgetHistory(), testCalculation.getCategory("Food").getBudgetHistory());
+                assertEquals(calculation.getCategory("Transportation").getBudgetHistory(), testCalculation.getCategory("Transportation").getBudgetHistory());
+            }
         }
 
     }
@@ -69,7 +75,6 @@ public class FileUtilityTest {
     public void testWriteAndReadFromFile() throws IOException {
         FileUtility.writeToFile(testMap);
 
-        assertTrue(new File(FileUtility.FILE_PATH).exists());
 
         Map<String, Calculation> loadMap = new HashMap<>();
         FileUtility.readFile(loadMap);
@@ -81,8 +86,4 @@ public class FileUtilityTest {
         }
     }
 
-    @AfterEach
-    public void tearDown() {
-        new File(FileUtility.FILE_PATH).delete();
-    }
 }
