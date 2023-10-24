@@ -4,9 +4,12 @@ import budget.core.Calculation;
 import budget.utility.FileUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.testfx.matcher.control.ListViewMatchers;
 import org.testfx.matcher.control.TableViewMatchers;
 import org.testfx.matcher.control.TextMatchers;
 import org.testfx.util.WaitForAsyncUtils;
@@ -37,6 +40,10 @@ public class WriteToFileTest extends TestFXBase {
      private final String LOAD_BUDGET_BTN = "#loadBudgetBtn";
 
      private  final String SUM_ID = "#totalSum";
+
+     private final String DEL_BTN = "#deleteBtn";
+
+     private final String NAME_VIEW = "#nameCalc";
     private final String CURRENT_DIR = System.getProperty("user.dir");
 
     /**
@@ -119,8 +126,48 @@ public class WriteToFileTest extends TestFXBase {
          }
      }
 
-     @AfterAll
-    public static void end() {
+     @Test
+     public void testDeletedBudget() {
+         WaitForAsyncUtils.waitForFxEvents();
+         Integer amount1 = 2000;
+         String food = "Food";
+
+         clickOn(NEW_BUDGET_BTN);
+         clickOn("#nameInput");
+
+         write("Test2");
+         clickOn("OK");
+         WaitForAsyncUtils.waitForFxEvents();
+         clickOn(SELECTOR_ID);
+         type(KeyCode.DOWN);
+         type(KeyCode.ENTER);
+         clickOn(INPUT_ID);
+         write("2000");
+         clickOn(SUBMIT_BTN_ID);
+         clickOn(SAVE_BTN);
+         clickOn(GO_BACK_BTN);
+
+         WaitForAsyncUtils.waitForFxEvents();
+         clickOn(LOAD_BUDGET_BTN);
+         WaitForAsyncUtils.waitForFxEvents();
+
+         moveTo("Test2");
+         clickOn("Test2");
+         moveTo(DEL_BTN);
+         clickOn(DEL_BTN);
+         WaitForAsyncUtils.waitForFxEvents();
+         clickOn("Confirm");
+         clickOn(GO_BACK_BTN);
+
+         WaitForAsyncUtils.waitForFxEvents();
+         clickOn(LOAD_BUDGET_BTN);
+         verifyThat(NAME_VIEW, ListViewMatchers.hasItems(1));
+
+
+     }
+
+     @AfterEach
+    public void end() {
          DataSingleton data = DataSingleton.getInstance();
          data.clearMap();
      }

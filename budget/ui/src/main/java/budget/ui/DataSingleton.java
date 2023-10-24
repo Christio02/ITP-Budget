@@ -51,6 +51,14 @@ public final class DataSingleton {
     }
 
     /**
+     * Delete an entry from the map of Calculations.
+     * @param name The name of the entry to delete.
+     */
+    public void deleteEntry(final String name) {
+        this.mapOfCalculations.remove(name);
+    }
+
+    /**
      * Set the current Calculation.
      *
      * @param newCalculation The Calculation to set.

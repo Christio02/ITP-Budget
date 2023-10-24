@@ -2,6 +2,8 @@
 
 import budget.core.Calculation;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,19 +21,19 @@ public final class FileUtility {
     /**
      * Current directory path.
      */
-<span class="fc" id="L22">    private static final String CURRENT_DIR = System.getProperty(&quot;user.dir&quot;);</span>
+<span class="fc" id="L24">    private static final String CURRENT_DIR = System.getProperty(&quot;user.dir&quot;);</span>
 
     /**
      * File path for serialization.
      */
-<span class="fc" id="L27">    private static final String FILE_PATH = CURRENT_DIR</span>
+<span class="fc" id="L29">    private static final String FILE_PATH = CURRENT_DIR</span>
             + &quot;/../utility/src/main/resources/budget/utility/savedBudget.json&quot;;
 
     /**
      * Private constructor to hide the implicit public one.
      */
-<span class="nc" id="L33">    private FileUtility() {</span>
-<span class="nc" id="L34">        throw new IllegalStateException(&quot;Utility class&quot;);</span>
+<span class="nc" id="L35">    private FileUtility() {</span>
+<span class="nc" id="L36">        throw new IllegalStateException(&quot;Utility class&quot;);</span>
     }
 
     /**
@@ -42,25 +44,25 @@ public final class FileUtility {
      * @throws IOException If an input or output exception occurred
      */
     public static void writeToFile(final Map&lt;String, Calculation&gt; calcMap, final String path) throws IOException {
-<span class="fc" id="L45">        File file = new File(CURRENT_DIR + path);</span>
+<span class="fc" id="L47">        File file = new File(CURRENT_DIR + path);</span>
         // Check if calcMap is empty
-<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        if (calcMap.isEmpty()) {</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">        if (calcMap.isEmpty()) {</span>
             // If it's empty, create an empty JSON object and write it to the file
-<span class="nc" id="L49">            Json.getMapper().writeValue(file, new HashMap&lt;&gt;());</span>
+<span class="nc" id="L51">            Json.getMapper().writeValue(file, new HashMap&lt;&gt;());</span>
         } else {
             Map&lt;String, Calculation&gt; existingDataMap;
-<span class="pc bpc" id="L52" title="1 of 2 branches missed.">            if (file.exists()) {</span>
-<span class="fc" id="L53">                existingDataMap = Json.getMapper().readValue(file, Json.getMapper()</span>
-<span class="fc" id="L54">                        .getTypeFactory().constructMapType(HashMap.class, String.class, Calculation.class));</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">            if (file.exists()) {</span>
+<span class="fc" id="L55">                existingDataMap = Json.getMapper().readValue(file, Json.getMapper()</span>
+<span class="fc" id="L56">                        .getTypeFactory().constructMapType(HashMap.class, String.class, Calculation.class));</span>
             } else {
-<span class="nc" id="L56">                existingDataMap = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L58">                existingDataMap = new HashMap&lt;&gt;();</span>
             }
-<span class="fc" id="L58">            existingDataMap.putAll(calcMap);</span>
+<span class="fc" id="L60">            existingDataMap.putAll(calcMap);</span>
 
             // Write the merged data back to the file
-<span class="fc" id="L61">            Json.getMapper().writerWithDefaultPrettyPrinter().writeValue(file, existingDataMap);</span>
+<span class="fc" id="L63">            Json.getMapper().writerWithDefaultPrettyPrinter().writeValue(file, existingDataMap);</span>
         }
-<span class="fc" id="L63">    }</span>
+<span class="fc" id="L65">    }</span>
 
     /**
      * Sets the load status.
@@ -68,8 +70,8 @@ public final class FileUtility {
      * @param loadStatus The new load status
      */
     public static void setLoad(final boolean loadStatus) {
-<span class="nc" id="L71">        load = loadStatus;</span>
-<span class="nc" id="L72">    }</span>
+<span class="nc" id="L73">        load = loadStatus;</span>
+<span class="nc" id="L74">    }</span>
 
     /**
      * Reads the Calculation object from a file.
@@ -79,28 +81,50 @@ public final class FileUtility {
      * @throws IOException If an input or output exception occurred
      */
     public static void readFile(final Map&lt;String, Calculation&gt; calcMap, final String path) throws IOException {
-<span class="fc" id="L82">        File file = new File(CURRENT_DIR + path);</span>
+<span class="fc" id="L84">        File file = new File(CURRENT_DIR + path);</span>
         Map&lt;String, Calculation&gt; mapFromFile =
-<span class="fc" id="L84">                Json.getMapper().readValue(file, new TypeReference</span>
+<span class="fc" id="L86">                Json.getMapper().readValue(file, new TypeReference</span>
                         &lt;Map&lt;String, Calculation&gt;&gt;(
-<span class="fc" id="L86">                                ) {</span>
+<span class="fc" id="L88">                                ) {</span>
                 });
-<span class="fc" id="L88">        calcMap.clear();</span>
+<span class="fc" id="L90">        calcMap.clear();</span>
 
-<span class="fc bfc" id="L90" title="All 2 branches covered.">        for (Map.Entry&lt;String, Calculation&gt; entry : mapFromFile.entrySet()) {</span>
-<span class="fc" id="L91">            String name = entry.getKey();</span>
-<span class="fc" id="L92">            Calculation calcObject = entry.getValue();</span>
-<span class="fc" id="L93">            calcMap.put(name, calcObject);</span>
-<span class="fc" id="L94">        }</span>
-<span class="fc" id="L95">    }</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        for (Map.Entry&lt;String, Calculation&gt; entry : mapFromFile.entrySet()) {</span>
+<span class="fc" id="L93">            String name = entry.getKey();</span>
+<span class="fc" id="L94">            Calculation calcObject = entry.getValue();</span>
+<span class="fc" id="L95">            calcMap.put(name, calcObject);</span>
+<span class="fc" id="L96">        }</span>
+<span class="fc" id="L97">    }</span>
 
+    /**
+     * Deletes a budget from the file.
+     * @param name The name of the budget to delete
+     * @param calcMap The map of calculations
+     */
+    public static void deleteBudget(final String name, final Map&lt;String, Calculation&gt; calcMap) {
+        try {
+<span class="nc" id="L106">            ObjectMapper mapper = new ObjectMapper();</span>
+<span class="nc" id="L107">            readFile(calcMap, &quot;/../utility/src/main/resources/budget/utility/savedBudget.json&quot;);</span>
+
+<span class="nc bnc" id="L109" title="All 2 branches missed.">            if (calcMap.containsKey(name)) {</span>
+<span class="nc" id="L110">                calcMap.remove(name);</span>
+<span class="nc" id="L111">                System.out.println(&quot;Deleted &quot; + name + &quot; from file&quot;);</span>
+<span class="nc" id="L112">                mapper.writerWithDefaultPrettyPrinter().writeValue(new File(FILE_PATH), calcMap);</span>
+            } else {
+<span class="nc" id="L114">                System.out.println(name + &quot; not found in the file. Nothing was deleted.&quot;);</span>
+            }
+
+<span class="nc" id="L117">        } catch (IOException e) {</span>
+<span class="nc" id="L118">            e.printStackTrace();</span>
+<span class="nc" id="L119">        }</span>
+<span class="nc" id="L120">    }</span>
     /**
      * Gets the load status.
      *
      * @return The load status
      */
     public static boolean getLoad() {
-<span class="nc" id="L103">        return load;</span>
+<span class="nc" id="L127">        return load;</span>
     }
 
 

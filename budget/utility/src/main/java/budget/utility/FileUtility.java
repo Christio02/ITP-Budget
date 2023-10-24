@@ -2,6 +2,8 @@ package budget.utility;
 
 import budget.core.Calculation;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -94,6 +96,28 @@ public final class FileUtility {
         }
     }
 
+    /**
+     * Deletes a budget from the file.
+     * @param name The name of the budget to delete
+     * @param calcMap The map of calculations
+     */
+    public static void deleteBudget(final String name, final Map<String, Calculation> calcMap) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            readFile(calcMap, "/../utility/src/main/resources/budget/utility/savedBudget.json");
+
+            if (calcMap.containsKey(name)) {
+                calcMap.remove(name);
+                System.out.println("Deleted " + name + " from file");
+                mapper.writerWithDefaultPrettyPrinter().writeValue(new File(FILE_PATH), calcMap);
+            } else {
+                System.out.println(name + " not found in the file. Nothing was deleted.");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Gets the load status.
      *
