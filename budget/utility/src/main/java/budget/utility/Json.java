@@ -1,7 +1,5 @@
 package budget.utility;
 
-
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -39,8 +37,10 @@ public final class Json {
     public static ObjectMapper getMapper() {
         ObjectMapper defaultObjectMapper = new ObjectMapper();
         defaultObjectMapper.
-                configure(DeserializationFeature.
-                        FAIL_ON_UNKNOWN_PROPERTIES, false);
+                configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false
+                );
+        defaultObjectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+
         return defaultObjectMapper;
     }
 

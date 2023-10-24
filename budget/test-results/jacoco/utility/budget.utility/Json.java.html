@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Json.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">utility</a> &gt; <a href="index.source.html" class="el_package">budget.utility</a> &gt; <span class="el_source">Json.java</span></div><h1>Json.java</h1><pre class="source lang-java linenums">package budget.utility;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+
+/**
+ * This class is responsible for JSON operations.
+ */
+public final class Json {
+
+    /**
+     * ObjectMapper for JSON operations.
+     */
+<span class="fc" id="L18">    private static final ObjectMapper MAPPER = getMapper();</span>
+
+    /**
+     * The amount to be added to the category.
+     */
+    private static final int AMOUNT = 2000;
+
+    /**
+     * Private constructor to hide the implicit public one.
+     */
+<span class="nc" id="L28">    private Json() {</span>
+<span class="nc" id="L29">        throw new IllegalStateException(&quot;Utility class&quot;);</span>
+    }
+
+    /**
+     * Gets the ObjectMapper.
+     *
+     * @return The ObjectMapper
+     */
+    public static ObjectMapper getMapper() {
+<span class="fc" id="L38">        ObjectMapper defaultObjectMapper = new ObjectMapper();</span>
+<span class="fc" id="L39">        defaultObjectMapper.</span>
+<span class="fc" id="L40">                configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false</span>
+                );
+<span class="fc" id="L42">        defaultObjectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);</span>
+
+<span class="fc" id="L44">        return defaultObjectMapper;</span>
+    }
+
+    /**
+     * Parses a JSON string into a JsonNode.
+     *
+     * @param src The JSON string to parse
+     * @return The parsed JsonNode
+     * @throws IOException If an input or output exception occurred
+     */
+    public static JsonNode parse(final String src) throws IOException {
+<span class="nc" id="L55">        return MAPPER.readTree(src);</span>
+    }
+
+    /**
+     * Converts a JsonNode into an object of the specified class.
+     *
+     * @param node The JsonNode to convert
+     * @param aClass The class of the object to return
+     * @param &lt;A&gt; The type of the object to return
+     * @return The converted object
+     * @throws JsonProcessingException If a JSON processing exception occurred
+     */
+    public static &lt;A&gt; A fromJson(final JsonNode node, final Class&lt;A&gt; aClass)
+            throws JsonProcessingException {
+<span class="nc" id="L69">        return MAPPER.treeToValue(node, aClass);</span>
+    }
+
+
+    /**
+     * Converts an object into a JsonNode.
+     *
+     * @param aObject The object to convert
+     * @return The converted JsonNode
+     */
+    public static JsonNode toJson(final Object aObject) {
+<span class="nc" id="L80">        return MAPPER.valueToTree(aObject);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

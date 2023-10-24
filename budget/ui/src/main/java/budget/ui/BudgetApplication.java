@@ -9,16 +9,30 @@ import javafx.scene.image.Image;
 import java.io.IOException;
 
 public class BudgetApplication extends Application {
+
+    /**
+     * The width of the application window.
+     */
+    private static final int WIDTH = 600;
+    /**
+     * The height of the application window.
+     */
+    private static final int HEIGHT = 400;
     @Override
-    public void start(Stage stage) throws IOException {
+    public final void start(final Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(BudgetApplication.class.getResource("startmenu-fxml.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
         scene.getStylesheets().add(getClass().getResource("style/style.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
 
-    public static void main(String[] args) {
+    /**
+     * Main method to launch the application.
+     *
+     * @param args Command-line arguments (not used).
+     */
+    public static void main(final String[] args) {
         launch();
     }
 }

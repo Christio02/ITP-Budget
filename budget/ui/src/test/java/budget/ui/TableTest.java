@@ -1,40 +1,67 @@
 package budget.ui;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
+import budget.core.Calculation;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.input.KeyCode;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.matcher.control.TableViewMatchers;
 import org.testfx.matcher.control.TextMatchers;
 import org.testfx.util.WaitForAsyncUtils;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.testfx.api.FxAssert.verifyThat;
 
 public class TableTest extends  TestFXBase{
     /* here put fxid to be used in lookup. Format: "#example"
     Or you can use "example" for getting the text of the component
     */
-    final String TABLE_ID =  "#table";
+    private final String TABLE_ID =  "#table";
 
-    final String SELECTOR_ID = "#selector";
+    private final String SELECTOR_ID = "#selector";
 
-    final String INPUT_ID = "#input";
+    private final String INPUT_ID = "#input";
 
-    final String SUM_ID = "#totalSum";
+    private final String SUM_ID = "#totalSum";
 
-    final String SUBMIT_BTN_ID = "#inputBtn";
+    private final String SUBMIT_BTN_ID = "#inputBtn";
 
-    final String NEW_BUDGET_BTN = "#newBudgetBtn";
+    private final String NEW_BUDGET_BTN = "#newBudgetBtn";
+
+    @BeforeEach
+    public void setUp() {
+        Map<String, Calculation> fileMap = new HashMap<>();
+        Calculation overWriteCalc = new Calculation();
+        fileMap.put("overwrite", overWriteCalc);
+        String userDir = System.getProperty("user.dir");
+        String path = userDir + "/../utility/src/main/resources/budget/utility/savedBudget.json";
+        File file = new File(path);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file, fileMap );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     @Test
     public void checkIfValueWasAddedToCorrectCategory() {
+        DataSingleton data = DataSingleton.getInstance();
+//        data.updateMap(new HashMap<>());
         WaitForAsyncUtils.waitForFxEvents();
         Integer amount = 2000;
         String food = "Food";
         clickOn(NEW_BUDGET_BTN);
         WaitForAsyncUtils.waitForFxEvents();
+        clickOn("#nameInput");
+
+        write("Test1");
+        clickOn("OK");
+
         clickOn(SELECTOR_ID);
         type(KeyCode.DOWN);
         type(KeyCode.ENTER);

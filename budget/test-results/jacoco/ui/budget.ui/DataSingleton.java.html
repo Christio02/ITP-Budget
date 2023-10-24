@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DataSingleton.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ui</a> &gt; <a href="index.source.html" class="el_package">budget.ui</a> &gt; <span class="el_source">DataSingleton.java</span></div><h1>DataSingleton.java</h1><pre class="source lang-java linenums">package budget.ui;
+
+import budget.core.Calculation;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Singleton class for managing data.
+ */
+public final class DataSingleton {
+    /**
+     * Field for instance of class.
+     */
+<span class="fc" id="L15">    private static final DataSingleton INSTANCE = new DataSingleton();</span>
+
+    /**
+     * Calculation data.
+     */
+    private Calculation calculation;
+    /**
+     * Calculation name data.
+     */
+    private String calcName;
+
+    /**
+     * Map data.
+     */
+<span class="fc" id="L29">    private Map&lt;String, Calculation&gt; mapOfCalculations = new HashMap&lt;&gt;();</span>
+
+    /**
+     * private constructor for retrieving instance.
+     */
+<span class="fc" id="L34">    private DataSingleton() {</span>
+<span class="fc" id="L35">    }</span>
+
+    /**
+     * Get the singleton instance of DataSingleton.
+     *
+     * @return The DataSingleton instance.
+     */
+    public static DataSingleton getInstance() {
+<span class="fc" id="L43">        return INSTANCE;</span>
+    }
+
+    /**
+     * Clear the map of Calculations.
+     */
+    public void clearMap() {
+<span class="fc" id="L50">        this.mapOfCalculations.clear();</span>
+<span class="fc" id="L51">    }</span>
+
+    /**
+     * Set the current Calculation.
+     *
+     * @param newCalculation The Calculation to set.
+     */
+    public void setCalculation(final Calculation newCalculation) {
+<span class="fc" id="L59">        this.calculation = newCalculation;</span>
+<span class="fc" id="L60">    }</span>
+
+    /**
+     * Get the current Calculation.
+     *
+     * @return The current Calculation.
+     */
+    public Calculation getCalculation() {
+<span class="fc" id="L68">        return this.calculation;</span>
+    }
+
+    /**
+     * Set the Calculation name.
+     *
+     * @param newCalcName The name to set.
+     */
+    public void setCalcName(final String newCalcName) {
+<span class="fc" id="L77">        this.calcName = newCalcName;</span>
+<span class="fc" id="L78">    }</span>
+
+    /**
+     * Get the Calculation name.
+     *
+     * @return The Calculation name.
+     */
+    public String getCalcName() {
+<span class="fc" id="L86">        return this.calcName;</span>
+    }
+
+    /**
+     * Add a Calculation to the map.
+     *
+     * @param name The name of the Calculation.
+     * @param calc The Calculation to add.
+     */
+    public void addCalculation(final String name, final Calculation calc) {
+<span class="fc" id="L96">        this.mapOfCalculations.put(name, calc);</span>
+<span class="fc" id="L97">    }</span>
+
+    /**
+     * Get a copy of the map of Calculations.
+     *
+     * @return A copy of the map of Calculations.
+     */
+    public Map&lt;String, Calculation&gt; getCalculations() {
+<span class="fc" id="L105">        return new HashMap&lt;&gt;(this.mapOfCalculations);</span>
+    }
+
+    /**
+     * Update the map of Calculations.
+     *
+     * @param tempMap The map to update with.
+     */
+    public void updateMap(final Map&lt;String, Calculation&gt; tempMap) {
+<span class="fc" id="L114">        this.mapOfCalculations.putAll(tempMap);</span>
+<span class="fc" id="L115">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

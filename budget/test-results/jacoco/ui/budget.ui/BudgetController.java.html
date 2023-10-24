@@ -5,139 +5,237 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.Alert;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.*;
+
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
 import budget.utility.FileUtility;
+import java.util.Map;
 
-import java.io.IOException;
-
-<span class="fc" id="L17">public class BudgetController {</span>
-
-    // Static field to hold the instance
-    private static BudgetController instance;
-
-    // Method to get the instance
-    public static BudgetController getInstance() {
-<span class="fc" id="L24">        return instance;</span>
-    }
-
-
+<span class="fc" id="L23">public class BudgetController {</span>
+    /**
+     * The table for displaying categories and their amounts.
+     */
     @FXML
     private TableView&lt;Category&gt; table;
 
+    /**
+     * The button for saving the current budget.
+     */
     @FXML
     private Button saveBtn;
 
+    /**
+     * The icon for the save button.
+     */
     @FXML
     private ImageView saveIcon;
+    /**
+     * The divider position for the SplitPane.
+     */
+    private static final double SPLIT_PANE_DIVIDER_POSITION = 0.4;
 
+    /**
+     * The input field for adding amounts to categories.
+     */
     @FXML
     private TextField input;
 
+    /**
+     * The button for adding amounts to categories.
+     */
     @FXML
     private Button inputBtn;
 
+    /**
+     * The table column for category names.
+     */
     @FXML
     private TableColumn&lt;Category, String&gt; category;
 
+    /**
+     * The table column for category amounts.
+     */
     @FXML
     private TableColumn&lt;Category, Integer&gt; amountUsed;
 
+    /**
+     * The SplitPane for the budget view.
+     */
     @FXML
     private SplitPane splitPane;
 
+    /**
+     * The ComboBox for selecting categories.
+     */
     @FXML
     private ComboBox&lt;String&gt; selector;
 
+    /**
+     * The text for displaying the total sum of the budget.
+     */
     @FXML
     private Text totalSum;
-
+    /**
+     *  The button for returning to the main menu.
+     */
     @FXML
     private Button returnMenuBtn;
 
-
-<span class="fc" id="L62">    private final ObservableList&lt;Category&gt; categoryList = FXCollections.observableArrayList();</span>
-<span class="fc" id="L63">    private Calculation calc = new Calculation();</span>
-
+    /**
+     * Title of the budget.
+     */
     @FXML
-    public void initialize() {
-<span class="fc" id="L67">        instance = this;</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (FileUtility.getLoad())   {</span>
-            try {
-<span class="fc" id="L70">                FileUtility.readFromFile(this.calc);</span>
-<span class="fc" id="L71">                totalSum.setText(Integer.toString(calc.getTotalSum()));</span>
-<span class="nc" id="L72">            } catch (IOException e) {</span>
-<span class="nc" id="L73">                e.printStackTrace();</span>
-<span class="fc" id="L74">            }</span>
-        }
+    private Text budgetTitle;
 
+    /**
+     * List of categories.
+     */
+<span class="fc" id="L102">    private final ObservableList&lt;Category&gt; categoryList = FXCollections.observableArrayList();</span>
 
-<span class="fc" id="L78">        ObservableList&lt;String&gt; categoryOptions = FXCollections.observableArrayList(</span>
+    /**
+     * The current calculation.
+     */
+    private Calculation calc;
+
+    /**
+     * Singleton for data retrieval and storing.
+     */
+<span class="fc" id="L112">    private final DataSingleton data = DataSingleton.getInstance();</span>
+    /**
+     * Initialize the controller and set up the UI.
+     */
+    @FXML
+    public final void initialize() {
+<span class="fc" id="L118">        calc = data.getCalculation();</span>
+<span class="fc" id="L119">        setupUI();</span>
+<span class="fc" id="L120">    }</span>
+
+    /**
+     * Set up the UI components and their behaviors.
+     */
+    private void setupUI() {
+        // Set up the category selection ComboBox
+<span class="fc" id="L127">        ObservableList&lt;String&gt; categoryOptions = FXCollections.observableArrayList(</span>
                 &quot;Food&quot;, &quot;Entertainment&quot;, &quot;Transportation&quot;, &quot;Clothing&quot;, &quot;Other&quot;
         );
-<span class="fc" id="L81">        selector.setItems(categoryOptions);</span>
+<span class="fc" id="L130">        selector.setItems(categoryOptions);</span>
 
-<span class="fc" id="L83">        category.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;categoryName&quot;));</span>
-<span class="fc" id="L84">        amountUsed.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;amount&quot;));</span>
+        // Set up the table columns
+<span class="fc" id="L133">        category.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;categoryName&quot;));</span>
+<span class="fc" id="L134">        amountUsed.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;amount&quot;));</span>
 
-<span class="fc" id="L86">        categoryList.addAll(calc.getCategoriesList()); // add all categories to the list</span>
-<span class="fc" id="L87">        table.setItems(categoryList); // set the table to display the list</span>
+        // Add categories to the list and set the table
+<span class="fc" id="L137">        categoryList.addAll(calc.getCategoriesList());</span>
+<span class="fc" id="L138">        table.setItems(categoryList);</span>
 
+        // Set the divider position for the SplitPane
+<span class="fc" id="L141">        splitPane.getDividers().get(0).positionProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="fc" id="L142">            splitPane.setDividerPosition(0, SPLIT_PANE_DIVIDER_POSITION);</span>
+<span class="fc" id="L143">        });</span>
 
-        // Set the divider position to 40% of the screen and make it non-resizable
-<span class="fc" id="L91">        splitPane.getDividers().get(0).positionProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
-<span class="fc" id="L92">            splitPane.setDividerPosition(0, 0.4);</span>
-<span class="fc" id="L93">        });</span>
+        // Set hover effects for the save button
+<span class="fc" id="L146">        saveBtn.setOnMouseEntered(event -&gt; {</span>
+<span class="fc" id="L147">            Image hoverImage = new Image(getClass().getResource(&quot;/budget/images/saveIconHover.png&quot;).toString());</span>
+<span class="fc" id="L148">            saveIcon.setImage(hoverImage);</span>
+<span class="fc" id="L149">        });</span>
 
+<span class="fc" id="L151">        saveBtn.setOnMouseExited(event -&gt; {</span>
+<span class="fc" id="L152">            Image normalImage = new Image(getClass().getResource(&quot;/budget/images/saveIcon.png&quot;).toString());</span>
+<span class="fc" id="L153">            saveIcon.setImage(normalImage);</span>
+<span class="fc" id="L154">        });</span>
 
-        // Set the save button to change image when hovered over
-<span class="fc" id="L97">        saveBtn.setOnMouseEntered(event -&gt; {</span>
-<span class="fc" id="L98">            Image hoverImage = new Image(getClass().getResource(&quot;/budget/images/saveIconHover.png&quot;).toString());</span>
-<span class="fc" id="L99">            saveIcon.setImage(hoverImage);</span>
-<span class="fc" id="L100">        });</span>
+<span class="fc" id="L156">        budgetTitle.setText(data.getCalcName());</span>
+<span class="fc" id="L157">        totalSum.setText(Integer.toString(calc.getTotalSum()));</span>
+<span class="fc" id="L158">    }</span>
 
-<span class="fc" id="L102">        saveBtn.setOnMouseExited(event -&gt; {</span>
-<span class="fc" id="L103">            Image normalImage = new Image(getClass().getResource(&quot;/budget/images/saveIcon.png&quot;).toString());</span>
-<span class="fc" id="L104">            saveIcon.setImage(normalImage);</span>
-<span class="fc" id="L105">        });</span>
-<span class="fc" id="L106">    }</span>
-
+    /**
+     * Switch to the main menu view.
+     *
+     * @param event The event triggering the action.
+     * @throws Exception If there is an error during scene change.
+     */
     @FXML
-    private void loadMainMenu(ActionEvent event) throws Exception {
-<span class="fc" id="L110">        ChangeScene.changeToScene(getClass(), event, &quot;startmenu-fxml.fxml&quot;);</span>
-<span class="fc" id="L111">    }</span>
+    private void loadMainMenu(final ActionEvent event) throws Exception {
+<span class="fc" id="L168">        ChangeScene.changeToScene(getClass(), event, &quot;startmenu-fxml.fxml&quot;);</span>
+<span class="fc" id="L169">    }</span>
 
+    /**
+     * Add a new calculation to the data.
+     *
+     * @param newCalc The new calculation to add.
+     */
+    public final void addCalculation(final Calculation newCalc) {
+<span class="fc" id="L177">        String name = this.budgetTitle.getText();</span>
+<span class="fc" id="L178">        data.addCalculation(name, newCalc);</span>
+<span class="fc" id="L179">    }</span>
 
+    /**
+     * Get the list of calculations.
+     *
+     * @return A map of calculation names to Calculation objects.
+     */
+    public final Map&lt;String, Calculation&gt; getCalculations() {
+<span class="fc" id="L187">        return data.getCalculations();</span>
+    }
+
+    /**
+     * Add an amount to the selected category.
+     */
     @FXML
     public void addAmount() {
-        // Get the input values
-<span class="fc" id="L117">        int amountToAdd = Integer.parseInt(input.getText());</span>
-<span class="fc" id="L118">        String category = selector.getValue();</span>
-
-
-<span class="fc bfc" id="L121" title="All 2 branches covered.">        for (Category cat : categoryList) {</span>
-<span class="fc bfc" id="L122" title="All 2 branches covered.">            if (cat.getCategoryName().equals(category)) {</span>
-<span class="fc" id="L123">                calc.addAmountToCategory(cat, amountToAdd);</span>
-<span class="fc" id="L124">                table.refresh();</span>
-<span class="fc" id="L125">                input.clear();</span>
-            }
-<span class="fc" id="L127">        }</span>
-
-<span class="fc" id="L129">        totalSum.setText(Integer.toString(calc.getTotalSum()));</span>
-
-<span class="fc" id="L131">    }</span>
-
-    @FXML
-    public void saveBudget() {
         try {
-<span class="fc" id="L136">            FileUtility.writeToFile(calc);</span>
-<span class="nc" id="L137">        } catch (Exception e) {</span>
-<span class="nc" id="L138">            e.printStackTrace();</span>
-<span class="fc" id="L139">        }</span>
-<span class="fc" id="L140">    }</span>
+<span class="fc" id="L196">            int amountToAdd = Integer.parseInt(input.getText());</span>
+<span class="fc" id="L197">            String newCategory = selector.getValue();</span>
+
+<span class="fc bfc" id="L199" title="All 2 branches covered.">            for (Category cat : categoryList) {</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">                if (cat.getCategoryName().equals(newCategory)) {</span>
+<span class="fc" id="L201">                    calc.addAmountToCategory(cat, amountToAdd);</span>
+<span class="fc" id="L202">                    table.refresh();</span>
+<span class="fc" id="L203">                    input.clear();</span>
+                }
+<span class="fc" id="L205">            }</span>
+<span class="fc" id="L206">            totalSum.setText(Integer.toString(calc.getTotalSum()));</span>
+<span class="nc" id="L207">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L208">            showAlertDialog(&quot;Invalid input&quot;, &quot;Please enter a valid integer.&quot;);</span>
+<span class="nc" id="L209">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L210">            showAlertDialog(&quot;Invalid input&quot;, &quot;The amount must be a positive integer.&quot;);</span>
+<span class="pc" id="L211">        }</span>
+<span class="fc" id="L212">    }</span>
+
+    /**
+     * Show an alert dialog with the given title and content.
+     * @param title
+     * @param content
+     */
+    private void showAlertDialog(final String title, final String content) {
+<span class="nc" id="L220">        Alert alert = new Alert(Alert.AlertType.ERROR);</span>
+<span class="nc" id="L221">        alert.setTitle(title);</span>
+<span class="nc" id="L222">        alert.setHeaderText(null);</span>
+<span class="nc" id="L223">        alert.setContentText(content);</span>
+<span class="nc" id="L224">        alert.showAndWait();</span>
+<span class="nc" id="L225">    }</span>
+
+    /**
+     * Save the current budget to a file.
+     */
+    @FXML
+    public final void saveBudget() {
+<span class="fc" id="L232">        addCalculation(this.calc);</span>
+        try {
+<span class="fc" id="L234">            FileUtility.writeToFile(getCalculations(), &quot;/../utility/src/main/resources/budget/utility/savedBudget.json&quot;);</span>
+<span class="nc" id="L235">        } catch (Exception e) {</span>
+<span class="nc" id="L236">            e.printStackTrace();</span>
+<span class="fc" id="L237">        }</span>
+<span class="fc" id="L238">    }</span>
 
 
 }

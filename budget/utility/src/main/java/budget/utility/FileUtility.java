@@ -1,16 +1,16 @@
 package budget.utility;
 
 import budget.core.Calculation;
-import budget.core.Category;
-
+import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class is responsible for file operations.
  */
 public final class FileUtility {
-
     /**
      * Load status.
      */
@@ -37,13 +37,29 @@ public final class FileUtility {
     /**
      * Writes the Calculation object to a file.
      *
-     * @param calc The Calculation object to save
+     * @param calcMap The map of calculation objects to save
+     * @param path The path to the file
      * @throws IOException If an input or output exception occurred
      */
-    public static void writeToFile(final Calculation calc) throws IOException {
-        Json.getMapper().
-                writerWithDefaultPrettyPrinter().
-                writeValue(new File(FILE_PATH), calc);
+    public static void writeToFile(final Map<String, Calculation> calcMap, final String path) throws IOException {
+        File file = new File(CURRENT_DIR + path);
+        // Check if calcMap is empty
+        if (calcMap.isEmpty()) {
+            // If it's empty, create an empty JSON object and write it to the file
+            Json.getMapper().writeValue(file, new HashMap<>());
+        } else {
+            Map<String, Calculation> existingDataMap;
+            if (file.exists()) {
+                existingDataMap = Json.getMapper().readValue(file, Json.getMapper()
+                        .getTypeFactory().constructMapType(HashMap.class, String.class, Calculation.class));
+            } else {
+                existingDataMap = new HashMap<>();
+            }
+            existingDataMap.putAll(calcMap);
+
+            // Write the merged data back to the file
+            Json.getMapper().writerWithDefaultPrettyPrinter().writeValue(file, existingDataMap);
+        }
     }
 
     /**
@@ -58,18 +74,23 @@ public final class FileUtility {
     /**
      * Reads the Calculation object from a file.
      *
-     * @param calc The Calculation object to load
+     * @param calcMap The map of calculations to update
+     * @param path The path to the file
      * @throws IOException If an input or output exception occurred
      */
-    public static void readFromFile(final Calculation calc) throws IOException {
-        Calculation loadCalc = Json.
-                getMapper().
-                readValue(new File(FILE_PATH), Calculation.class);
+    public static void readFile(final Map<String, Calculation> calcMap, final String path) throws IOException {
+        File file = new File(CURRENT_DIR + path);
+        Map<String, Calculation> mapFromFile =
+                Json.getMapper().readValue(file, new TypeReference
+                        <Map<String, Calculation>>(
+                                ) {
+                });
+        calcMap.clear();
 
-        calc.getCategoriesList().clear();
-
-        for (Category cat : loadCalc.getCategoriesList()) {
-            calc.getCategoriesList().add(cat);
+        for (Map.Entry<String, Calculation> entry : mapFromFile.entrySet()) {
+            String name = entry.getKey();
+            Calculation calcObject = entry.getValue();
+            calcMap.put(name, calcObject);
         }
     }
 
@@ -81,4 +102,6 @@ public final class FileUtility {
     public static boolean getLoad() {
         return load;
     }
+
+
 }
