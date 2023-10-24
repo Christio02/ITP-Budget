@@ -51,7 +51,7 @@ public class StartMenuController {
             e.printStackTrace();
         }
         dialog = new Dialog<>();
-        dialog.setTitle("Set calculation name");
+        dialog.setTitle("Set budget name");
         dialog.setHeaderText("Please provide a unique name for budget");
 
         TextField inputText = new TextField();
@@ -62,6 +62,7 @@ public class StartMenuController {
         ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
         ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
         dialog.getDialogPane().getButtonTypes().addAll(okButton, cancelButton);
+
 
         // Result converter to handle the OK button click
         dialog.setResultConverter(buttonType -> {
@@ -79,6 +80,10 @@ public class StartMenuController {
     public final boolean popUpOnLoadBudgets() {
         boolean shouldLoad = true;
         Optional<String> result = dialog.showAndWait();
+        if (!result.isPresent()) {
+            return false;
+        }
+
         /*
          * A reference to the result of the dialog.
          * Anonymous class to allow for the use of a mutable variable.

@@ -6,4 +6,4 @@ ui,budget.ui,StartMenuController.new Object() {...},0,16,0,0,0,5,0,3,0,3
 ui,budget.ui,BudgetsViewController.new ListCell() {...},0,86,1,7,0,15,1,5,0,2
 ui,budget.ui,BudgetApplication,4,34,0,0,2,7,1,2,1,2
 ui,budget.ui,DataSingleton,0,57,0,0,0,20,0,12,0,12
-ui,budget.ui,StartMenuController,44,187,6,8,18,45,6,7,0,6
+ui,budget.ui,StartMenuController,46,190,7,9,19,46,7,7,0,6

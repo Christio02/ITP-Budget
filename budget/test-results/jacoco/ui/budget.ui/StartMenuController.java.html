@@ -51,7 +51,7 @@ import java.util.regex.Pattern;
 <span class="nc" id="L51">            e.printStackTrace();</span>
 <span class="fc" id="L52">        }</span>
 <span class="fc" id="L53">        dialog = new Dialog&lt;&gt;();</span>
-<span class="fc" id="L54">        dialog.setTitle(&quot;Set calculation name&quot;);</span>
+<span class="fc" id="L54">        dialog.setTitle(&quot;Set budget name&quot;);</span>
 <span class="fc" id="L55">        dialog.setHeaderText(&quot;Please provide a unique name for budget&quot;);</span>
 
 <span class="fc" id="L57">        TextField inputText = new TextField();</span>
@@ -63,71 +63,76 @@ import java.util.regex.Pattern;
 <span class="fc" id="L63">        ButtonType cancelButton = new ButtonType(&quot;Cancel&quot;, ButtonBar.ButtonData.CANCEL_CLOSE);</span>
 <span class="fc" id="L64">        dialog.getDialogPane().getButtonTypes().addAll(okButton, cancelButton);</span>
 
+
         // Result converter to handle the OK button click
-<span class="fc" id="L67">        dialog.setResultConverter(buttonType -&gt; {</span>
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">            if (buttonType == okButton) {</span>
-<span class="fc" id="L69">                return inputText.getText();</span>
+<span class="fc" id="L68">        dialog.setResultConverter(buttonType -&gt; {</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">            if (buttonType == okButton) {</span>
+<span class="fc" id="L70">                return inputText.getText();</span>
             }
-<span class="nc" id="L71">            return null;</span>
+<span class="nc" id="L72">            return null;</span>
         });
 
-<span class="fc" id="L74">    }</span>
+<span class="fc" id="L75">    }</span>
     /**
      * Displays a dialog for entering a unique budget name.
      * @return True if the budget can be loaded, false otherwise.
      */
     public final boolean popUpOnLoadBudgets() {
-<span class="fc" id="L80">        boolean shouldLoad = true;</span>
-<span class="fc" id="L81">        Optional&lt;String&gt; result = dialog.showAndWait();</span>
+<span class="fc" id="L81">        boolean shouldLoad = true;</span>
+<span class="fc" id="L82">        Optional&lt;String&gt; result = dialog.showAndWait();</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if (!result.isPresent()) {</span>
+<span class="nc" id="L84">            return false;</span>
+        }
+
         /*
          * A reference to the result of the dialog.
          * Anonymous class to allow for the use of a mutable variable.
          */
-<span class="fc" id="L86">        var ref = new Object() {</span>
-<span class="fc" id="L87">            private String thisKey = &quot;&quot;;</span>
+<span class="fc" id="L91">        var ref = new Object() {</span>
+<span class="fc" id="L92">            private String thisKey = &quot;&quot;;</span>
             public void setThisKey(final String key) {
-<span class="fc" id="L89">                this.thisKey = key;</span>
-<span class="fc" id="L90">            }</span>
+<span class="fc" id="L94">                this.thisKey = key;</span>
+<span class="fc" id="L95">            }</span>
             public String getThisKey() {
-<span class="fc" id="L92">                return this.thisKey;</span>
+<span class="fc" id="L97">                return this.thisKey;</span>
             }
         };
-<span class="fc" id="L95">        result.ifPresent(ref::setThisKey);</span>
-<span class="fc" id="L96">        Pattern pattern = Pattern.compile(&quot;[^a-zA-Z0-9]*&quot;);</span>
-<span class="fc" id="L97">        Matcher matcher = pattern.matcher(ref.getThisKey());</span>
-<span class="pc bpc" id="L98" title="2 of 4 branches missed.">        if (ref.getThisKey().isEmpty() || !matcher.find()) {</span>
-<span class="nc" id="L99">            shouldLoad = false;</span>
-<span class="nc" id="L100">            Alert alert = new Alert(Alert.AlertType.ERROR);</span>
-<span class="nc" id="L101">            alert.setHeaderText(&quot;Invalid input!&quot;);</span>
-<span class="nc" id="L102">            alert.setContentText(&quot;Name is empty or name contains non-numerical characters!&quot;);</span>
+<span class="fc" id="L100">        result.ifPresent(ref::setThisKey);</span>
+<span class="fc" id="L101">        Pattern pattern = Pattern.compile(&quot;[^a-zA-Z0-9]*&quot;);</span>
+<span class="fc" id="L102">        Matcher matcher = pattern.matcher(ref.getThisKey());</span>
+<span class="pc bpc" id="L103" title="2 of 4 branches missed.">        if (ref.getThisKey().isEmpty() || !matcher.find()) {</span>
+<span class="nc" id="L104">            shouldLoad = false;</span>
+<span class="nc" id="L105">            Alert alert = new Alert(Alert.AlertType.ERROR);</span>
+<span class="nc" id="L106">            alert.setHeaderText(&quot;Invalid input!&quot;);</span>
+<span class="nc" id="L107">            alert.setContentText(&quot;Name is empty or name contains non-numerical characters!&quot;);</span>
 
-<span class="nc" id="L104">            alert.showAndWait();</span>
-<span class="nc" id="L105">            return shouldLoad;</span>
+<span class="nc" id="L109">            alert.showAndWait();</span>
+<span class="nc" id="L110">            return shouldLoad;</span>
 
         }
 
-<span class="fc" id="L109">        boolean budgetExists = false;</span>
-<span class="fc bfc" id="L110" title="All 2 branches covered.">        for (Map.Entry&lt;String, Calculation&gt; entry : data.getCalculations().entrySet()) {</span>
-<span class="fc" id="L111">            String presentKey = entry.getKey();</span>
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">            if (ref.getThisKey().equals(presentKey)) {</span>
-<span class="nc" id="L113">                budgetExists = true;</span>
-<span class="nc" id="L114">                break;</span>
+<span class="fc" id="L114">        boolean budgetExists = false;</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        for (Map.Entry&lt;String, Calculation&gt; entry : data.getCalculations().entrySet()) {</span>
+<span class="fc" id="L116">            String presentKey = entry.getKey();</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">            if (ref.getThisKey().equals(presentKey)) {</span>
+<span class="nc" id="L118">                budgetExists = true;</span>
+<span class="nc" id="L119">                break;</span>
 
             }
-<span class="fc" id="L117">        }</span>
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">        if (budgetExists) {</span>
-<span class="nc" id="L119">            shouldLoad = false;</span>
-<span class="nc" id="L120">            Alert errorAlert = new Alert(Alert.AlertType.ERROR);</span>
-<span class="nc" id="L121">            errorAlert.setHeaderText(&quot;Error, could not create new budget&quot;);</span>
-<span class="nc" id="L122">            errorAlert.setContentText(&quot;Budget with that name already exists!&quot;);</span>
-<span class="nc" id="L123">            errorAlert.showAndWait();</span>
+<span class="fc" id="L122">        }</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        if (budgetExists) {</span>
+<span class="nc" id="L124">            shouldLoad = false;</span>
+<span class="nc" id="L125">            Alert errorAlert = new Alert(Alert.AlertType.ERROR);</span>
+<span class="nc" id="L126">            errorAlert.setHeaderText(&quot;Error, could not create new budget&quot;);</span>
+<span class="nc" id="L127">            errorAlert.setContentText(&quot;Budget with that name already exists!&quot;);</span>
+<span class="nc" id="L128">            errorAlert.showAndWait();</span>
 
-<span class="nc" id="L125">        } else {</span>
-<span class="fc" id="L126">            data.setCalculation(new Calculation());</span>
-<span class="fc" id="L127">            data.setCalcName(ref.getThisKey());</span>
-<span class="fc" id="L128">            FileUtility.setLoad(false);</span>
+<span class="nc" id="L130">        } else {</span>
+<span class="fc" id="L131">            data.setCalculation(new Calculation());</span>
+<span class="fc" id="L132">            data.setCalcName(ref.getThisKey());</span>
+<span class="fc" id="L133">            FileUtility.setLoad(false);</span>
         }
-<span class="fc" id="L130">        return shouldLoad;</span>
+<span class="fc" id="L135">        return shouldLoad;</span>
 
 
     }
@@ -138,13 +143,13 @@ import java.util.regex.Pattern;
      */
     @FXML
     private void loadNewBudget(final ActionEvent event) throws Exception {
-<span class="fc" id="L141">        FileUtility.setLoad(false);</span>
-<span class="pc bpc" id="L142" title="1 of 2 branches missed.">        if (!popUpOnLoadBudgets()) {</span>
-<span class="nc" id="L143">            return;</span>
+<span class="fc" id="L146">        FileUtility.setLoad(false);</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">        if (!popUpOnLoadBudgets()) {</span>
+<span class="nc" id="L148">            return;</span>
         }
-<span class="fc" id="L145">        ChangeScene.changeToScene(getClass(), event, &quot;budget-view.fxml&quot;);</span>
+<span class="fc" id="L150">        ChangeScene.changeToScene(getClass(), event, &quot;budget-view.fxml&quot;);</span>
 
-<span class="fc" id="L147">    }</span>
+<span class="fc" id="L152">    }</span>
     /**
      * Handles the event when the &quot;Load Previous Budget&quot; button is clicked.
      * @param event The ActionEvent triggered by the button click.
@@ -152,9 +157,9 @@ import java.util.regex.Pattern;
      */
     @FXML
     private void loadPrevBudget(final ActionEvent event) throws Exception {
-<span class="fc" id="L155">        FileUtility.setLoad(true);</span>
-<span class="fc" id="L156">        ChangeScene.changeToScene(getClass(), event, &quot;load-budgets.fxml&quot;);</span>
-<span class="fc" id="L157">    }</span>
+<span class="fc" id="L160">        FileUtility.setLoad(true);</span>
+<span class="fc" id="L161">        ChangeScene.changeToScene(getClass(), event, &quot;load-budgets.fxml&quot;);</span>
+<span class="fc" id="L162">    }</span>
 }
 
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
