@@ -13,6 +13,7 @@ import javafx.scene.control.ListView;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import budget.utility.FileUtility;
 
 public class BudgetsViewController {
     /**
@@ -148,7 +149,6 @@ public class BudgetsViewController {
     @FXML
     private void loadMainMenu(final ActionEvent event) throws Exception {
         ChangeScene.changeToScene(getClass(), event, "startmenu-fxml.fxml");
-
     }
 
     /**
@@ -177,6 +177,8 @@ public class BudgetsViewController {
             Calculation selectedCalc = calcObject.getItems().get(selectedIndex);
 
             if (selectedCalc != null) {
+                FileUtility.deleteBudget(selectedCalcName, data.getCalculations());
+                data.deleteEntry(selectedCalcName);
                 // Remove the selected item from the calculationMap
                 calculationMap.remove(selectedCalcName);
 
@@ -190,8 +192,10 @@ public class BudgetsViewController {
                     nameCalc.getSelectionModel().selectFirst();
                 }
 
+
             }
         }
+
     }
 
 

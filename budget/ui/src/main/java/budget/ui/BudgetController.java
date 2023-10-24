@@ -234,8 +234,8 @@ public class BudgetController {
 
     /**
      * Show an alert dialog with the given title and content.
-     * @param title
-     * @param content
+     * @param title The title of the alert dialog
+     * @param content The content of the alert dialog
      */
     private void showAlertDialog(final String title, final String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -252,6 +252,7 @@ public class BudgetController {
     public final void saveBudget() {
         addCalculation(this.calc);
         try {
+//            FileUtility.writeToFile(getCalculations(), "../utility/src/main/resources/budget/utility/savedBudget.json");
             FileUtility.writeToFile(getCalculations(), "/../utility/src/main/resources/budget/utility/savedBudget.json");
         } catch (Exception e) {
             e.printStackTrace();

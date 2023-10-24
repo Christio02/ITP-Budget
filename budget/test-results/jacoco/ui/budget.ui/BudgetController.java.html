@@ -213,8 +213,8 @@ import java.util.Map;
 
     /**
      * Show an alert dialog with the given title and content.
-     * @param title
-     * @param content
+     * @param title The title of the alert dialog
+     * @param content The content of the alert dialog
      */
     private void showAlertDialog(final String title, final String content) {
 <span class="nc" id="L220">        Alert alert = new Alert(Alert.AlertType.ERROR);</span>
@@ -231,11 +231,12 @@ import java.util.Map;
     public final void saveBudget() {
 <span class="fc" id="L232">        addCalculation(this.calc);</span>
         try {
-<span class="fc" id="L234">            FileUtility.writeToFile(getCalculations(), &quot;/../utility/src/main/resources/budget/utility/savedBudget.json&quot;);</span>
-<span class="nc" id="L235">        } catch (Exception e) {</span>
-<span class="nc" id="L236">            e.printStackTrace();</span>
-<span class="fc" id="L237">        }</span>
-<span class="fc" id="L238">    }</span>
+//            FileUtility.writeToFile(getCalculations(), &quot;../utility/src/main/resources/budget/utility/savedBudget.json&quot;);
+<span class="fc" id="L235">            FileUtility.writeToFile(getCalculations(), &quot;/../utility/src/main/resources/budget/utility/savedBudget.json&quot;);</span>
+<span class="nc" id="L236">        } catch (Exception e) {</span>
+<span class="nc" id="L237">            e.printStackTrace();</span>
+<span class="fc" id="L238">        }</span>
+<span class="fc" id="L239">    }</span>
 
 
 }
