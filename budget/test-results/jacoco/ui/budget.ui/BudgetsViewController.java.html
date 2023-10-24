@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BudgetsViewController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ui</a> &gt; <a href="index.source.html" class="el_package">budget.ui</a> &gt; <span class="el_source">BudgetsViewController.java</span></div><h1>BudgetsViewController.java</h1><pre class="source lang-java linenums">package budget.ui;
+
+import budget.core.Calculation;
+import budget.core.Category;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+<span class="fc" id="L17">public class BudgetsViewController {</span>
+    /**
+     * Listview for names.
+     */
+    @FXML
+    private ListView&lt;String&gt; nameCalc;
+    /**
+     * Listview for calculation objects.
+     */
+    @FXML
+    private ListView&lt;Calculation&gt; calcObject;
+    /**
+     * Local Map of calcualtion objects.
+     */
+    private Map&lt;String, Calculation&gt; calculationMap;
+
+    /**
+     * Singleton for data retrieval and storing.
+     */
+<span class="fc" id="L36">    private final DataSingleton data = DataSingleton.getInstance();</span>
+
+    /**
+     * Selected name in listview.
+     */
+    private String selectedName;
+
+    /**
+     * Initialize the BudgetsView UI and set up event handling.
+     */
+    @FXML
+    public final void initialize() {
+<span class="fc" id="L48">        System.out.println(data.getCalculations());</span>
+<span class="fc" id="L49">        calculationMap = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L51">        calculationMap = data.getCalculations();</span>
+
+
+<span class="fc" id="L54">        ObservableList&lt;String&gt; listOfCalcNames = FXCollections.observableArrayList();</span>
+<span class="fc" id="L55">        ObservableList&lt;Calculation&gt; listOfCalcObjects = FXCollections.observableArrayList();</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        for (Map.Entry&lt;String, Calculation&gt; entry: this.calculationMap.entrySet()) {</span>
+<span class="fc" id="L57">            String entryName = entry.getKey();</span>
+<span class="fc" id="L58">            Calculation calc = entry.getValue();</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">            if (!entryName.equals(&quot;overwrite&quot;)) {</span>
+<span class="fc" id="L60">                listOfCalcNames.add(entryName);</span>
+<span class="fc" id="L61">                listOfCalcObjects.add(calc);</span>
+            }
+<span class="fc" id="L63">        }</span>
+
+<span class="fc" id="L65">       nameCalc.setItems(listOfCalcNames); calcObject.setItems(listOfCalcObjects);</span>
+
+
+
+<span class="fc" id="L69">        handleDoubleClickObject();</span>
+<span class="fc" id="L70">        updateView();</span>
+<span class="fc" id="L71">        observerSelectedName();</span>
+
+<span class="fc" id="L73">    }</span>
+
+    /**
+     * Observes the selected name in the nameCalc ListView.
+     */
+    private void observerSelectedName() {
+<span class="fc" id="L79">        nameCalc.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">            if (newValue != null) {</span>
+<span class="fc" id="L81">                selectedName = newValue;</span>
+<span class="fc" id="L82">                Calculation selectedCalc = calculationMap.get(selectedName);</span>
+<span class="fc" id="L83">                calcObject.getSelectionModel().select(selectedCalc);</span>
+<span class="fc" id="L84">                calcObject.scrollTo(selectedCalc);</span>
+            }
+<span class="fc" id="L86">        });</span>
+<span class="fc" id="L87">    }</span>
+
+    /**
+     * Handle double-click on an object in the nameCalc ListView.
+     */
+    private void handleDoubleClickObject() {
+<span class="fc" id="L93">        nameCalc.setOnMouseClicked(event -&gt; {</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">            if (event.getClickCount() == 2) {</span>
+<span class="fc" id="L95">                String selectedCalcName = nameCalc.getSelectionModel().getSelectedItem();</span>
+
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">                if (selectedCalcName != null) {</span>
+<span class="fc" id="L98">                    Calculation selectedCalc = data.getCalculations().get(selectedCalcName);</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">                    if (selectedCalc != null) {</span>
+<span class="fc" id="L100">                        data.setCalculation(selectedCalc);</span>
+<span class="fc" id="L101">                        data.setCalcName(selectedCalcName);</span>
+                        try {
+<span class="fc" id="L103">                            ChangeScene.changeToScene(getClass(), event, &quot;budget-view.fxml&quot;);</span>
+<span class="nc" id="L104">                        } catch (Exception e) {</span>
+<span class="nc" id="L105">                            throw new RuntimeException(e);</span>
+<span class="fc" id="L106">                        }</span>
+                    }
+                }
+            }
+<span class="fc" id="L110">        });</span>
+<span class="fc" id="L111">    }</span>
+
+    /**
+     * Update the view for the calcObject ListView.
+     */
+    private void updateView() {
+<span class="fc" id="L117">        calcObject.setCellFactory(param -&gt; new ListCell&lt;Calculation&gt;() {</span>
+            @Override
+            protected void updateItem(final Calculation item, final boolean empty) {
+<span class="fc" id="L120">                super.updateItem(item, empty);</span>
+
+<span class="pc bpc" id="L122" title="1 of 4 branches missed.">                if (empty || item == null) {</span>
+<span class="fc" id="L123">                    setText(null);</span>
+                } else {
+                    // Customize the text representation here
+<span class="fc" id="L126">                    StringBuilder text = new StringBuilder(&quot;Calculation: &quot;  + &quot;\nTotal Sum: &quot; + item.getTotalSum() + &quot;\nCategories:\n&quot;);</span>
+
+<span class="fc bfc" id="L128" title="All 2 branches covered.">                    for (Category category : item.getCategoriesList()) {</span>
+<span class="fc" id="L129">                        text.append(category.getCategoryName()).append(&quot;: &quot;).append(category.getAmount()).append(&quot;\nBudget History: &quot;);</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">                        for (int amount : category.getBudgetHistory()) {</span>
+<span class="fc" id="L131">                            text.append(amount).append(&quot;, &quot;);</span>
+<span class="fc" id="L132">                        }</span>
+<span class="fc" id="L133">                        text.delete(text.length() - 2, text.length()); // Remove the trailing comma and space</span>
+<span class="fc" id="L134">                        text.append(&quot;\n&quot;);</span>
+<span class="fc" id="L135">                    }</span>
+
+<span class="fc" id="L137">                    setText(text.toString());</span>
+                }
+<span class="fc" id="L139">            }</span>
+        });
+
+<span class="fc" id="L142">    }</span>
+
+    /**
+     * Load the main menu.
+     * @param event The event triggering the action.
+     */
+    @FXML
+    private void loadMainMenu(final ActionEvent event) throws Exception {
+<span class="nc" id="L150">        ChangeScene.changeToScene(getClass(), event, &quot;startmenu-fxml.fxml&quot;);</span>
+
+<span class="nc" id="L152">    }</span>
+
+    /**
+     * Delete the selected budget.
+     */
+    @FXML
+    public final void deleteBudget() {
+<span class="nc" id="L159">        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);</span>
+
+<span class="nc" id="L161">        confirmationAlert.setHeaderText(&quot;Are you sure you want to delete budget?&quot;);</span>
+<span class="nc" id="L162">        confirmationAlert.setContentText(&quot;Deleting budget, means you'll never be able to retrieve it!&quot;);</span>
+
+<span class="nc" id="L164">        ButtonType confirm = new ButtonType(&quot;Confirm&quot;);</span>
+<span class="nc" id="L165">        ButtonType cancel = new ButtonType(&quot;Cancel&quot;);</span>
+
+<span class="nc" id="L167">        confirmationAlert.getButtonTypes().setAll(confirm, cancel);</span>
+
+<span class="nc" id="L169">        Optional&lt;ButtonType&gt; result = confirmationAlert.showAndWait();</span>
+
+<span class="nc" id="L171">        int selectedIndex = nameCalc.getSelectionModel().getSelectedIndex();</span>
+
+<span class="nc bnc" id="L173" title="All 6 branches missed.">        if (selectedIndex &gt;= 0 &amp;&amp; result.isPresent() &amp;&amp; result.get().equals(confirm)) {</span>
+<span class="nc" id="L174">            String selectedCalcName = nameCalc.getItems().get(selectedIndex);</span>
+
+            // Check if the selected item is also in calcObject
+<span class="nc" id="L177">            Calculation selectedCalc = calcObject.getItems().get(selectedIndex);</span>
+
+<span class="nc bnc" id="L179" title="All 2 branches missed.">            if (selectedCalc != null) {</span>
+                // Remove the selected item from the calculationMap
+<span class="nc" id="L181">                calculationMap.remove(selectedCalcName);</span>
+
+                // Remove the selected items from the ListViews
+<span class="nc" id="L184">                nameCalc.getItems().remove(selectedIndex);</span>
+<span class="nc" id="L185">                calcObject.getItems().remove(selectedIndex);</span>
+<span class="nc" id="L186">                data.updateMap(calculationMap);</span>
+
+                // Set the selection back to the first item
+<span class="nc bnc" id="L189" title="All 2 branches missed.">                if (!nameCalc.getItems().isEmpty()) {</span>
+<span class="nc" id="L190">                    nameCalc.getSelectionModel().selectFirst();</span>
+                }
+
+            }
+        }
+<span class="nc" id="L195">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

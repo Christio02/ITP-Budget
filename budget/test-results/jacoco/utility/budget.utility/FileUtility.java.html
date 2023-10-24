@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FileUtility.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">utility</a> &gt; <a href="index.source.html" class="el_package">budget.utility</a> &gt; <span class="el_source">FileUtility.java</span></div><h1>FileUtility.java</h1><pre class="source lang-java linenums">package budget.utility;
+
+import budget.core.Calculation;
+import com.fasterxml.jackson.core.type.TypeReference;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * This class is responsible for file operations.
+ */
+public final class FileUtility {
+    /**
+     * Load status.
+     */
+    private static boolean load;
+
+    /**
+     * Current directory path.
+     */
+<span class="fc" id="L22">    private static final String CURRENT_DIR = System.getProperty(&quot;user.dir&quot;);</span>
+
+    /**
+     * File path for serialization.
+     */
+<span class="fc" id="L27">    private static final String FILE_PATH = CURRENT_DIR</span>
+            + &quot;/../utility/src/main/resources/budget/utility/savedBudget.json&quot;;
+
+    /**
+     * Private constructor to hide the implicit public one.
+     */
+<span class="nc" id="L33">    private FileUtility() {</span>
+<span class="nc" id="L34">        throw new IllegalStateException(&quot;Utility class&quot;);</span>
+    }
+
+    /**
+     * Writes the Calculation object to a file.
+     *
+     * @param calcMap The map of calculation objects to save
+     * @throws IOException If an input or output exception occurred
+     */
+    public static void writeToFile(final Map&lt;String, Calculation&gt; calcMap) throws IOException {
+<span class="fc" id="L44">        File file = new File(FILE_PATH);</span>
+        // Check if calcMap is empty
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (calcMap.isEmpty()) {</span>
+            // If it's empty, create an empty JSON object and write it to the file
+<span class="nc" id="L48">            Json.getMapper().writeValue(file, new HashMap&lt;&gt;());</span>
+        } else {
+            Map&lt;String, Calculation&gt; existingDataMap;
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">            if (file.exists()) {</span>
+<span class="fc" id="L52">                existingDataMap = Json.getMapper().readValue(file, Json.getMapper()</span>
+<span class="fc" id="L53">                        .getTypeFactory().constructMapType(HashMap.class, String.class, Calculation.class));</span>
+            } else {
+<span class="nc" id="L55">                existingDataMap = new HashMap&lt;&gt;();</span>
+            }
+<span class="fc" id="L57">            existingDataMap.putAll(calcMap);</span>
+
+            // Write the merged data back to the file
+<span class="fc" id="L60">            Json.getMapper().writerWithDefaultPrettyPrinter().writeValue(file, existingDataMap);</span>
+        }
+<span class="fc" id="L62">    }</span>
+
+    /**
+     * Sets the load status.
+     *
+     * @param loadStatus The new load status
+     */
+    public static void setLoad(final boolean loadStatus) {
+<span class="nc" id="L70">        load = loadStatus;</span>
+<span class="nc" id="L71">    }</span>
+
+    /**
+     * Reads the Calculation object from a file.
+     *
+     * @param calcMap The map of calculations to update
+     * @throws IOException If an input or output exception occurred
+     */
+    public static void readFile(final Map&lt;String, Calculation&gt; calcMap) throws IOException {
+<span class="fc" id="L80">        File file = new File(FILE_PATH);</span>
+        Map&lt;String, Calculation&gt; mapFromFile =
+<span class="fc" id="L82">                Json.getMapper().readValue(file, new TypeReference</span>
+                        &lt;Map&lt;String, Calculation&gt;&gt;(
+<span class="fc" id="L84">                                ) {</span>
+                });
+<span class="fc" id="L86">        calcMap.clear();</span>
+
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        for (Map.Entry&lt;String, Calculation&gt; entry : mapFromFile.entrySet()) {</span>
+<span class="fc" id="L89">            String name = entry.getKey();</span>
+<span class="fc" id="L90">            Calculation calcObject = entry.getValue();</span>
+<span class="fc" id="L91">            calcMap.put(name, calcObject);</span>
+<span class="fc" id="L92">        }</span>
+<span class="fc" id="L93">    }</span>
+
+    /**
+     * Gets the load status.
+     *
+     * @return The load status
+     */
+    public static boolean getLoad() {
+<span class="nc" id="L101">        return load;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

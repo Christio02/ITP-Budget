@@ -35,19 +35,26 @@ public class FileUtilityTest {
         testCalculation.addAmountToCategory(transport, 500);
         testCalculation.addAmountToCategory(transport, 2000);
         testMap.put(testName, testCalculation);
+        String userDir = System.getProperty("user.dir");
+        String path = userDir + "/../utility/src/main/resources/budget/utility/savedBudget.json";
+        File file = new File(path);
+
+//        try {
+//            Json.getMapper().writerWithDefaultPrettyPrinter().writeValue(file, testMap);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+
     }
     @Test
     public void testNameIsIdentical() throws IOException{
         FileUtility.writeToFile(testMap);
-
         Map<String, Calculation> loadMap = new HashMap<>();
         FileUtility.readFile(loadMap);
 
         for (Map.Entry<String, Calculation> entry : loadMap.entrySet() ) {
             String name = entry.getKey();
-            if (!name.equals("overwrite")) {
-                assertEquals(testName, name );
-            }
+            assertEquals(testName, name);
 
         }
     }
