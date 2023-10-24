@@ -94,7 +94,7 @@ public class StartMenuController {
         if (ref.getThisKey().isEmpty() || !matcher.find()) {
             shouldLoad = false;
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Wrong input!");
+            alert.setHeaderText("Invalid input!");
             alert.setContentText("Name is empty or name contains non-numerical characters!");
 
             alert.showAndWait();

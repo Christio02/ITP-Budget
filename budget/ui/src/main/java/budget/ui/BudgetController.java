@@ -5,12 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.image.Image;
@@ -190,20 +185,32 @@ public class BudgetController {
      * Add an amount to the selected category.
      */
     @FXML
-    public final void addAmount() {
-        // Get the input values
-        int amountToAdd = Integer.parseInt(input.getText());
-        String newCategory = selector.getValue();
+    public void addAmount() {
+        try {
+            int amountToAdd = Integer.parseInt(input.getText());
+            String category = selector.getValue();
 
-        for (Category cat : categoryList) {
-            if (cat.getCategoryName().equals(newCategory)) {
-                calc.addAmountToCategory(cat, amountToAdd);
-                table.refresh();
-                input.clear();
+            for (Category cat : categoryList) {
+                if (cat.getCategoryName().equals(category)) {
+                    calc.addAmountToCategory(cat, amountToAdd);
+                    table.refresh();
+                    input.clear();
+                }
             }
+            totalSum.setText(Integer.toString(calc.getTotalSum()));
+        } catch (NumberFormatException e) {
+            showAlertDialog("Invalid input", "Please enter a valid integer.");
+        } catch (IllegalArgumentException e) {
+            showAlertDialog("Invalid input", "The amount must be a positive integer.");
         }
+    }
 
-        totalSum.setText(Integer.toString(calc.getTotalSum()));
+    private void showAlertDialog(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     /**
