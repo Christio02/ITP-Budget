@@ -205,6 +205,11 @@ public class BudgetController {
         }
     }
 
+    /**
+     * Show an alert dialog with the given title and content.
+     * @param title
+     * @param content
+     */
     private void showAlertDialog(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);

@@ -79,6 +79,10 @@ public class StartMenuController {
     public final boolean popUpOnLoadBudgets() {
         boolean shouldLoad = true;
         Optional<String> result = dialog.showAndWait();
+        /**
+         * A reference to the result of the dialog.
+         * Anonymous class to allow for the use of a mutable variable.
+         */
         var ref = new Object() {
             private String thisKey = "";
             public void setThisKey(final String key) {
@@ -105,7 +109,7 @@ public class StartMenuController {
         boolean budgetExists = false;
         for (Map.Entry<String, Calculation> entry : data.getCalculations().entrySet()) {
             String presentKey = entry.getKey();
-            if (ref.thisKey.equals(presentKey)) {
+            if (ref.getThisKey().equals(presentKey)) {
                 budgetExists = true;
                 break;
 
@@ -120,7 +124,7 @@ public class StartMenuController {
 
         } else {
             data.setCalculation(new Calculation());
-            data.setCalcName(ref.thisKey);
+            data.setCalcName(ref.getThisKey());
             FileUtility.setLoad(false);
         }
         return shouldLoad;
