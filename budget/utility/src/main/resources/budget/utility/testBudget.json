@@ -1,13 +1,13 @@
 {
-  "Test" : {
+  "overwrite" : {
     "categoriesList" : [ {
       "categoryName" : "Food",
-      "amount" : 500,
-      "budgetHistory" : [ 200, 300 ]
+      "amount" : 0,
+      "budgetHistory" : [ ]
     }, {
       "categoryName" : "Transportation",
-      "amount" : 2500,
-      "budgetHistory" : [ 500, 2000 ]
+      "amount" : 0,
+      "budgetHistory" : [ ]
     }, {
       "categoryName" : "Entertainment",
       "amount" : 0,
@@ -21,6 +21,6 @@
       "amount" : 0,
       "budgetHistory" : [ ]
     } ],
-    "totalSum" : 3000
+    "totalSum" : 0
   }
 }

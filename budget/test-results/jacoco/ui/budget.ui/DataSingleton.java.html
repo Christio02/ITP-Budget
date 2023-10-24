@@ -44,13 +44,20 @@ public final class DataSingleton {
     }
 
     /**
+     * Clear the map of Calculations.
+     */
+    public void clearMap() {
+<span class="fc" id="L50">        this.mapOfCalculations.clear();</span>
+<span class="fc" id="L51">    }</span>
+
+    /**
      * Set the current Calculation.
      *
      * @param newCalculation The Calculation to set.
      */
     public void setCalculation(final Calculation newCalculation) {
-<span class="fc" id="L52">        this.calculation = newCalculation;</span>
-<span class="fc" id="L53">    }</span>
+<span class="fc" id="L59">        this.calculation = newCalculation;</span>
+<span class="fc" id="L60">    }</span>
 
     /**
      * Get the current Calculation.
@@ -58,7 +65,7 @@ public final class DataSingleton {
      * @return The current Calculation.
      */
     public Calculation getCalculation() {
-<span class="fc" id="L61">        return this.calculation;</span>
+<span class="fc" id="L68">        return this.calculation;</span>
     }
 
     /**
@@ -67,8 +74,8 @@ public final class DataSingleton {
      * @param newCalcName The name to set.
      */
     public void setCalcName(final String newCalcName) {
-<span class="fc" id="L70">        this.calcName = newCalcName;</span>
-<span class="fc" id="L71">    }</span>
+<span class="fc" id="L77">        this.calcName = newCalcName;</span>
+<span class="fc" id="L78">    }</span>
 
     /**
      * Get the Calculation name.
@@ -76,7 +83,7 @@ public final class DataSingleton {
      * @return The Calculation name.
      */
     public String getCalcName() {
-<span class="fc" id="L79">        return this.calcName;</span>
+<span class="fc" id="L86">        return this.calcName;</span>
     }
 
     /**
@@ -86,8 +93,8 @@ public final class DataSingleton {
      * @param calc The Calculation to add.
      */
     public void addCalculation(final String name, final Calculation calc) {
-<span class="fc" id="L89">        this.mapOfCalculations.put(name, calc);</span>
-<span class="fc" id="L90">    }</span>
+<span class="fc" id="L96">        this.mapOfCalculations.put(name, calc);</span>
+<span class="fc" id="L97">    }</span>
 
     /**
      * Get a copy of the map of Calculations.
@@ -95,7 +102,7 @@ public final class DataSingleton {
      * @return A copy of the map of Calculations.
      */
     public Map&lt;String, Calculation&gt; getCalculations() {
-<span class="fc" id="L98">        return new HashMap&lt;&gt;(this.mapOfCalculations);</span>
+<span class="fc" id="L105">        return new HashMap&lt;&gt;(this.mapOfCalculations);</span>
     }
 
     /**
@@ -104,7 +111,7 @@ public final class DataSingleton {
      * @param tempMap The map to update with.
      */
     public void updateMap(final Map&lt;String, Calculation&gt; tempMap) {
-<span class="fc" id="L107">        this.mapOfCalculations.putAll(tempMap);</span>
-<span class="fc" id="L108">    }</span>
+<span class="fc" id="L114">        this.mapOfCalculations.putAll(tempMap);</span>
+<span class="fc" id="L115">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

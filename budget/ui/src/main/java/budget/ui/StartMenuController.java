@@ -45,7 +45,7 @@ public class StartMenuController {
 
         try {
             Map<String, Calculation> tempMap = new HashMap<>();
-            FileUtility.readFile(tempMap);
+            FileUtility.readFile(tempMap, "/../utility/src/main/resources/budget/utility/savedBudget.json");
             data.updateMap(tempMap);
         } catch (IOException e) {
             e.printStackTrace();
@@ -79,7 +79,7 @@ public class StartMenuController {
     public final boolean popUpOnLoadBudgets() {
         boolean shouldLoad = true;
         Optional<String> result = dialog.showAndWait();
-        /**
+        /*
          * A reference to the result of the dialog.
          * Anonymous class to allow for the use of a mutable variable.
          */

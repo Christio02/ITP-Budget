@@ -38,10 +38,11 @@ public final class FileUtility {
      * Writes the Calculation object to a file.
      *
      * @param calcMap The map of calculation objects to save
+     * @param path The path to the file
      * @throws IOException If an input or output exception occurred
      */
-    public static void writeToFile(final Map<String, Calculation> calcMap) throws IOException {
-        File file = new File(FILE_PATH);
+    public static void writeToFile(final Map<String, Calculation> calcMap, final String path) throws IOException {
+        File file = new File(CURRENT_DIR + path);
         // Check if calcMap is empty
         if (calcMap.isEmpty()) {
             // If it's empty, create an empty JSON object and write it to the file
@@ -74,10 +75,11 @@ public final class FileUtility {
      * Reads the Calculation object from a file.
      *
      * @param calcMap The map of calculations to update
+     * @param path The path to the file
      * @throws IOException If an input or output exception occurred
      */
-    public static void readFile(final Map<String, Calculation> calcMap) throws IOException {
-        File file = new File(FILE_PATH);
+    public static void readFile(final Map<String, Calculation> calcMap, final String path) throws IOException {
+        File file = new File(CURRENT_DIR + path);
         Map<String, Calculation> mapFromFile =
                 Json.getMapper().readValue(file, new TypeReference
                         <Map<String, Calculation>>(
@@ -100,4 +102,6 @@ public final class FileUtility {
     public static boolean getLoad() {
         return load;
     }
+
+
 }

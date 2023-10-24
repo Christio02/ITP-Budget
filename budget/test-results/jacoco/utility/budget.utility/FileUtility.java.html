@@ -38,28 +38,29 @@ public final class FileUtility {
      * Writes the Calculation object to a file.
      *
      * @param calcMap The map of calculation objects to save
+     * @param path The path to the file
      * @throws IOException If an input or output exception occurred
      */
-    public static void writeToFile(final Map&lt;String, Calculation&gt; calcMap) throws IOException {
-<span class="fc" id="L44">        File file = new File(FILE_PATH);</span>
+    public static void writeToFile(final Map&lt;String, Calculation&gt; calcMap, final String path) throws IOException {
+<span class="fc" id="L45">        File file = new File(CURRENT_DIR + path);</span>
         // Check if calcMap is empty
-<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (calcMap.isEmpty()) {</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        if (calcMap.isEmpty()) {</span>
             // If it's empty, create an empty JSON object and write it to the file
-<span class="nc" id="L48">            Json.getMapper().writeValue(file, new HashMap&lt;&gt;());</span>
+<span class="nc" id="L49">            Json.getMapper().writeValue(file, new HashMap&lt;&gt;());</span>
         } else {
             Map&lt;String, Calculation&gt; existingDataMap;
-<span class="pc bpc" id="L51" title="1 of 2 branches missed.">            if (file.exists()) {</span>
-<span class="fc" id="L52">                existingDataMap = Json.getMapper().readValue(file, Json.getMapper()</span>
-<span class="fc" id="L53">                        .getTypeFactory().constructMapType(HashMap.class, String.class, Calculation.class));</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">            if (file.exists()) {</span>
+<span class="fc" id="L53">                existingDataMap = Json.getMapper().readValue(file, Json.getMapper()</span>
+<span class="fc" id="L54">                        .getTypeFactory().constructMapType(HashMap.class, String.class, Calculation.class));</span>
             } else {
-<span class="nc" id="L55">                existingDataMap = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L56">                existingDataMap = new HashMap&lt;&gt;();</span>
             }
-<span class="fc" id="L57">            existingDataMap.putAll(calcMap);</span>
+<span class="fc" id="L58">            existingDataMap.putAll(calcMap);</span>
 
             // Write the merged data back to the file
-<span class="fc" id="L60">            Json.getMapper().writerWithDefaultPrettyPrinter().writeValue(file, existingDataMap);</span>
+<span class="fc" id="L61">            Json.getMapper().writerWithDefaultPrettyPrinter().writeValue(file, existingDataMap);</span>
         }
-<span class="fc" id="L62">    }</span>
+<span class="fc" id="L63">    }</span>
 
     /**
      * Sets the load status.
@@ -67,30 +68,31 @@ public final class FileUtility {
      * @param loadStatus The new load status
      */
     public static void setLoad(final boolean loadStatus) {
-<span class="nc" id="L70">        load = loadStatus;</span>
-<span class="nc" id="L71">    }</span>
+<span class="nc" id="L71">        load = loadStatus;</span>
+<span class="nc" id="L72">    }</span>
 
     /**
      * Reads the Calculation object from a file.
      *
      * @param calcMap The map of calculations to update
+     * @param path The path to the file
      * @throws IOException If an input or output exception occurred
      */
-    public static void readFile(final Map&lt;String, Calculation&gt; calcMap) throws IOException {
-<span class="fc" id="L80">        File file = new File(FILE_PATH);</span>
+    public static void readFile(final Map&lt;String, Calculation&gt; calcMap, final String path) throws IOException {
+<span class="fc" id="L82">        File file = new File(CURRENT_DIR + path);</span>
         Map&lt;String, Calculation&gt; mapFromFile =
-<span class="fc" id="L82">                Json.getMapper().readValue(file, new TypeReference</span>
+<span class="fc" id="L84">                Json.getMapper().readValue(file, new TypeReference</span>
                         &lt;Map&lt;String, Calculation&gt;&gt;(
-<span class="fc" id="L84">                                ) {</span>
+<span class="fc" id="L86">                                ) {</span>
                 });
-<span class="fc" id="L86">        calcMap.clear();</span>
+<span class="fc" id="L88">        calcMap.clear();</span>
 
-<span class="fc bfc" id="L88" title="All 2 branches covered.">        for (Map.Entry&lt;String, Calculation&gt; entry : mapFromFile.entrySet()) {</span>
-<span class="fc" id="L89">            String name = entry.getKey();</span>
-<span class="fc" id="L90">            Calculation calcObject = entry.getValue();</span>
-<span class="fc" id="L91">            calcMap.put(name, calcObject);</span>
-<span class="fc" id="L92">        }</span>
-<span class="fc" id="L93">    }</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        for (Map.Entry&lt;String, Calculation&gt; entry : mapFromFile.entrySet()) {</span>
+<span class="fc" id="L91">            String name = entry.getKey();</span>
+<span class="fc" id="L92">            Calculation calcObject = entry.getValue();</span>
+<span class="fc" id="L93">            calcMap.put(name, calcObject);</span>
+<span class="fc" id="L94">        }</span>
+<span class="fc" id="L95">    }</span>
 
     /**
      * Gets the load status.
@@ -98,7 +100,9 @@ public final class FileUtility {
      * @return The load status
      */
     public static boolean getLoad() {
-<span class="nc" id="L101">        return load;</span>
+<span class="nc" id="L103">        return load;</span>
     }
+
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

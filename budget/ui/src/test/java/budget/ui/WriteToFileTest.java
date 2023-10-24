@@ -1,8 +1,10 @@
 
 package budget.ui;
 import budget.core.Calculation;
+import budget.utility.FileUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.input.KeyCode;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.matcher.control.TableViewMatchers;
@@ -44,9 +46,12 @@ public class WriteToFileTest extends TestFXBase {
 
      @BeforeEach
      public void setUp() {
+         DataSingleton data = DataSingleton.getInstance();
+         data.clearMap();
      }
      @Test
      public void testCorrectWrittenToFile() {
+
 
          WaitForAsyncUtils.waitForFxEvents();
          Integer amount1 = 2000;
@@ -103,17 +108,21 @@ public class WriteToFileTest extends TestFXBase {
 
          verifyThat(SUM_ID, TextMatchers.hasText("5000"));
          Map<String, Calculation> fileMap = new HashMap<>();
-         Calculation overWriteCalc = new Calculation();
-         fileMap.put("overwrite", overWriteCalc);
-         String userDir = System.getProperty("user.dir");
-         String path = userDir + "/../utility/src/main/resources/budget/utility/savedBudget.json";
-         File file = new File(path);
+         Calculation calc = new Calculation();
+         fileMap.put("overwrite", calc);
+         String path = "/../utility/src/main/resources/budget/utility/testBudget.json";
+
          try {
-             ObjectMapper mapper = new ObjectMapper();
-             mapper.writerWithDefaultPrettyPrinter().writeValue(file, fileMap );
+             FileUtility.writeToFile(fileMap, path);
          } catch (IOException e) {
-             e.printStackTrace();
+             throw new RuntimeException(e);
          }
+     }
+
+     @AfterAll
+    public static void end() {
+         DataSingleton data = DataSingleton.getInstance();
+         data.clearMap();
      }
 
  }

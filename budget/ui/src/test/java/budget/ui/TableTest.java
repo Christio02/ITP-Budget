@@ -50,7 +50,8 @@ public class TableTest extends  TestFXBase{
 
     @Test
     public void checkIfValueWasAddedToCorrectCategory() {
-
+        DataSingleton data = DataSingleton.getInstance();
+//        data.updateMap(new HashMap<>());
         WaitForAsyncUtils.waitForFxEvents();
         Integer amount = 2000;
         String food = "Food";
@@ -58,7 +59,7 @@ public class TableTest extends  TestFXBase{
         WaitForAsyncUtils.waitForFxEvents();
         clickOn("#nameInput");
 
-        write("Test");
+        write("Test1");
         clickOn("OK");
 
         clickOn(SELECTOR_ID);

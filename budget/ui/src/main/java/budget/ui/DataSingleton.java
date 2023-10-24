@@ -44,6 +44,13 @@ public final class DataSingleton {
     }
 
     /**
+     * Clear the map of Calculations.
+     */
+    public void clearMap() {
+        this.mapOfCalculations.clear();
+    }
+
+    /**
      * Set the current Calculation.
      *
      * @param newCalculation The Calculation to set.
