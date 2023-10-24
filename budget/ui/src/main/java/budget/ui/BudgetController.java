@@ -13,11 +13,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.Alert;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
 import budget.utility.FileUtility;
+import javafx.scene.chart.PieChart;
+
+
+import java.io.IOException;
 import java.util.Map;
 
 public class BudgetController {
@@ -48,6 +51,9 @@ public class BudgetController {
      */
     @FXML
     private TextField input;
+
+    @FXML
+    private PieChart budgetPieChart;
 
     /**
      * The button for adding amounts to categories.
@@ -113,6 +119,8 @@ public class BudgetController {
     /**
      * Initialize the controller and set up the UI.
      */
+
+
     @FXML
     public final void initialize() {
         calc = data.getCalculation();
@@ -155,6 +163,16 @@ public class BudgetController {
 
         budgetTitle.setText(data.getCalcName());
         totalSum.setText(Integer.toString(calc.getTotalSum()));
+    }
+    private void populatePieChart() {
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+
+        for (Category cat : calc.getCategoriesList()) {
+            pieChartData.add(new PieChart.Data(cat.getCategoryName(), cat.getAmount()));
+        }
+
+        budgetPieChart.setData(pieChartData);
+        budgetPieChart.setTitle("Budget Distribution");
     }
 
     /**
@@ -204,11 +222,14 @@ public class BudgetController {
                 }
             }
             totalSum.setText(Integer.toString(calc.getTotalSum()));
+            populatePieChart();
         } catch (NumberFormatException e) {
             showAlertDialog("Invalid input", "Please enter a valid integer.");
         } catch (IllegalArgumentException e) {
             showAlertDialog("Invalid input", "The amount must be a positive integer.");
         }
+
+
     }
 
     /**
