@@ -11,6 +11,8 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
 import budget.utility.FileUtility;
+import javafx.scene.chart.PieChart;
+
 
 import java.io.IOException;
 
@@ -38,6 +40,9 @@ public class BudgetController {
     private TextField input;
 
     @FXML
+    private PieChart budgetPieChart;
+
+    @FXML
     private Button inputBtn;
 
     @FXML
@@ -62,9 +67,21 @@ public class BudgetController {
     private final ObservableList<Category> categoryList = FXCollections.observableArrayList();
     private Calculation calc = new Calculation();
 
+    private void populatePieChart() {
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+
+        for (Category cat : calc.getCategoriesList()) {
+            pieChartData.add(new PieChart.Data(cat.getCategoryName(), cat.getAmount()));
+        }
+
+        budgetPieChart.setData(pieChartData);
+        budgetPieChart.setTitle("Budget Distribution");
+    }
+
     @FXML
     public void initialize() {
         instance = this;
+        populatePieChart();
         if (FileUtility.getLoad())   {
             try {
                 FileUtility.readFromFile(this.calc);
@@ -127,6 +144,7 @@ public class BudgetController {
         }
 
         totalSum.setText(Integer.toString(calc.getTotalSum()));
+        populatePieChart();
 
     }
 
