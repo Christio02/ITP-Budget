@@ -126,6 +126,7 @@ public class BudgetController {
     public final void initialize() {
         calc = data.getCalculation();
         setupUI();
+        populatePieChart();
     }
 
     /**
@@ -171,6 +172,7 @@ public class BudgetController {
         for (Category cat : calc.getCategoriesList()) {
             pieChartData.add(new PieChart.Data(cat.getCategoryName(), cat.getAmount()));
         }
+        budgetPieChart = new PieChart(pieChartData);
 
         budgetPieChart.setData(pieChartData);
         budgetPieChart.setTitle("Budget Distribution");
@@ -255,7 +257,7 @@ public class BudgetController {
         try {
 //            FileUtility.writeToFile(getCalculations(), "../utility/src/main/resources/budget/utility/savedBudget.json");
             FileUtility.writeToFile(getCalculations(), "/../utility/src/main/resources/budget/utility/savedBudget.json");
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
