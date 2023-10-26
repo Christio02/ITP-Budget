@@ -25,11 +25,15 @@ public final class ChangeScene {
      * @param className   The class associated with the FXML file.
      * @param buttonEvent The event that triggers the scene change.
      * @param sceneName   The name of the FXML scene file.
+     * @param height    The height of the scene.
+     * @param width     The width of the scene.
      * @throws Exception if an error occurs during scene change.
      */
-    public static void changeToScene(final Class className, final Event buttonEvent, final String sceneName) throws Exception {
+
+    public static void changeToScene(final Class className, final Event buttonEvent, final String sceneName, final double width, final double height)
+            throws Exception {
         Parent root = FXMLLoader.load(className.getResource(sceneName)); // loads FXML for the target scene
-        Scene scene = new Scene(root); // create a new scene from the root
+        Scene scene = new Scene(root, width, height); // create a new scene from the root
         scene.getStylesheets().add(className.getResource("style/style.css").toExternalForm());
         Stage stage = (Stage) ((Node) buttonEvent.getSource()).getScene().getWindow(); // load window from the scene
         stage.setScene(scene); // set the scene for the stage

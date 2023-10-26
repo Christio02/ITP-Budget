@@ -13,6 +13,7 @@ target/
 *.ipr
 
 
+
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
@@ -51,3 +52,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# testresults #
+testresults/

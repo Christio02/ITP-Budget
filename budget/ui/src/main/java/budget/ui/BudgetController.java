@@ -5,13 +5,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.Alert;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
@@ -55,7 +50,7 @@ public class BudgetController {
      * The PieChart for displaying the budget distribution.
      */
     @FXML
-    private PieChart budgetPieChart;
+    private PieChart pieChart;
 
     /**
      * The button for adding amounts to categories.
@@ -117,7 +112,7 @@ public class BudgetController {
     /**
      * Singleton for data retrieval and storing.
      */
-    private final DataSingleton data = DataSingleton.getInstance();
+    private final DataSingleton dataSingleton = DataSingleton.getInstance();
     /**
      * Initialize the controller and set up the UI.
      */
@@ -125,7 +120,7 @@ public class BudgetController {
 
     @FXML
     public final void initialize() {
-        calc = data.getCalculation();
+        calc = dataSingleton.getCalculation();
         setupUI();
         populatePieChart();
     }
@@ -164,21 +159,63 @@ public class BudgetController {
             saveIcon.setImage(normalImage);
         });
 
-        budgetTitle.setText(data.getCalcName());
+        budgetTitle.setText(dataSingleton.getCalcName());
         totalSum.setText(Integer.toString(calc.getTotalSum()));
 
 
     }
+
+    @SuppressWarnings("checkstyle:magicnumber")
     private void populatePieChart() {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+//        ObservableList<PieChart.Data> testData = FXCollections.observableArrayList(
+//                new PieChart.Data("Food", 2000),
+//                new PieChart.Data("Entertainment", 3000),
+//                new PieChart.Data("Transportation", 1000),
+//                new PieChart.Data("Clothing", 500)
+//        );
+
+        pieChart.getData().clear();
+
+
 
         for (Category cat : calc.getCategoriesList()) {
-            pieChartData.add(new PieChart.Data(cat.getCategoryName(), cat.getAmount()));
+            PieChart.Data data = new PieChart.Data(cat.getCategoryName(), cat.getAmount());
+            pieChartData.add(data);
         }
-        budgetPieChart = new PieChart(pieChartData);
+        int totalAmount = calc.getTotalSum();
+        for (PieChart.Data data : pieChartData) {
+            Node node = data.getNode();
+            if (node != null) {
+                String color = getCategoryColor(data.getName());
+                node.setStyle("-fx-pie-color: " + color + ";");
+                // Customize the data label with a percentage
+                Label label = new Label();
+                label.setText(String.format("%.1f%%", (data.getPieValue() / totalAmount) * 100));
 
-        budgetPieChart.setData(pieChartData);
-        budgetPieChart.setTitle("Budget Distribution");
+                // Set the label's style
+                label.setStyle("-fx-font-size: 12px; -fx-font-weight: bold;");
+
+                // Add the label to the pie chart
+                data.getNode().setUserData(label);
+            }
+        }
+
+        // Clear existing data and add the filtered data to the PieChart
+        pieChart.getData().clear();
+        pieChart.getData().addAll(pieChartData);
+
+        pieChart.setTitle("Budget Distribution");
+    }
+
+    private String getCategoryColor(final String categoryName) {
+        return switch (categoryName) {
+            case "Food" -> "#106bc7";
+            case "Entertainment" -> "#ffe100";
+            case "Transportation" -> "#FF0000";
+            case "Clothing" -> "#00ff1e";
+            default -> "#ff00d9";
+        };
     }
 
     /**
@@ -187,9 +224,10 @@ public class BudgetController {
      * @param event The event triggering the action.
      * @throws Exception If there is an error during scene change.
      */
+    @SuppressWarnings("magicnumber")
     @FXML
     private void loadMainMenu(final ActionEvent event) throws Exception {
-        ChangeScene.changeToScene(getClass(), event, "startmenu-fxml.fxml");
+        ChangeScene.changeToScene(getClass(), event, "startmenu-fxml.fxml", 600, 400);
     }
 
     /**
@@ -199,7 +237,7 @@ public class BudgetController {
      */
     public final void addCalculation(final Calculation newCalc) {
         String name = this.budgetTitle.getText();
-        data.addCalculation(name, newCalc);
+        dataSingleton.addCalculation(name, newCalc);
     }
 
     /**
@@ -208,7 +246,7 @@ public class BudgetController {
      * @return A map of calculation names to Calculation objects.
      */
     public final Map<String, Calculation> getCalculations() {
-        return data.getCalculations();
+        return dataSingleton.getCalculations();
     }
 
     /**

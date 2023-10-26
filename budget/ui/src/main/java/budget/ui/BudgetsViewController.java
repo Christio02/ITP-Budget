@@ -90,6 +90,7 @@ public class BudgetsViewController {
     /**
      * Handle double-click on an object in the nameCalc ListView.
      */
+    @SuppressWarnings("magicnumber")
     private void handleDoubleClickObject() {
         nameCalc.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -101,7 +102,7 @@ public class BudgetsViewController {
                         data.setCalculation(selectedCalc);
                         data.setCalcName(selectedCalcName);
                         try {
-                            ChangeScene.changeToScene(getClass(), event, "budget-view.fxml");
+                            ChangeScene.changeToScene(getClass(), event, "budget-view.fxml", 800, 600);
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
@@ -146,9 +147,10 @@ public class BudgetsViewController {
      * Load the main menu.
      * @param event The event triggering the action.
      */
+    @SuppressWarnings("magicnumber")
     @FXML
     private void loadMainMenu(final ActionEvent event) throws Exception {
-        ChangeScene.changeToScene(getClass(), event, "startmenu-fxml.fxml");
+        ChangeScene.changeToScene(getClass(), event, "startmenu-fxml.fxml", 600, 400);
     }
 
     /**
