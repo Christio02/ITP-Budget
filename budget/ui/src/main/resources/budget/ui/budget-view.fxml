@@ -54,7 +54,7 @@
             </Text>
             </children></AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="229.0" prefWidth="598.0">
-            <children>
+            <children/>
             <TableView fx:id="table" fixedCellSize="0.0" layoutY="-4.0">
                 <columns>
                     <TableColumn id="kategori" fx:id="category" prefWidth="301.0" text="Category"/>
@@ -70,6 +70,7 @@
                 </children>
             </AnchorPane>
             <AnchorPane layoutX="627.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0"/>
+
             <PieChart fx:id="pieChart" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0"/>
         </AnchorPane>
     </items>
