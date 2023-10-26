@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD Suppressions 1.1//EN"
+        "https://checkstyle.org/dtds/suppressions_1_1.dtd">
+
+<suppressions>
+    <suppress files=".*" checks="magicnumber">
+        <query>
+            <or>
+                <and>
+                    <match name="CommentRegularExpression">
+                        <text>SuppressWarnings("checkstyle:magicnumber")</text>
+                    </match>
+                </and>
+            </or>
+        </query>
+    </suppress>
+</suppressions>

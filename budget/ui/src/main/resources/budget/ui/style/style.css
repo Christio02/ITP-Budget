@@ -6,6 +6,13 @@
     -fx-font-family: 'Poppins', sans-serif;
 }
 
+#pieContainer {
+    -fx-background-color: white;
+    -fx-border-color: #284B63;
+    -fx-border-width: 1;
+    -fx-border-radius: 2;
+}
+
 /* Removes divider border*/
 .split-pane *.split-pane-divider {
     -fx-padding: 0 1 0 1;

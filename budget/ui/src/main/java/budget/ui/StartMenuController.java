@@ -141,13 +141,14 @@ public class StartMenuController {
      * @param event The ActionEvent triggered by the button click.
      * @throws Exception if an exception occurs during the operation.
      */
+    @SuppressWarnings("magicnumber")
     @FXML
     private void loadNewBudget(final ActionEvent event) throws Exception {
         FileUtility.setLoad(false);
         if (!popUpOnLoadBudgets()) {
             return;
         }
-        ChangeScene.changeToScene(getClass(), event, "budget-view.fxml");
+        ChangeScene.changeToScene(getClass(), event, "budget-view.fxml", 1200, 800);
 
     }
     /**
@@ -155,10 +156,11 @@ public class StartMenuController {
      * @param event The ActionEvent triggered by the button click.
      * @throws Exception if an exception occurs during the operation.
      */
+    @SuppressWarnings("magicnumber")
     @FXML
     private void loadPrevBudget(final ActionEvent event) throws Exception {
         FileUtility.setLoad(true);
-        ChangeScene.changeToScene(getClass(), event, "load-budgets.fxml");
+        ChangeScene.changeToScene(getClass(), event, "load-budgets.fxml", 800, 600);
     }
 }
 
