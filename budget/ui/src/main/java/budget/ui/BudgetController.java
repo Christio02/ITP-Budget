@@ -19,8 +19,6 @@ import javafx.scene.image.ImageView;
 import budget.utility.FileUtility;
 import javafx.scene.chart.PieChart;
 
-
-import java.io.IOException;
 import java.util.Map;
 
 public class BudgetController {
@@ -52,6 +50,9 @@ public class BudgetController {
     @FXML
     private TextField input;
 
+    /**
+     * The PieChart for displaying the budget distribution.
+     */
     @FXML
     private PieChart budgetPieChart;
 
