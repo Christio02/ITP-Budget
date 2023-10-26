@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 import budget.utility.FileUtility;
 import javafx.scene.chart.PieChart;
 
+import java.io.IOException;
 import java.util.Map;
 
 public class BudgetController {
@@ -165,6 +166,8 @@ public class BudgetController {
 
         budgetTitle.setText(data.getCalcName());
         totalSum.setText(Integer.toString(calc.getTotalSum()));
+
+
     }
     private void populatePieChart() {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
@@ -255,7 +258,6 @@ public class BudgetController {
     public final void saveBudget() {
         addCalculation(this.calc);
         try {
-//            FileUtility.writeToFile(getCalculations(), "../utility/src/main/resources/budget/utility/savedBudget.json");
             FileUtility.writeToFile(getCalculations(), "/../utility/src/main/resources/budget/utility/savedBudget.json");
         } catch (IOException e) {
             e.printStackTrace();
