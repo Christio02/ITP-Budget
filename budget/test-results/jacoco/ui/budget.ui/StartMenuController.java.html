@@ -141,25 +141,27 @@ import java.util.regex.Pattern;
      * @param event The ActionEvent triggered by the button click.
      * @throws Exception if an exception occurs during the operation.
      */
+    @SuppressWarnings(&quot;magicnumber&quot;)
     @FXML
     private void loadNewBudget(final ActionEvent event) throws Exception {
-<span class="fc" id="L146">        FileUtility.setLoad(false);</span>
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">        if (!popUpOnLoadBudgets()) {</span>
-<span class="nc" id="L148">            return;</span>
+<span class="fc" id="L147">        FileUtility.setLoad(false);</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">        if (!popUpOnLoadBudgets()) {</span>
+<span class="nc" id="L149">            return;</span>
         }
-<span class="fc" id="L150">        ChangeScene.changeToScene(getClass(), event, &quot;budget-view.fxml&quot;);</span>
+<span class="fc" id="L151">        ChangeScene.changeToScene(getClass(), event, &quot;budget-view.fxml&quot;, 1200, 800);</span>
 
-<span class="fc" id="L152">    }</span>
+<span class="fc" id="L153">    }</span>
     /**
      * Handles the event when the &quot;Load Previous Budget&quot; button is clicked.
      * @param event The ActionEvent triggered by the button click.
      * @throws Exception if an exception occurs during the operation.
      */
+    @SuppressWarnings(&quot;magicnumber&quot;)
     @FXML
     private void loadPrevBudget(final ActionEvent event) throws Exception {
-<span class="fc" id="L160">        FileUtility.setLoad(true);</span>
-<span class="fc" id="L161">        ChangeScene.changeToScene(getClass(), event, &quot;load-budgets.fxml&quot;);</span>
-<span class="fc" id="L162">    }</span>
+<span class="fc" id="L162">        FileUtility.setLoad(true);</span>
+<span class="fc" id="L163">        ChangeScene.changeToScene(getClass(), event, &quot;load-budgets.fxml&quot;, 800, 600);</span>
+<span class="fc" id="L164">    }</span>
 }
 
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

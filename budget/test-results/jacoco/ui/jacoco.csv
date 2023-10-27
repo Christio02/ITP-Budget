@@ -1,9 +1,9 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-ui,budget.ui,BudgetsViewController,6,273,8,14,2,64,8,13,0,10
-ui,budget.ui,BudgetController,32,216,0,4,12,47,1,13,1,11
-ui,budget.ui,ChangeScene,0,32,0,0,0,7,0,1,0,1
+ui,budget.ui,BudgetsViewController,6,277,8,14,2,64,8,13,0,10
+ui,budget.ui,BudgetController,87,289,6,9,24,64,7,16,2,12
+ui,budget.ui,ChangeScene,0,34,0,0,0,7,0,1,0,1
 ui,budget.ui,StartMenuController.new Object() {...},0,16,0,0,0,5,0,3,0,3
 ui,budget.ui,BudgetsViewController.new ListCell() {...},0,86,1,7,0,15,1,5,0,2
 ui,budget.ui,BudgetApplication,4,34,0,0,2,7,1,2,1,2
 ui,budget.ui,DataSingleton,0,57,0,0,0,20,0,12,0,12
-ui,budget.ui,StartMenuController,46,190,7,9,19,46,7,7,0,6
+ui,budget.ui,StartMenuController,46,194,7,9,19,46,7,7,0,6

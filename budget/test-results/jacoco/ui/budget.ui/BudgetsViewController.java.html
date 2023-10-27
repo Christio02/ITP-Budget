@@ -90,113 +90,115 @@ import budget.utility.FileUtility;
     /**
      * Handle double-click on an object in the nameCalc ListView.
      */
+    @SuppressWarnings(&quot;magicnumber&quot;)
     private void handleDoubleClickObject() {
-<span class="fc" id="L94">        nameCalc.setOnMouseClicked(event -&gt; {</span>
-<span class="fc bfc" id="L95" title="All 2 branches covered.">            if (event.getClickCount() == 2) {</span>
-<span class="fc" id="L96">                String selectedCalcName = nameCalc.getSelectionModel().getSelectedItem();</span>
+<span class="fc" id="L95">        nameCalc.setOnMouseClicked(event -&gt; {</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">            if (event.getClickCount() == 2) {</span>
+<span class="fc" id="L97">                String selectedCalcName = nameCalc.getSelectionModel().getSelectedItem();</span>
 
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">                if (selectedCalcName != null) {</span>
-<span class="fc" id="L99">                    Calculation selectedCalc = data.getCalculations().get(selectedCalcName);</span>
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">                    if (selectedCalc != null) {</span>
-<span class="fc" id="L101">                        data.setCalculation(selectedCalc);</span>
-<span class="fc" id="L102">                        data.setCalcName(selectedCalcName);</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">                if (selectedCalcName != null) {</span>
+<span class="fc" id="L100">                    Calculation selectedCalc = data.getCalculations().get(selectedCalcName);</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">                    if (selectedCalc != null) {</span>
+<span class="fc" id="L102">                        data.setCalculation(selectedCalc);</span>
+<span class="fc" id="L103">                        data.setCalcName(selectedCalcName);</span>
                         try {
-<span class="fc" id="L104">                            ChangeScene.changeToScene(getClass(), event, &quot;budget-view.fxml&quot;);</span>
-<span class="nc" id="L105">                        } catch (Exception e) {</span>
-<span class="nc" id="L106">                            throw new RuntimeException(e);</span>
-<span class="fc" id="L107">                        }</span>
+<span class="fc" id="L105">                            ChangeScene.changeToScene(getClass(), event, &quot;budget-view.fxml&quot;, 800, 600);</span>
+<span class="nc" id="L106">                        } catch (Exception e) {</span>
+<span class="nc" id="L107">                            throw new RuntimeException(e);</span>
+<span class="fc" id="L108">                        }</span>
                     }
                 }
             }
-<span class="fc" id="L111">        });</span>
-<span class="fc" id="L112">    }</span>
+<span class="fc" id="L112">        });</span>
+<span class="fc" id="L113">    }</span>
 
     /**
      * Update the view for the calcObject ListView.
      */
     private void updateView() {
-<span class="fc" id="L118">        calcObject.setCellFactory(param -&gt; new ListCell&lt;Calculation&gt;() {</span>
+<span class="fc" id="L119">        calcObject.setCellFactory(param -&gt; new ListCell&lt;Calculation&gt;() {</span>
             @Override
             protected void updateItem(final Calculation item, final boolean empty) {
-<span class="fc" id="L121">                super.updateItem(item, empty);</span>
+<span class="fc" id="L122">                super.updateItem(item, empty);</span>
 
-<span class="pc bpc" id="L123" title="1 of 4 branches missed.">                if (empty || item == null) {</span>
-<span class="fc" id="L124">                    setText(null);</span>
+<span class="pc bpc" id="L124" title="1 of 4 branches missed.">                if (empty || item == null) {</span>
+<span class="fc" id="L125">                    setText(null);</span>
                 } else {
                     // Customize the text representation here
-<span class="fc" id="L127">                    StringBuilder text = new StringBuilder(&quot;Calculation: &quot;  + &quot;\nTotal Sum: &quot; + item.getTotalSum() + &quot;\nCategories:\n&quot;);</span>
+<span class="fc" id="L128">                    StringBuilder text = new StringBuilder(&quot;Calculation: &quot;  + &quot;\nTotal Sum: &quot; + item.getTotalSum() + &quot;\nCategories:\n&quot;);</span>
 
-<span class="fc bfc" id="L129" title="All 2 branches covered.">                    for (Category category : item.getCategoriesList()) {</span>
-<span class="fc" id="L130">                        text.append(category.getCategoryName()).append(&quot;: &quot;).append(category.getAmount()).append(&quot;\nBudget History: &quot;);</span>
-<span class="fc bfc" id="L131" title="All 2 branches covered.">                        for (int amount : category.getBudgetHistory()) {</span>
-<span class="fc" id="L132">                            text.append(amount).append(&quot;, &quot;);</span>
-<span class="fc" id="L133">                        }</span>
-<span class="fc" id="L134">                        text.delete(text.length() - 2, text.length()); // Remove the trailing comma and space</span>
-<span class="fc" id="L135">                        text.append(&quot;\n&quot;);</span>
-<span class="fc" id="L136">                    }</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">                    for (Category category : item.getCategoriesList()) {</span>
+<span class="fc" id="L131">                        text.append(category.getCategoryName()).append(&quot;: &quot;).append(category.getAmount()).append(&quot;\nBudget History: &quot;);</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">                        for (int amount : category.getBudgetHistory()) {</span>
+<span class="fc" id="L133">                            text.append(amount).append(&quot;, &quot;);</span>
+<span class="fc" id="L134">                        }</span>
+<span class="fc" id="L135">                        text.delete(text.length() - 2, text.length()); // Remove the trailing comma and space</span>
+<span class="fc" id="L136">                        text.append(&quot;\n&quot;);</span>
+<span class="fc" id="L137">                    }</span>
 
-<span class="fc" id="L138">                    setText(text.toString());</span>
+<span class="fc" id="L139">                    setText(text.toString());</span>
                 }
-<span class="fc" id="L140">            }</span>
+<span class="fc" id="L141">            }</span>
         });
 
-<span class="fc" id="L143">    }</span>
+<span class="fc" id="L144">    }</span>
 
     /**
      * Load the main menu.
      * @param event The event triggering the action.
      */
+    @SuppressWarnings(&quot;magicnumber&quot;)
     @FXML
     private void loadMainMenu(final ActionEvent event) throws Exception {
-<span class="fc" id="L151">        ChangeScene.changeToScene(getClass(), event, &quot;startmenu-fxml.fxml&quot;);</span>
-<span class="fc" id="L152">    }</span>
+<span class="fc" id="L153">        ChangeScene.changeToScene(getClass(), event, &quot;startmenu-fxml.fxml&quot;, 600, 400);</span>
+<span class="fc" id="L154">    }</span>
 
     /**
      * Delete the selected budget.
      */
     @FXML
     public final void deleteBudget() {
-<span class="fc" id="L159">        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);</span>
+<span class="fc" id="L161">        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);</span>
 
-<span class="fc" id="L161">        confirmationAlert.setHeaderText(&quot;Are you sure you want to delete budget?&quot;);</span>
-<span class="fc" id="L162">        confirmationAlert.setContentText(&quot;Deleting budget, means you'll never be able to retrieve it!&quot;);</span>
+<span class="fc" id="L163">        confirmationAlert.setHeaderText(&quot;Are you sure you want to delete budget?&quot;);</span>
+<span class="fc" id="L164">        confirmationAlert.setContentText(&quot;Deleting budget, means you'll never be able to retrieve it!&quot;);</span>
 
-<span class="fc" id="L164">        ButtonType confirm = new ButtonType(&quot;Confirm&quot;);</span>
-<span class="fc" id="L165">        ButtonType cancel = new ButtonType(&quot;Cancel&quot;);</span>
+<span class="fc" id="L166">        ButtonType confirm = new ButtonType(&quot;Confirm&quot;);</span>
+<span class="fc" id="L167">        ButtonType cancel = new ButtonType(&quot;Cancel&quot;);</span>
 
-<span class="fc" id="L167">        confirmationAlert.getButtonTypes().setAll(confirm, cancel);</span>
+<span class="fc" id="L169">        confirmationAlert.getButtonTypes().setAll(confirm, cancel);</span>
 
-<span class="fc" id="L169">        Optional&lt;ButtonType&gt; result = confirmationAlert.showAndWait();</span>
+<span class="fc" id="L171">        Optional&lt;ButtonType&gt; result = confirmationAlert.showAndWait();</span>
 
-<span class="fc" id="L171">        int selectedIndex = nameCalc.getSelectionModel().getSelectedIndex();</span>
+<span class="fc" id="L173">        int selectedIndex = nameCalc.getSelectionModel().getSelectedIndex();</span>
 
-<span class="pc bpc" id="L173" title="3 of 6 branches missed.">        if (selectedIndex &gt;= 0 &amp;&amp; result.isPresent() &amp;&amp; result.get().equals(confirm)) {</span>
-<span class="fc" id="L174">            String selectedCalcName = nameCalc.getItems().get(selectedIndex);</span>
+<span class="pc bpc" id="L175" title="3 of 6 branches missed.">        if (selectedIndex &gt;= 0 &amp;&amp; result.isPresent() &amp;&amp; result.get().equals(confirm)) {</span>
+<span class="fc" id="L176">            String selectedCalcName = nameCalc.getItems().get(selectedIndex);</span>
 
             // Check if the selected item is also in calcObject
-<span class="fc" id="L177">            Calculation selectedCalc = calcObject.getItems().get(selectedIndex);</span>
+<span class="fc" id="L179">            Calculation selectedCalc = calcObject.getItems().get(selectedIndex);</span>
 
-<span class="pc bpc" id="L179" title="1 of 2 branches missed.">            if (selectedCalc != null) {</span>
-<span class="fc" id="L180">                FileUtility.deleteBudget(selectedCalcName, data.getCalculations());</span>
-<span class="fc" id="L181">                data.deleteEntry(selectedCalcName);</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">            if (selectedCalc != null) {</span>
+<span class="fc" id="L182">                FileUtility.deleteBudget(selectedCalcName, data.getCalculations());</span>
+<span class="fc" id="L183">                data.deleteEntry(selectedCalcName);</span>
                 // Remove the selected item from the calculationMap
-<span class="fc" id="L183">                calculationMap.remove(selectedCalcName);</span>
+<span class="fc" id="L185">                calculationMap.remove(selectedCalcName);</span>
 
                 // Remove the selected items from the ListViews
-<span class="fc" id="L186">                nameCalc.getItems().remove(selectedIndex);</span>
-<span class="fc" id="L187">                calcObject.getItems().remove(selectedIndex);</span>
-<span class="fc" id="L188">                data.updateMap(calculationMap);</span>
+<span class="fc" id="L188">                nameCalc.getItems().remove(selectedIndex);</span>
+<span class="fc" id="L189">                calcObject.getItems().remove(selectedIndex);</span>
+<span class="fc" id="L190">                data.updateMap(calculationMap);</span>
 
                 // Set the selection back to the first item
-<span class="pc bpc" id="L191" title="1 of 2 branches missed.">                if (!nameCalc.getItems().isEmpty()) {</span>
-<span class="fc" id="L192">                    nameCalc.getSelectionModel().selectFirst();</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">                if (!nameCalc.getItems().isEmpty()) {</span>
+<span class="fc" id="L194">                    nameCalc.getSelectionModel().selectFirst();</span>
                 }
 
 
             }
         }
 
-<span class="fc" id="L199">    }</span>
+<span class="fc" id="L201">    }</span>
 
 
 }
