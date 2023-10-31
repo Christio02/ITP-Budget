@@ -14,6 +14,8 @@ public class Calculation {
      * This cis a list that stores categories.
      */
     private final ArrayList<Category> categoriesList = new ArrayList<>();
+    private String name;
+
     /*
      * Creates a new Calculation object.
      */
@@ -24,8 +26,34 @@ public class Calculation {
         this.categoriesList.add(new Category("Entertainment"));
         this.categoriesList.add(new Category("Clothing"));
         this.categoriesList.add(new Category("Other"));
+        name = null;
+    }
+
+    /*
+     * Creates a new Calculation object, with given name
+     */
+    @JsonCreator
+    public Calculation(String name) {
+        this.categoriesList.add(new Category("Food"));
+        this.categoriesList.add(new Category("Transportation"));
+        this.categoriesList.add(new Category("Entertainment"));
+        this.categoriesList.add(new Category("Clothing"));
+        this.categoriesList.add(new Category("Other"));
+        this.name = name;
 
     }
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+
+
 
     /**
      * Adds the specified amount to the specified category.
@@ -97,6 +125,7 @@ public class Calculation {
     public ArrayList<Category> getCategoriesList() {
         return categoriesList;
     }
+
 
     public static void main(String[] args) {
 
