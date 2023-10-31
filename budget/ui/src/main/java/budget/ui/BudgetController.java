@@ -1,6 +1,7 @@
 package budget.ui;
 import budget.core.Calculation;
 import budget.core.Category;
+import budget.utility.Json;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,7 +15,11 @@ import javafx.scene.image.ImageView;
 import budget.utility.FileUtility;
 import javafx.scene.chart.PieChart;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Map;
 
 public class BudgetController {
@@ -121,6 +126,7 @@ public class BudgetController {
     @FXML
     public final void initialize() {
         calc = dataSingleton.getCalculation();
+        calc.setName(dataSingleton.getCalcName());
         setupUI();
         populatePieChart();
     }
@@ -168,12 +174,6 @@ public class BudgetController {
     @SuppressWarnings("checkstyle:magicnumber")
     private void populatePieChart() {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-//        ObservableList<PieChart.Data> testData = FXCollections.observableArrayList(
-//                new PieChart.Data("Food", 2000),
-//                new PieChart.Data("Entertainment", 3000),
-//                new PieChart.Data("Transportation", 1000),
-//                new PieChart.Data("Clothing", 500)
-//        );
 
         pieChart.getData().clear();
 
@@ -295,8 +295,33 @@ public class BudgetController {
     @FXML
     public final void saveBudget() {
         addCalculation(this.calc);
+        createNewBudget(this.calc);
+//        try {
+//            FileUtility.writeToFile(getCalculations(), "/../utility/src/main/resources/budget/utility/savedBudget.json");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+    }
+
+    private void createNewBudget(Calculation calculation) {
+        String apiUrl = "http://localhost:8080/budget";
         try {
-            FileUtility.writeToFile(getCalculations(), "/../utility/src/main/resources/budget/utility/savedBudget.json");
+            URL url = new URL(apiUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setDoOutput(true);
+            String jsonCalculation = Json.getMapper().writeValueAsString(calculation);
+            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()))) {
+                writer.write(jsonCalculation);
+            }
+            int responseCode = conn.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_CREATED) {
+                System.out.println("Budget was written correctly!");
+            } else {
+                System.out.println("Budget was not written correctly " + responseCode);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

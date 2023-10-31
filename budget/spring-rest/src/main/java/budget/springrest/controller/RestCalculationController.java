@@ -1,7 +1,7 @@
 package budget.springrest.controller;
 
 import budget.core.Calculation;
-import budget.springrest.repository.CalculationModelList;
+import budget.springrest.repository.CalculationRepositorylList;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,10 +15,10 @@ public class RestCalculationController {
     /*
     The framework is going to handle it
      */
-    private final CalculationModelList repository;
+    private final CalculationRepositorylList repository;
 
 
-    public RestCalculationController(CalculationModelList repository) { // uses constructor injection
+    public RestCalculationController(CalculationRepositorylList repository) { // uses constructor injection
         this.repository = repository;
     }
 

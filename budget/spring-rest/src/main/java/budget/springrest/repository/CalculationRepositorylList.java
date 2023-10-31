@@ -2,7 +2,6 @@ package budget.springrest.repository;
 
 
 import budget.core.Calculation;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -15,11 +14,11 @@ import java.util.ArrayList;
  */
 
 @Repository
-public class CalculationModelList {
+public class CalculationRepositorylList {
 
     private ArrayList<Calculation> budgets = new ArrayList<>();
 
-    public CalculationModelList() {
+    public CalculationRepositorylList() {
         budgets.add(new Calculation("test"));
         budgets.add(new Calculation("test2"));
     }
