@@ -102,7 +102,7 @@ public class BudgetsViewController {
                         data.setCalculation(selectedCalc);
                         data.setCalcName(selectedCalcName);
                         try {
-                            ChangeScene.changeToScene(getClass(), event, "budget-view.fxml", 800, 600);
+                            ChangeScene.changeToScene(getClass(), event, "budget-view.fxml", 1200, 420);
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }

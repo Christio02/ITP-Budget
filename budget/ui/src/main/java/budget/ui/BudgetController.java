@@ -194,7 +194,7 @@ public class BudgetController {
                 label.setText(String.format("%.1f%%", (data.getPieValue() / totalAmount) * 100));
 
                 // Set the label's style
-                label.setStyle("-fx-font-size: 12px; -fx-font-weight: bold;");
+                label.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
 
                 // Add the label to the pie chart
                 data.getNode().setUserData(label);
@@ -227,7 +227,7 @@ public class BudgetController {
     @SuppressWarnings("magicnumber")
     @FXML
     private void loadMainMenu(final ActionEvent event) throws Exception {
-        ChangeScene.changeToScene(getClass(), event, "startmenu-fxml.fxml", 600, 400);
+        ChangeScene.changeToScene(getClass(), event, "startmenu-fxml.fxml", 600, 425);
     }
 
     /**

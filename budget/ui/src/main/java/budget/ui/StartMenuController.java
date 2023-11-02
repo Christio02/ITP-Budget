@@ -148,7 +148,7 @@ public class StartMenuController {
         if (!popUpOnLoadBudgets()) {
             return;
         }
-        ChangeScene.changeToScene(getClass(), event, "budget-view.fxml", 1200, 800);
+        ChangeScene.changeToScene(getClass(), event, "budget-view.fxml", 1200, 420);
 
     }
     /**

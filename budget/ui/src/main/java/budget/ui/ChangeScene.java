@@ -38,5 +38,6 @@ public final class ChangeScene {
         Stage stage = (Stage) ((Node) buttonEvent.getSource()).getScene().getWindow(); // load window from the scene
         stage.setScene(scene); // set the scene for the stage
         stage.show(); // show the stage
+        stage.centerOnScreen();
     }
 }
