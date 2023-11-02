@@ -167,46 +167,64 @@ public class BudgetController {
 
     @SuppressWarnings("checkstyle:magicnumber")
     private void populatePieChart() {
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-//        ObservableList<PieChart.Data> testData = FXCollections.observableArrayList(
-//                new PieChart.Data("Food", 2000),
-//                new PieChart.Data("Entertainment", 3000),
-//                new PieChart.Data("Transportation", 1000),
-//                new PieChart.Data("Clothing", 500)
-//        );
-
-        pieChart.getData().clear();
-
-
-
-        for (Category cat : calc.getCategoriesList()) {
-            PieChart.Data data = new PieChart.Data(cat.getCategoryName(), cat.getAmount());
-            pieChartData.add(data);
-        }
-        int totalAmount = calc.getTotalSum();
-        for (PieChart.Data data : pieChartData) {
-            Node node = data.getNode();
-            if (node != null) {
-                String color = getCategoryColor(data.getName());
-                node.setStyle("-fx-pie-color: " + color + ";");
-                // Customize the data label with a percentage
-                Label label = new Label();
-                label.setText(String.format("%.1f%%", (data.getPieValue() / totalAmount) * 100));
-
-                // Set the label's style
-                label.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
-
-                // Add the label to the pie chart
-                data.getNode().setUserData(label);
+        // Hvis pieChart ikke har noen data, initialiser den med alle kategorier
+        if (pieChart.getData().isEmpty()) {
+            for (Category cat : calc.getCategoriesList()) {
+                if (cat.getAmount() > 0) {
+                    PieChart.Data data = new PieChart.Data(cat.getCategoryName(), cat.getAmount());
+                    pieChart.getData().add(data);
+                }
+            }
+        } else {
+            // Oppdater eksisterende data
+            for (Category cat : calc.getCategoriesList()) {
+                PieChart.Data existingData = findDataByName(cat.getCategoryName());
+                if (existingData != null) {
+                    if (cat.getAmount() > 0) {
+                        existingData.setPieValue(cat.getAmount());
+                    } else {
+                        // Fjern kategorien fra piecharten hvis dens verdi er 0
+                        pieChart.getData().remove(existingData);
+                    }
+                } else if (cat.getAmount() > 0) {
+                    // Hvis data for denne kategorien ikke finnes, og den har en verdi større enn 0, legg den til
+                    PieChart.Data data = new PieChart.Data(cat.getCategoryName(), cat.getAmount());
+                    pieChart.getData().add(data);
+                }
             }
         }
 
-        // Clear existing data and add the filtered data to the PieChart
-        pieChart.getData().clear();
-        pieChart.getData().addAll(pieChartData);
+        // Sett fargene og oppdater labels
+        updateColorsAndLabels();
 
         pieChart.setTitle("Budget Distribution");
     }
+
+    private PieChart.Data findDataByName(final String categoryName) {
+        for (PieChart.Data data : pieChart.getData()) {
+            if (data.getName().equals(categoryName)) {
+                return data;
+            }
+        }
+        return null;
+    }
+
+    private void updateColorsAndLabels() {
+        int totalAmount = calc.getTotalSum();
+        for (PieChart.Data data : pieChart.getData()) {
+            Node node = data.getNode();
+            String color = getCategoryColor(data.getName());
+            node.setStyle("-fx-pie-color: " + color + ";");
+            Label label = (Label) node.getUserData();
+            if (label == null) {
+                label = new Label();
+                node.setUserData(label);
+            }
+            final int percentageDenominator = 100;
+            label.setText(String.format("%.1f%%", (data.getPieValue() / totalAmount) * percentageDenominator));
+        }
+    }
+
 
     private String getCategoryColor(final String categoryName) {
         return switch (categoryName) {

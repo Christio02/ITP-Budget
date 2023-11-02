@@ -6,9 +6,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="budget.ui.BudgetsViewController">
+<AnchorPane fx:id="savedContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="612.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="budget.ui.BudgetsViewController">
    <children>
-      <Text layoutX="146.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lagrede budsjetter">
+      <Text layoutX="171.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header" text="Saved budgets">
          <font>
             <Font size="37.0" />
          </font>
@@ -25,16 +25,16 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Text layoutX="48.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Navn">
+      <Text layoutX="48.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header" text="Name">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <Text layoutX="328.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Budsjett" wrappingWidth="94.28515625">
+      <Text layoutX="357.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header" text="Info" wrappingWidth="94.28515625">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <Button fx:id="deleteBtn" layoutX="480.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#deleteBudget" prefHeight="32.0" prefWidth="94.0" text="Slett budsjett" />
+      <Button fx:id="deleteBtn" layoutX="504.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#deleteBudget" prefHeight="32.0" prefWidth="94.0" text="Delete" />
    </children>
 </AnchorPane>

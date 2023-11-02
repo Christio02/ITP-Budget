@@ -23,6 +23,30 @@
     } ],
     "totalSum" : 5000
   },
+  "efefe" : {
+    "categoriesList" : [ {
+      "categoryName" : "Food",
+      "amount" : 444,
+      "budgetHistory" : [ 444 ]
+    }, {
+      "categoryName" : "Transportation",
+      "amount" : 3434,
+      "budgetHistory" : [ 3434 ]
+    }, {
+      "categoryName" : "Entertainment",
+      "amount" : 34,
+      "budgetHistory" : [ 34 ]
+    }, {
+      "categoryName" : "Clothing",
+      "amount" : 56,
+      "budgetHistory" : [ 56 ]
+    }, {
+      "categoryName" : "Other",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    } ],
+    "totalSum" : 3968
+  },
   "overwrite" : {
     "categoriesList" : [ {
       "categoryName" : "Food",
