@@ -294,8 +294,18 @@ public class BudgetController {
      */
     @FXML
     public final void saveBudget() {
-        addCalculation(this.calc);
-        createNewBudget(this.calc);
+
+        System.out.println(dataSingleton.getCalculations());
+
+        if (dataSingleton.getCalculations().containsKey(this.calc.getName())) {
+            System.out.println("Oppdaterer budsjett!");
+            updateBudget();
+
+        } else {
+            addCalculation(this.calc);
+            createNewBudget();
+        }
+
 //        try {
 //            FileUtility.writeToFile(getCalculations(), "/../utility/src/main/resources/budget/utility/savedBudget.json");
 //        } catch (IOException e) {
@@ -303,12 +313,11 @@ public class BudgetController {
 //        }
     }
 
-    private void createNewBudget(Calculation calculation) {
-        String apiUrl = "http://localhost:8080/budget";
+    private void sendRequest(Calculation calculation, String httpMethod, String apiUrl) {
         try {
             URL url = new URL(apiUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
+            conn.setRequestMethod(httpMethod);
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setDoOutput(true);
             String jsonCalculation = Json.getMapper().writeValueAsString(calculation);
@@ -326,6 +335,16 @@ public class BudgetController {
             e.printStackTrace();
         }
     }
+
+    private void createNewBudget() {
+        sendRequest(this.calc, "POST", "http://localhost:8080/budget");
+    }
+
+    private  void updateBudget() {
+        sendRequest(this.calc, "PUT", "http://localhost:8080/budget/" + this.calc.getName());
+    }
+
+
 
 
 }

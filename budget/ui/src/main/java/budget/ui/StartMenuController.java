@@ -45,20 +45,17 @@ public class StartMenuController {
     /**
      * Initializes the controller, loading existing budget data if available.
      */
+
+    private ArrayList<Calculation> calculations;
     @FXML
     public final void initialize() {
         System.out.println(data.getCalculations().toString());
 
-        try {
-            Map<String, Calculation> tempMap = new HashMap<>();
-            FileUtility.readFile(tempMap, "/../utility/src/main/resources/budget/utility/savedBudget.json");
-            data.updateMap(tempMap);
+//            Map<String, Calculation> tempMap = new HashMap<>();
+//          FileUtility.readFile(tempMap, "/../utility/src/main/resources/budget/utility/savedBudget.json");
+        calculations =  getAllCalculations();
+        System.out.println(calculations);
 
-            ArrayList<Calculation> calculations = getAllCalculations();
-            System.out.println(calculations);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         dialog = new Dialog<>();
         dialog.setTitle("Set budget name");
         dialog.setHeaderText("Please provide a unique name for budget");
@@ -82,6 +79,8 @@ public class StartMenuController {
         });
 
     }
+
+
     /**
      * Displays a dialog for entering a unique budget name.
      * @return True if the budget can be loaded, false otherwise.
@@ -185,6 +184,7 @@ public class StartMenuController {
                    return Json.getMapper().readValue(reader, new TypeReference<ArrayList<Calculation>>() {});
                }
            } else {
+               System.out.println("NO budgets found" + responseCode);
                return null;
            }
        } catch (IOException e) {
