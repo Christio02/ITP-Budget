@@ -13,66 +13,73 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<SplitPane fx:id="splitPane" dividerPositions="0.4" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="866.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="budget.ui.BudgetController">
-    <items>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="140.0" prefWidth="776.0">
-            <children>
-                <Text layoutX="93.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header" text="Category">
-                    <font>
+
+<AnchorPane prefHeight="449.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="budget.ui.BudgetController">
+   <children>
+      <AnchorPane fx:id="pieContainer" layoutX="600.0" prefHeight="450.0" prefWidth="600.0">
+         <children>
+   
+                              <PieChart fx:id="pieChart" maxHeight="445.0" prefHeight="408.0" prefWidth="600.0" />
+         </children>
+      </AnchorPane>
+      <SplitPane fx:id="splitPane" dividerPositions="0.3" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="450.0" prefWidth="600.0">
+          <items>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="140.0" prefWidth="598.0">
+                  <children>
+                      <Text layoutX="93.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header" text="Category">
+                          <font>
+                              <Font size="24.0" />
+                          </font>
+                      </Text>
+                      <Text layoutX="299.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header" text="Amount">
+                          <font>
+                              <Font size="24.0" />
+                          </font>
+                      </Text>
+                      <Button fx:id="inputBtn" layoutX="452.0" layoutY="97.0" mnemonicParsing="false" onAction="#addAmount" prefHeight="28.0" prefWidth="80.0" text="Add">
+                          <font>
+                              <Font size="14.0" />
+                          </font>
+                  </Button>
+                      <TextField fx:id="input" layoutX="299.0" layoutY="98.0" prefHeight="26.0" prefWidth="118.0" promptText="Write amount" />
+                      <ComboBox fx:id="selector" layoutX="93.0" layoutY="98.0" prefWidth="150.0" promptText="Select category" />
+                      <Button fx:id="returnMenuBtn" layoutX="6.0" layoutY="6.0" mnemonicParsing="false" onAction="#loadMainMenu" prefHeight="39.0" prefWidth="46.0" text="←">
+                          <font>
+                              <Font size="18.0" />
+                          </font>
+                      </Button>
+                      <Button fx:id="saveBtn" layoutX="538.0" layoutY="11.0" mnemonicParsing="false" onAction="#saveBudget" prefHeight="29.0" prefWidth="46.0">
+                          <graphic>
+                              <ImageView fx:id="saveIcon" fitHeight="20.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                      <Image url="@../images/saveIcon.png" />
+                                  </image>
+                              </ImageView>
+                          </graphic>
+                      </Button>
+                  <Text fx:id="budgetTitle" fill="WHITE" layoutX="276.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
                         <Font size="24.0" />
-                    </font>
-                </Text>
-                <Text layoutX="299.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header" text="Amount">
-                    <font>
-                        <Font size="24.0" />
-                    </font>
-                </Text>
-                <Button fx:id="inputBtn" layoutX="452.0" layoutY="97.0" mnemonicParsing="false" onAction="#addAmount" prefHeight="28.0" prefWidth="80.0" text="Add">
-                    <font>
-                        <Font size="14.0" />
-                    </font></Button>
-                <TextField fx:id="input" layoutX="299.0" layoutY="98.0" prefHeight="26.0" prefWidth="118.0" promptText="Write amount" />
-                <ComboBox fx:id="selector" layoutX="93.0" layoutY="98.0" prefWidth="150.0" promptText="Select category" />
-                <Button fx:id="returnMenuBtn" layoutX="6.0" layoutY="6.0" mnemonicParsing="false" onAction="#loadMainMenu" prefHeight="39.0" prefWidth="46.0" text="←">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                </Button>
-                <Button fx:id="saveBtn" layoutX="538.0" layoutY="11.0" mnemonicParsing="false" onAction="#saveBudget" prefHeight="29.0" prefWidth="46.0">
-                    <graphic>
-                        <ImageView fx:id="saveIcon" fitHeight="20.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../images/saveIcon.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Button>
-            <Text fx:id="budgetTitle" fill="WHITE" layoutX="276.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            </children></AnchorPane>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="236.0" prefWidth="746.0">
-            <children />
-            <TableView fx:id="table" fixedCellSize="0.0" layoutY="-4.0" prefHeight="245.0" prefWidth="599.0">
-                <columns>
-                    <TableColumn id="kategori" fx:id="category" prefWidth="301.0" text="Category" />
-                    <TableColumn id="brukt" fx:id="amountUsed" prefWidth="296.0" text="Expenses" />
-                </columns>
-            </TableView>
-            <AnchorPane layoutY="209.0" prefHeight="26.0" prefWidth="658.0">
-                <children>
-                    <Text layoutX="133.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sumLabel" text="Total" />
-                    <Text fx:id="totalSum" fill="#363636" layoutX="446.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sumLabel" text="0" />
-                </children>
+                     </font>
+                  </Text>
+                  </children>
             </AnchorPane>
-         <AnchorPane fx:id="pieContainer" layoutX="601.0" layoutY="14.0" prefHeight="400.0" prefWidth="600.0">
-            <children>
-      
-                        <PieChart fx:id="pieChart" prefHeight="400.0" prefWidth="600.0" />
-            </children>
-         </AnchorPane>
-        </AnchorPane>
-    </items>
-</SplitPane>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="236.0" prefWidth="598.0">
+                  <children />
+                  <TableView fx:id="table" fixedCellSize="0.0" layoutY="-4.0" prefHeight="245.0" prefWidth="599.0">
+                      <columns>
+                          <TableColumn id="kategori" fx:id="category" prefWidth="301.0" text="Category" />
+                          <TableColumn id="brukt" fx:id="amountUsed" prefWidth="296.0" text="Expenses" />
+                      </columns>
+                  </TableView>
+                  <AnchorPane layoutY="209.0" prefHeight="26.0" prefWidth="658.0">
+                      <children>
+                          <Text layoutX="133.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sumLabel" text="Total" />
+                          <Text fx:id="totalSum" fill="#363636" layoutX="446.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sumLabel" text="0" />
+                      </children>
+                  </AnchorPane>
+              </AnchorPane>
+          </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

@@ -156,7 +156,7 @@ public class StartMenuController {
         if (!popUpOnLoadBudgets()) {
             return;
         }
-        ChangeScene.changeToScene(getClass(), event, "budget-view.fxml", 1200, 800);
+        ChangeScene.changeToScene(getClass(), event, "budget-view.fxml", 1200, 420);
 
     }
     /**
@@ -168,7 +168,7 @@ public class StartMenuController {
     @FXML
     private void loadPrevBudget(final ActionEvent event) throws Exception {
         FileUtility.setLoad(true);
-        ChangeScene.changeToScene(getClass(), event, "load-budgets.fxml", 800, 600);
+        ChangeScene.changeToScene(getClass(), event, "load-budgets.fxml", 612, 400);
     }
 
     private ArrayList<Calculation> getAllCalculations() {
