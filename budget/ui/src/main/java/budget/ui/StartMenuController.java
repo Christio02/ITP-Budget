@@ -1,5 +1,8 @@
 package budget.ui;
 import budget.core.Calculation;
+import budget.core.Category;
+import budget.utility.Json;
+import com.fasterxml.jackson.core.type.TypeReference;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import budget.utility.FileUtility;
@@ -10,7 +13,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Alert;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -39,17 +45,17 @@ public class StartMenuController {
     /**
      * Initializes the controller, loading existing budget data if available.
      */
+
+    private ArrayList<Calculation> calculations;
     @FXML
     public final void initialize() {
         System.out.println(data.getCalculations().toString());
 
-        try {
-            Map<String, Calculation> tempMap = new HashMap<>();
-            FileUtility.readFile(tempMap, "/../utility/src/main/resources/budget/utility/savedBudget.json");
-            data.updateMap(tempMap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//            Map<String, Calculation> tempMap = new HashMap<>();
+//          FileUtility.readFile(tempMap, "/../utility/src/main/resources/budget/utility/savedBudget.json");
+        calculations =  getAllCalculations();
+        System.out.println(calculations);
+
         dialog = new Dialog<>();
         dialog.setTitle("Set budget name");
         dialog.setHeaderText("Please provide a unique name for budget");
@@ -73,6 +79,8 @@ public class StartMenuController {
         });
 
     }
+
+
     /**
      * Displays a dialog for entering a unique budget name.
      * @return True if the budget can be loaded, false otherwise.
@@ -162,5 +170,27 @@ public class StartMenuController {
         FileUtility.setLoad(true);
         ChangeScene.changeToScene(getClass(), event, "load-budgets.fxml", 612, 400);
     }
-}
 
+    private ArrayList<Calculation> getAllCalculations() {
+
+       String apiUrl = "http://localhost:8080/budget";
+       try {
+           URL url = new URL(apiUrl);
+           HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+           conn.setRequestMethod("GET");
+           int responseCode = conn.getResponseCode();
+           if (responseCode == 200) {
+               try(BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                   return Json.getMapper().readValue(reader, new TypeReference<ArrayList<Calculation>>() {});
+               }
+           } else {
+               System.out.println("NO budgets found" + responseCode);
+               return null;
+           }
+       } catch (IOException e) {
+           e.printStackTrace();
+           return null;
+       }
+
+    }
+}

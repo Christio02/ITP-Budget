@@ -1,1 +1,27 @@
-
+{
+  "overwrite" : {
+    "categoriesList" : [ {
+      "categoryName" : "Food",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    }, {
+      "categoryName" : "Transportation",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    }, {
+      "categoryName" : "Entertainment",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    }, {
+      "categoryName" : "Clothing",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    }, {
+      "categoryName" : "Other",
+      "amount" : 0,
+      "budgetHistory" : [ ]
+    } ],
+    "name" : null,
+    "totalSum" : 0
+  }
+}
