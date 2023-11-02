@@ -21,6 +21,7 @@
       "amount" : 0,
       "budgetHistory" : [ ]
     } ],
+    "name" : null,
     "totalSum" : 0
   }
 }
