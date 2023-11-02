@@ -183,18 +183,16 @@ public class BudgetsViewController {
                 data.deleteEntry(selectedCalc);
                 // Remove the selected item from the calculationMap
                 calculations.remove(selectedCalc);
+                data.deleteRequest(selectedCalcName);
 
                 // Remove the selected items from the ListViews
                 nameCalc.getItems().remove(selectedIndex);
                 calcObject.getItems().remove(selectedIndex);
-                data.updateCalculation(selectedCalc);
 
                 // Set the selection back to the first item
                 if (!nameCalc.getItems().isEmpty()) {
                     nameCalc.getSelectionModel().selectFirst();
                 }
-
-
             }
         }
 
