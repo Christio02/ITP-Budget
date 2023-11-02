@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Controller class for the start menu in the budget application.
@@ -46,15 +47,11 @@ public class StartMenuController {
      * Initializes the controller, loading existing budget data if available.
      */
 
-    private ArrayList<Calculation> calculations;
+    public ArrayList<Calculation> calculations;
     @FXML
     public final void initialize() {
-        System.out.println(data.getCalculations().toString());
 
-//            Map<String, Calculation> tempMap = new HashMap<>();
-//          FileUtility.readFile(tempMap, "/../utility/src/main/resources/budget/utility/savedBudget.json");
-        calculations =  getAllCalculations();
-        System.out.println(calculations);
+        this.calculations = data.getCalculations();
 
         dialog = new Dialog<>();
         dialog.setTitle("Set budget name");
@@ -120,9 +117,8 @@ public class StartMenuController {
         }
 
         boolean budgetExists = false;
-        for (Map.Entry<String, Calculation> entry : data.getCalculations().entrySet()) {
-            String presentKey = entry.getKey();
-            if (ref.getThisKey().equals(presentKey)) {
+        for (Calculation calc : calculations) {
+            if (calc != null && ref.getThisKey().equals(calc.getName())) {
                 budgetExists = true;
                 break;
 
@@ -171,26 +167,4 @@ public class StartMenuController {
         ChangeScene.changeToScene(getClass(), event, "load-budgets.fxml", 612, 400);
     }
 
-    private ArrayList<Calculation> getAllCalculations() {
-
-       String apiUrl = "http://localhost:8080/budget";
-       try {
-           URL url = new URL(apiUrl);
-           HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-           conn.setRequestMethod("GET");
-           int responseCode = conn.getResponseCode();
-           if (responseCode == 200) {
-               try(BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-                   return Json.getMapper().readValue(reader, new TypeReference<ArrayList<Calculation>>() {});
-               }
-           } else {
-               System.out.println("NO budgets found" + responseCode);
-               return null;
-           }
-       } catch (IOException e) {
-           e.printStackTrace();
-           return null;
-       }
-
-    }
 }

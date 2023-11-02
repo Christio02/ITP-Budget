@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * This class is responsible for the calculation of the budget.
@@ -125,6 +126,21 @@ public class Calculation {
     public ArrayList<Category> getCategoriesList() {
         return categoriesList;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Calculation calculation = (Calculation) obj;
+        // Replace field1, field2, etc. with the actual fields you want to compare.
+        // Use Objects.equals for fields that could be null.
+        return Objects.equals(name, calculation.getName());
+    }
+
 
 
     public static void main(String[] args) {
