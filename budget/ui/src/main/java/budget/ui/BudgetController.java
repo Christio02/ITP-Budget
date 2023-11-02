@@ -1,7 +1,6 @@
 package budget.ui;
 import budget.core.Calculation;
 import budget.core.Category;
-import budget.utility.Json;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,16 +11,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
-import budget.utility.FileUtility;
 import javafx.scene.chart.PieChart;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Map;
+
 
 public class BudgetController {
     /**
@@ -127,7 +120,7 @@ public class BudgetController {
     @FXML
     public final void initialize() {
         this.calculations = dataSingleton.getCalculations();
-        this.calc = dataSingleton.getCalculation();
+        calc =  new Calculation();
         System.out.println(calculations.toString());
         setupUI();
         populatePieChart();
