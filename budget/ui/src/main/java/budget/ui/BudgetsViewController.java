@@ -2,6 +2,7 @@ package budget.ui;
 
 import budget.core.Calculation;
 import budget.core.Category;
+import budget.utility.Json;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,10 +11,17 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import budget.utility.FileUtility;
+
 
 public class BudgetsViewController {
     /**
@@ -179,7 +187,7 @@ public class BudgetsViewController {
             Calculation selectedCalc = calcObject.getItems().get(selectedIndex);
 
             if (selectedCalc != null) {
-                FileUtility.deleteBudget(selectedCalcName, data.getCalculations());
+                deleteBudget("http://localhost:8080/budget/" + selectedCalcName);
                 data.deleteEntry(selectedCalcName);
                 // Remove the selected item from the calculationMap
                 calculationMap.remove(selectedCalcName);
@@ -199,6 +207,27 @@ public class BudgetsViewController {
         }
 
     }
+
+    private void deleteBudget(String apiUrl) {
+        try {
+            URL url = new URL(apiUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("DELETE");
+            conn.setRequestProperty("Content-Type", "application/json");
+            int responseCode = conn.getResponseCode();
+
+            if (responseCode == HttpURLConnection.HTTP_NO_CONTENT) {
+                System.out.println("Budget was deleted successfully!");
+            } else if (responseCode == HttpURLConnection.HTTP_NOT_FOUND) {
+                System.out.println("Budget not found on the server.");
+            } else {
+                System.out.println("Failed to delete budget. Response code: " + responseCode);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }

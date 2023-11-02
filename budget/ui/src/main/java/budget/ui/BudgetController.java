@@ -177,8 +177,6 @@ public class BudgetController {
 
         pieChart.getData().clear();
 
-
-
         for (Category cat : calc.getCategoriesList()) {
             PieChart.Data data = new PieChart.Data(cat.getCategoryName(), cat.getAmount());
             pieChartData.add(data);

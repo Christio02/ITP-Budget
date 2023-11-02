@@ -19,8 +19,7 @@ public class CalculationRepositorylList {
     private ArrayList<Calculation> budgets = new ArrayList<>();
 
     public CalculationRepositorylList() {
-        budgets.add(new Calculation("test"));
-        budgets.add(new Calculation("test2"));
+
     }
 
     //GET
