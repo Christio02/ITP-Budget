@@ -6,8 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 /**
  * This class is responsible for file operations.
@@ -39,30 +38,36 @@ public final class FileUtility {
     /**
      * Writes the Calculation object to a file.
      *
-     * @param calcMap The map of calculation objects to save
+     * @param calculations The Arraylist of calculation objects to save
      * @param path The path to the file
      * @throws IOException If an input or output exception occurred
      */
-    public static void writeToFile(final Map<String, Calculation> calcMap, final String path) throws IOException {
+    public static void writeToFile(final ArrayList<Calculation> calculations, final String path) throws IOException {
         File file = new File(CURRENT_DIR + path);
         // Check if calcMap is empty
-        if (calcMap.isEmpty()) {
+        if (calculations.isEmpty()) {
             // If it's empty, create an empty JSON object and write it to the file
-            Json.getMapper().writeValue(file, new HashMap<>());
+            Json.getMapper().writeValue(file, new ArrayList<>());
         } else {
-            Map<String, Calculation> existingDataMap;
+            ArrayList<Calculation> existingDataList;
             if (file.exists()) {
-                existingDataMap = Json.getMapper().readValue(file, Json.getMapper()
-                        .getTypeFactory().constructMapType(HashMap.class, String.class, Calculation.class));
+                existingDataList = Json.getMapper().readValue(file, Json.getMapper()
+                        .getTypeFactory().constructCollectionType(ArrayList.class, Calculation.class));
             } else {
-                existingDataMap = new HashMap<>();
+                existingDataList = new ArrayList<>();
             }
-            existingDataMap.putAll(calcMap);
+
+            for (Calculation calculation : calculations) {
+                if (!existingDataList.contains(calculation)) {
+                    existingDataList.add(calculation);
+                }
+            }
 
             // Write the merged data back to the file
-            Json.getMapper().writerWithDefaultPrettyPrinter().writeValue(file, existingDataMap);
+            Json.getMapper().writerWithDefaultPrettyPrinter().writeValue(file, existingDataList);
         }
     }
+
 
     /**
      * Sets the load status.
@@ -76,45 +81,43 @@ public final class FileUtility {
     /**
      * Reads the Calculation object from a file.
      *
-     * @param calcMap The map of calculations to update
+     * @param calculations The ArrayList of calculations to update
      * @param path The path to the file
      * @throws IOException If an input or output exception occurred
      */
-    public static void readFile(final Map<String, Calculation> calcMap, final String path) throws IOException {
+    public static void readFile(final ArrayList<Calculation> calculations, final String path) throws IOException {
         File file = new File(CURRENT_DIR + path);
-        Map<String, Calculation> mapFromFile =
+        ArrayList<Calculation> calculationArrayList =
                 Json.getMapper().readValue(file, new TypeReference
-                        <Map<String, Calculation>>(
+                        <ArrayList<Calculation>>(
                                 ) {
                 });
-        calcMap.clear();
+        calculations.clear();
 
-        for (Map.Entry<String, Calculation> entry : mapFromFile.entrySet()) {
-            String name = entry.getKey();
-            Calculation calcObject = entry.getValue();
-            calcMap.put(name, calcObject);
-        }
+        calculations.addAll(calculationArrayList);
     }
 
     /**
      * Deletes a budget from the file.
      * @param name The name of the budget to delete
-     * @param calcMap The map of calculations
+     * @param calculations The ArrayList of calculations
      */
-    public static void deleteBudget(final String name, final Map<String, Calculation> calcMap) {
+    public static void deleteBudget(final String name, final ArrayList<Calculation> calculations) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            readFile(calcMap, "/../utility/src/main/resources/budget/utility/savedBudget.json");
+            readFile(calculations, "/../utility/src/main/resources/budget/utility/savedBudget.json");
 
-            if (calcMap.containsKey(name)) {
-                calcMap.remove(name);
-                System.out.println("Deleted " + name + " from file");
-                mapper.writerWithDefaultPrettyPrinter().writeValue(new File(FILE_PATH), calcMap);
+            for (Calculation calc : calculations) {
+                if (calc.getName().equals(name)) {
+                    calculations.remove(calc);
+                    System.out.println("Deleted " + name + " from file");
+                    break;
             } else {
                 System.out.println(name + " not found in the file. Nothing was deleted.");
             }
-
-        } catch (IOException e) {
+        mapper.writerWithDefaultPrettyPrinter().writeValue(new File(FILE_PATH), calculations);
+        }
+    } catch (IOException e) {
             e.printStackTrace();
         }
     }

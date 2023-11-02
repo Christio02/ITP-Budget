@@ -2,9 +2,12 @@ package budget.springrest.repository;
 
 
 import budget.core.Calculation;
+import budget.utility.FileUtility;
 import org.springframework.stereotype.Repository;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * The '@Repository' annotation is used to mark this class as a Data Access Object (DAO) or repository.
@@ -24,6 +27,11 @@ public class CalculationRepositorylList {
 
     //GET
     public ArrayList<Calculation> findAll() {
+        try {
+            FileUtility.readFile(this.budgets, "./utility/src/main/resources/budget/utility/savedBudget.json");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return new ArrayList<>(this.budgets);
     }
 
@@ -33,7 +41,15 @@ public class CalculationRepositorylList {
     }
 
     public Calculation create(Calculation calc) {
+        if (calc.getName().equals("null")) {
+            throw new IllegalArgumentException("Invalid budget name!");
+        }
         budgets.add(calc);
+        try {
+            FileUtility.writeToFile(budgets, "./utility/src/main/resources/budget/utility/savedBudget.json");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return calc;
     }
 
@@ -42,12 +58,19 @@ public class CalculationRepositorylList {
                 .stream().filter(c -> c.getName().equals(calculation.getName()))
                 .findFirst().orElseThrow(() -> new IllegalArgumentException("Budget you are trying to update not found"));
         int index = findBudgetIndex(existingCalc.getName());
+        System.out.println("Before update: " + budgets.get(index));  // Debug: Print before update
         budgets.set(index, calculation);
+        System.out.println("After update: " + budgets.get(index));   // Debug: Print after update
+        try {
+            FileUtility.writeToFile(budgets, "./utility/src/main/resources/budget/utility/savedBudget.json");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void delete(String name) {
         budgets.removeIf(c -> c.getName().equals(name));
-
+        FileUtility.deleteBudget(name, budgets);
     }
     public int findBudgetIndex(String name) {
         for (int i = 0; i < budgets.size(); i++) {

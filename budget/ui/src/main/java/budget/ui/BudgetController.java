@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class BudgetController {
@@ -122,11 +123,12 @@ public class BudgetController {
      * Initialize the controller and set up the UI.
      */
 
-
+    private ArrayList<Calculation> calculations;
     @FXML
     public final void initialize() {
-        calc = dataSingleton.getCalculation();
-        calc.setName(dataSingleton.getCalcName());
+        this.calculations = dataSingleton.getCalculations();
+        this.calc = dataSingleton.getCalculation();
+        System.out.println(calculations.toString());
         setupUI();
         populatePieChart();
     }
@@ -235,7 +237,7 @@ public class BudgetController {
      */
     public final void addCalculation(final Calculation newCalc) {
         String name = this.budgetTitle.getText();
-        dataSingleton.addCalculation(name, newCalc);
+        dataSingleton.addCalculation(newCalc);
     }
 
     /**
@@ -243,7 +245,7 @@ public class BudgetController {
      *
      * @return A map of calculation names to Calculation objects.
      */
-    public final Map<String, Calculation> getCalculations() {
+    public final ArrayList<Calculation> getCalculations() {
         return dataSingleton.getCalculations();
     }
 
@@ -293,9 +295,8 @@ public class BudgetController {
     @FXML
     public final void saveBudget() {
 
-        System.out.println(dataSingleton.getCalculations());
 
-        if (dataSingleton.getCalculations().containsKey(this.calc.getName())) {
+        if (this.calculations.contains(this.calc)) {
             System.out.println("Oppdaterer budsjett!");
             updateBudget();
 
@@ -303,43 +304,15 @@ public class BudgetController {
             addCalculation(this.calc);
             createNewBudget();
         }
-
-//        try {
-//            FileUtility.writeToFile(getCalculations(), "/../utility/src/main/resources/budget/utility/savedBudget.json");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-    }
-
-    private void sendRequest(Calculation calculation, String httpMethod, String apiUrl) {
-        try {
-            URL url = new URL(apiUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod(httpMethod);
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setDoOutput(true);
-            String jsonCalculation = Json.getMapper().writeValueAsString(calculation);
-            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()))) {
-                writer.write(jsonCalculation);
-            }
-            int responseCode = conn.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_CREATED) {
-                System.out.println("Budget was written correctly!");
-            } else {
-                System.out.println("Budget was not written correctly " + responseCode);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void createNewBudget() {
-        sendRequest(this.calc, "POST", "http://localhost:8080/budget");
+        dataSingleton.addCalculation(this.calc);
     }
 
     private  void updateBudget() {
-        sendRequest(this.calc, "PUT", "http://localhost:8080/budget/" + this.calc.getName());
+        System.out.println(this.calc);  // Debug: Print calc before sending
+        dataSingleton.updateCalculation(this.calc);
     }
 
 
