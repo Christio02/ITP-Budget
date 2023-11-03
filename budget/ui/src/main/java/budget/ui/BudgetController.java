@@ -294,7 +294,7 @@ public class BudgetController {
             updateBudget();
 
         } else {
-            addCalculation(this.calc);
+            System.out.println("Legger til nytt budsjett!");
             createNewBudget();
         }
     }
