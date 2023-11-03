@@ -5,11 +5,12 @@ import budget.utility.Json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 
+import java.net.*;
+import java.net.http.HttpClient;
+
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -40,10 +41,15 @@ public final class DataSingleton {
      */
     private ArrayList<Calculation> calculations = new ArrayList<>();
 
+    private final HttpClient client;
     /**
      * private constructor for retrieving instance.
      */
     private DataSingleton() {
+        client = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_2)
+                .followRedirects(HttpClient.Redirect.NORMAL)
+                .build();
     }
 
     /**
@@ -77,6 +83,7 @@ public final class DataSingleton {
      *
      * @return The current Calculation.
      */
+
     public Calculation getCalculation() {
         getRequest(false, this.calcName, calculation);
         return this.calculation;
@@ -117,24 +124,30 @@ public final class DataSingleton {
 
     public void sendPOSTRequest(Calculation calculation) {
         try {
-            URL url = new URL(API_URL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
 
-            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(), StandardCharsets.UTF_8))) {
-                String jsonCalc = Json.getMapper().writeValueAsString(calculation);
-                writer.write(jsonCalc);
-            }
-            int responseCode = conn.getResponseCode();
+
+            String jsonCalculation = Json.getMapper().writeValueAsString(calculation);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URL(API_URL).toURI())
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonCalculation))
+                    .header("Content-Type", "application/json")
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            int responseCode = response.statusCode();
+            String responseBody = response.body();
+
             if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED || responseCode == HttpURLConnection.HTTP_NO_CONTENT) {
                 System.out.println("Request was successful!");
+                System.out.println("Response Body: " + responseBody);
             } else {
-                System.out.println("Request was not successful " + responseCode);
+                System.out.println("Request was not successful for POST " + responseCode);
             }
-        } catch (IOException e) {
+        } catch (MalformedURLException | JsonProcessingException | URISyntaxException e) {
             e.printStackTrace();
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -153,7 +166,7 @@ public final class DataSingleton {
             if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED || responseCode == HttpURLConnection.HTTP_NO_CONTENT) {
                 System.out.println("Request was successful!");
             } else {
-                System.out.println("Request was not successful " + responseCode);
+                System.out.println("Request was not successful for PUT " + responseCode);
             }
         } catch (IOException e) {
             e.printStackTrace();

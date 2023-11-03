@@ -22,4 +22,28 @@
   } ],
   "name" : "Test",
   "totalSum" : 0
+}, {
+  "categoriesList" : [ {
+    "categoryName" : "Food",
+    "amount" : 2000,
+    "budgetHistory" : [ ]
+  }, {
+    "categoryName" : "Transportation",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  }, {
+    "categoryName" : "Entertainment",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  }, {
+    "categoryName" : "Clothing",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  }, {
+    "categoryName" : "Other",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  } ],
+  "name" : "Test2",
+  "totalSum" : 2000
 } ]
