@@ -96,10 +96,7 @@ public final class DataSingleton {
      * @param newCalcName The name to set.
      */
     public void setCalcName(final String newCalcName) {
-        System.out.print("Sending get request");
         this.calcName = newCalcName;
-        this.calculation = getCalculation();
-        System.out.println("Loaded from file: " + this.calculation.toString());
     }
     /**
      * Get the Calculation name.

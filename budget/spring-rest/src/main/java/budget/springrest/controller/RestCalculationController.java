@@ -4,6 +4,7 @@ import budget.core.Calculation;
 import budget.springrest.repository.CalculationRepositorylList;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 
@@ -31,7 +32,11 @@ public class RestCalculationController {
     // GET http://localhost:8080/name(Mitt budsjett)
     @GetMapping("/{name}")
     public Calculation findByName(@PathVariable String name) {
-        return repository.findByName(name);
+        if (repository.hasBudget(name)) {
+            return repository.findByName(name);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No budget found by that name!");
+        }
     }
 
     // POST http://localhost:8080/budget (do not need /create)
