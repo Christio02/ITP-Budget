@@ -17,9 +17,9 @@
     "budgetHistory" : [ ]
   }, {
     "categoryName" : "Other",
-    "amount" : 0,
-    "budgetHistory" : [ ]
+    "amount" : 2000,
+    "budgetHistory" : [2000]
   } ],
   "name" : "Test",
-  "totalSum" : 0
+  "totalSum" : 2000
 } ]
