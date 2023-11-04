@@ -50,6 +50,7 @@ public final class DataSingleton {
                 .version(HttpClient.Version.HTTP_2)
                 .followRedirects(HttpClient.Redirect.NORMAL)
                 .build();
+
     }
 
     /**
@@ -95,9 +96,11 @@ public final class DataSingleton {
      * @param newCalcName The name to set.
      */
     public void setCalcName(final String newCalcName) {
+        System.out.print("Sending get request");
         this.calcName = newCalcName;
+        this.calculation = getCalculation();
+        System.out.println("Loaded from file: " + this.calculation.toString());
     }
-
     /**
      * Get the Calculation name.
      *
@@ -151,43 +154,51 @@ public final class DataSingleton {
         }
     }
 
-    public void sendPUTRequest(Calculation calculation) {
+    public void sendPUTRequest(String name) {
         try {
-            URL url = new URL(API_URL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestMethod("PUT");
+            String jsonCalc = Json.getMapper().writeValueAsString(calculation);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(API_URL + "/" + name))
+                    .header("Content-Type", "application/json")
+                    .PUT(HttpRequest.BodyPublishers.ofString(jsonCalc))
+                    .build();
 
-            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(), StandardCharsets.UTF_8))) {
-                String jsonCalc = Json.getMapper().writeValueAsString(calculation);
-                writer.write(jsonCalc);
-            }
-            int responseCode = conn.getResponseCode();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            int responseCode = response.statusCode();
+
             if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED || responseCode == HttpURLConnection.HTTP_NO_CONTENT) {
-                System.out.println("Request was successful!");
+                System.out.println("PUT Request was successful!");
             } else {
-                System.out.println("Request was not successful for PUT " + responseCode);
+                System.out.println("PUT Request was not successful. Response Code: " + responseCode);
             }
-        } catch (IOException e) {
+        } catch (URISyntaxException | IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
     public void getRequest(boolean getAll, String name, Calculation calc) {
         try {
-            if (getAll) {
-                URL url = new URL("http://localhost:8080/budget");
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-                conn.setRequestProperty("Content-Type", "application/json");
-                this.calculations = Json.getMapper().readValue(conn.getInputStream(), new TypeReference<ArrayList<Calculation>>() {});
+            String apiUrl = "http://localhost:8080/budget" + (getAll ? "" : "/" + name);
+            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                    .uri(new URI(apiUrl))
+                    .header("Content-Type", "application/json")
+                    .GET();
+
+            HttpResponse<String> response = client.send(requestBuilder.build(), HttpResponse.BodyHandlers.ofString());
+            int responseCode = response.statusCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                String responseBody = response.body();
+                System.out.println("GET Request was successful!");
+                if (getAll) {
+                    this.calculations = Json.getMapper().readValue(responseBody, new TypeReference<ArrayList<Calculation>>() {});
+                } else {
+                    this.calculation = Json.getMapper().readValue(responseBody, Calculation.class);
+                }
             } else {
-                URL url = new URL("http://localhost:8080/budget/" + name);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-                conn.setRequestProperty("Content-Type", "application/json");
-               this.calculation =  Json.getMapper().readValue(conn.getInputStream(), Calculation.class);
+                System.out.println("GET Request was not successful. Response Code: " + responseCode);
             }
-        } catch (IOException e) {
+        } catch (URISyntaxException | IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -202,7 +213,7 @@ public final class DataSingleton {
         int index = this.calculations.indexOf(calc);
         if (index != -1) {
             this.calculations.set(index, calc);
-            sendPUTRequest(calc);
+            sendPUTRequest(calc.getName());
         }
     }
 
@@ -213,31 +224,36 @@ public final class DataSingleton {
 
     public void deleteRequest(final String name) {
         try {
-            URL url = new URL(API_URL + name);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestMethod("DELETE");
-            int responseCode = conn.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED || responseCode == HttpURLConnection.HTTP_NO_CONTENT) {
-                ArrayList<Calculation> calc = getCalculations();
-                Iterator<Calculation> calculationIterator = getCalculations().iterator();
-                while (calculationIterator.hasNext()) {
-                    Calculation calculation = calculationIterator.next();
-                    if (calculation.getName().equals(name)) {
-                        calculationIterator.remove();
-                        break;
-                    }
-                }
-                System.out.println("Calculation was deleted correctly");
+            String apiUrl = API_URL + "/" + name;
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(apiUrl))
+                    .header("Content-Type", "application/json")
+                    .DELETE()
+                    .build();
 
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            int responseCode = response.statusCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED || responseCode == HttpURLConnection.HTTP_NO_CONTENT) {
+                removeCalculationLocally(name);
+                System.out.println("Calculation was deleted correctly");
             } else {
                 System.out.println("Request was not successful " + responseCode);
             }
-
-
-        } catch (IOException e) {
+        } catch (URISyntaxException | IOException | InterruptedException e) {
             e.printStackTrace();
         }
+    }
 
+    private void removeCalculationLocally(String name) {
+        Iterator<Calculation> calculationIterator = getCalculations().iterator();
+        while (calculationIterator.hasNext()) {
+            Calculation calculation = calculationIterator.next();
+            if (calculation.getName().equals(name)) {
+                calculationIterator.remove();
+                break;
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 package budget.core;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.Objects;
 /**
  * This class is responsible for the calculation of the budget.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Calculation {
 
     /**
@@ -140,11 +142,28 @@ public class Calculation {
         // Use Objects.equals for fields that could be null.
         return Objects.equals(name, calculation.getName());
     }
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append("Calculation Name: ").append(name).append("\n");
+        result.append("Total Sum: ").append(getTotalSum()).append("\n");
+        result.append("Categories:\n");
+
+        for (Category category : categoriesList) {
+            result.append(category.getCategoryName()).append(": ").append(category.getAmount()).append("\n");
+        }
+
+        return result.toString();
+    }
+
+
 
 
 
     public static void main(String[] args) {
-
+        Calculation calculation = new Calculation("Hello");
+        calculation.addAmountToCategory(calculation.getCategory("Food"), 2000);
+        System.out.println(calculation);
 
     }
 

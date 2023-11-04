@@ -100,8 +100,8 @@ public class BudgetsViewController {
                 if (selectedCalcName != null) {
                     Calculation selectedCalc = data.getCalculations().stream().filter(calc -> calc.getName().equals(selectedCalcName)).findFirst().orElse(null);
                     if (selectedCalc != null) {
-                        data.setCalculation(selectedCalc);
                         data.setCalcName(selectedCalcName);
+                        data.setCalculation(selectedCalc);
                         try {
                             ChangeScene.changeToScene(getClass(), event, "budget-view.fxml", 800, 600);
                         } catch (Exception e) {

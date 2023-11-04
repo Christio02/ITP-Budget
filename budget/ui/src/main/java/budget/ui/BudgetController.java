@@ -120,7 +120,7 @@ public class BudgetController {
     @FXML
     public final void initialize() {
         this.calculations = dataSingleton.getCalculations();
-        calc =  new Calculation();
+        calc = dataSingleton.getCalculation();
         System.out.println(calculations.toString());
         setupUI();
         populatePieChart();
@@ -230,6 +230,7 @@ public class BudgetController {
      */
     public final void addCalculation(final Calculation newCalc) {
         String name = this.budgetTitle.getText();
+        this.calc.setName(name);
         dataSingleton.addCalculation(newCalc);
     }
 
@@ -300,10 +301,11 @@ public class BudgetController {
     }
 
     private void createNewBudget() {
+        this.calc.setName(budgetTitle.getText());
         dataSingleton.addCalculation(this.calc);
     }
 
-    private  void updateBudget() {
+    private void updateBudget() {
         System.out.println(this.calc);  // Debug: Print calc before sending
         dataSingleton.updateCalculation(this.calc);
     }

@@ -3,30 +3,20 @@ package budget.utility;
 import budget.core.Calculation;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.util.FileCopyUtils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.io.InputStream;
 
 /**
  * This class is responsible for file operations.
  */
 public final class FileUtility {
-    /**
-     * Load status.
-     */
-    private static boolean load;
-
-    /**
-     * Current directory path.
-     */
-    private static final String CURRENT_DIR = System.getProperty("user.dir");
-
-    /**
-     * File path for serialization.
-     */
-    private static final String FILE_PATH = CURRENT_DIR
-            + "/../utility/src/main/resources/budget/utility/savedBudget.json";
+    private static final String FILE_PATH_TEST = "savedBudget.json";
+    private static final Resource resource = new ClassPathResource(FILE_PATH_TEST);
 
     /**
      * Private constructor to hide the implicit public one.
@@ -38,33 +28,30 @@ public final class FileUtility {
     /**
      * Writes the Calculation object to a file.
      *
-     * @param calculations The Arraylist of calculation objects to save
-     * @param path The path to the file
+     * @param calculations The ArrayList of calculation objects to save
      * @throws IOException If an input or output exception occurred
      */
-    public static void writeToFile(final ArrayList<Calculation> calculations, final String path) throws IOException {
-        File file = new File(CURRENT_DIR + path);
-        // Check if calcMap is empty
-        if (calculations.isEmpty()) {
-            // If it's empty, create an empty JSON object and write it to the file
-            Json.getMapper().writeValue(file, new ArrayList<>());
-        } else {
-            ArrayList<Calculation> existingDataList;
-            if (file.exists()) {
-                existingDataList = Json.getMapper().readValue(file, Json.getMapper()
-                        .getTypeFactory().constructCollectionType(ArrayList.class, Calculation.class));
-            } else {
-                existingDataList = new ArrayList<>();
-            }
+    public static void writeToFile(final ArrayList<Calculation> calculations) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
 
-            for (Calculation calculation : calculations) {
-                if (!existingDataList.contains(calculation)) {
-                    existingDataList.add(calculation);
-                }
-            }
+        // Read the existing data from the file, if it exists
+        ArrayList<Calculation> existingData = new ArrayList<>();
+        File file = resource.getFile();
 
-            // Write the merged data back to the file
-            Json.getMapper().writerWithDefaultPrettyPrinter().writeValue(file, existingDataList);
+        try (InputStream inputStream = resource.getInputStream()) {
+            existingData = objectMapper.readValue(inputStream, new TypeReference<ArrayList<Calculation>>() {});
+        }
+
+        // Merge the new calculations with the existing data
+        for (Calculation calculation : calculations) {
+            if (!existingData.contains(calculation)) {
+                existingData.add(calculation);
+            }
+        }
+
+        // Write the merged data back to the file
+        try (OutputStream outputStream = new FileOutputStream(file)) {
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(outputStream, existingData);
         }
     }
 
@@ -75,60 +62,74 @@ public final class FileUtility {
      * @param loadStatus The new load status
      */
     public static void setLoad(final boolean loadStatus) {
-        load = loadStatus;
+        // Implement your logic for setting the load status here
     }
 
     /**
      * Reads the Calculation object from a file.
      *
      * @param calculations The ArrayList of calculations to update
-     * @param path The path to the file
      * @throws IOException If an input or output exception occurred
      */
-    public static void readFile(final ArrayList<Calculation> calculations, final String path) throws IOException {
-        File file = new File(CURRENT_DIR + path);
-        ArrayList<Calculation> calculationArrayList =
-                Json.getMapper().readValue(file, new TypeReference
-                        <ArrayList<Calculation>>(
-                                ) {
-                });
-        calculations.clear();
+    public static void readFile(final ArrayList<Calculation> calculations) throws IOException {
+        try {
+            InputStream inputStream = resource.getInputStream();
 
-        calculations.addAll(calculationArrayList);
+            ObjectMapper objectMapper = new ObjectMapper();
+            calculations.clear();
+            calculations.addAll(objectMapper.readValue(inputStream, new TypeReference<ArrayList<Calculation>>() {}));
+
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Deletes a budget from the file.
+     *
      * @param name The name of the budget to delete
      * @param calculations The ArrayList of calculations
      */
     public static void deleteBudget(final String name, final ArrayList<Calculation> calculations) {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            readFile(calculations, "/../utility/src/main/resources/budget/utility/savedBudget.json");
+        Calculation foundCalculation = null;
 
-            for (Calculation calc : calculations) {
-                if (calc.getName().equals(name)) {
-                    calculations.remove(calc);
-                    System.out.println("Deleted " + name + " from file");
-                    break;
-            } else {
-                System.out.println(name + " not found in the file. Nothing was deleted.");
+        for (Calculation calc : calculations) {
+            if (calc.getName().equals(name)) {
+                foundCalculation = calc;
+                break;
             }
-        mapper.writerWithDefaultPrettyPrinter().writeValue(new File(FILE_PATH), calculations);
         }
-    } catch (IOException e) {
-            e.printStackTrace();
+
+        if (foundCalculation != null) {
+            calculations.remove(foundCalculation);
+            System.out.println("Deleted " + name + " from the file");
+
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            try (InputStream inputStream = resource.getInputStream()) {
+                File file = resource.getFile();
+                ArrayList<Calculation> existingData = objectMapper.readValue(inputStream, new TypeReference<ArrayList<Calculation>>() {});
+                existingData.remove(foundCalculation);
+
+                try (OutputStream outputStream = new FileOutputStream(file)) {
+                    objectMapper.writerWithDefaultPrettyPrinter().writeValue(outputStream, existingData);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println(name + " not found in the file. Nothing was deleted.");
         }
     }
+
     /**
      * Gets the load status.
      *
      * @return The load status
      */
     public static boolean getLoad() {
-        return load;
+        // Implement your logic for getting the load status here
+        return false;
     }
-
-
 }
