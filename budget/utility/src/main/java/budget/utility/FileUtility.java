@@ -15,8 +15,17 @@ import java.io.InputStream;
  * This class is responsible for file operations.
  */
 public final class FileUtility {
-    private static final String FILE_PATH_TEST = "savedBudget.json";
-    private static final Resource resource = new ClassPathResource(FILE_PATH_TEST);
+    /**
+     * Current directory path.
+     */
+    private static final String CURRENT_DIR = System.getProperty("user.dir");
+
+    /**
+     * File path for serialization.
+     */
+    private static final String FILE_PATH = CURRENT_DIR
+            + "/utility/src/main/resources/budget/utility/savedBudget.json";
+
 
     /**
      * Private constructor to hide the implicit public one.
@@ -34,24 +43,11 @@ public final class FileUtility {
     public static void writeToFile(final ArrayList<Calculation> calculations) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 
-        // Read the existing data from the file, if it exists
-        ArrayList<Calculation> existingData = new ArrayList<>();
-        File file = resource.getFile();
+        File file = new File(FILE_PATH);
 
-        try (InputStream inputStream = resource.getInputStream()) {
-            existingData = objectMapper.readValue(inputStream, new TypeReference<ArrayList<Calculation>>() {});
-        }
-
-        // Merge the new calculations with the existing data
-        for (Calculation calculation : calculations) {
-            if (!existingData.contains(calculation)) {
-                existingData.add(calculation);
-            }
-        }
-
-        // Write the merged data back to the file
+        // Write the updated data directly to the file, overwriting the existing content
         try (OutputStream outputStream = new FileOutputStream(file)) {
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(outputStream, existingData);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(outputStream, calculations);
         }
     }
 
@@ -73,7 +69,8 @@ public final class FileUtility {
      */
     public static void readFile(final ArrayList<Calculation> calculations) throws IOException {
         try {
-            InputStream inputStream = resource.getInputStream();
+            File file = new File(FILE_PATH);
+            InputStream inputStream = new FileInputStream(file);
 
             ObjectMapper objectMapper = new ObjectMapper();
             calculations.clear();
@@ -82,44 +79,6 @@ public final class FileUtility {
             inputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * Deletes a budget from the file.
-     *
-     * @param name The name of the budget to delete
-     * @param calculations The ArrayList of calculations
-     */
-    public static void deleteBudget(final String name, final ArrayList<Calculation> calculations) {
-        Calculation foundCalculation = null;
-
-        for (Calculation calc : calculations) {
-            if (calc.getName().equals(name)) {
-                foundCalculation = calc;
-                break;
-            }
-        }
-
-        if (foundCalculation != null) {
-            calculations.remove(foundCalculation);
-            System.out.println("Deleted " + name + " from the file");
-
-            ObjectMapper objectMapper = new ObjectMapper();
-
-            try (InputStream inputStream = resource.getInputStream()) {
-                File file = resource.getFile();
-                ArrayList<Calculation> existingData = objectMapper.readValue(inputStream, new TypeReference<ArrayList<Calculation>>() {});
-                existingData.remove(foundCalculation);
-
-                try (OutputStream outputStream = new FileOutputStream(file)) {
-                    objectMapper.writerWithDefaultPrettyPrinter().writeValue(outputStream, existingData);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println(name + " not found in the file. Nothing was deleted.");
         }
     }
 

@@ -206,8 +206,19 @@ public final class DataSingleton {
         sendPOSTRequest(calc);
     }
 
+    private boolean checkIfExists(String name) {
+        return !this.calculations.stream()
+                .filter(p -> p.getName().equals(name)).toList().isEmpty();
+    }
+
     public void updateCalculation(final Calculation calc) {
-        int index = this.calculations.indexOf(calc);
+       int index = -1;
+        for (int i = 0; i < calculations.size(); i++) {
+            if (calculations.get(i).getName().equals(calc.getName())) {
+                index = i;
+                break;
+            }
+        }
         if (index != -1) {
             this.calculations.set(index, calc);
             sendPUTRequest(calc.getName());

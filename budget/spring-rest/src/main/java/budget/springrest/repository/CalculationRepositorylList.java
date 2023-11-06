@@ -33,6 +33,9 @@ public class CalculationRepositorylList {
         if (calc.getName().equals("null")) {
             throw new IllegalArgumentException("Invalid budget name!");
         }
+//        if (checkDuplicate(calc.getName())) {
+//            throw new IllegalArgumentException("Budget name already exists!");
+//        }
         budgets.add(calc);
         saveDataToFile(); // Save data to the file after creating
         return calc;
@@ -52,7 +55,7 @@ public class CalculationRepositorylList {
 
     public void delete(String name) {
         budgets.removeIf(c -> c.getName().equals(name));
-        FileUtility.deleteBudget(name, this.budgets);
+        saveDataToFile();
     }
 
     private int findBudgetIndex(String name) {
@@ -84,7 +87,7 @@ public class CalculationRepositorylList {
     // Method to save data to the file
     private void saveDataToFile() {
         try {
-            FileUtility.writeToFile(budgets);
+            FileUtility.writeToFile(this.budgets);
         } catch (IOException e) {
             e.printStackTrace();
         }
