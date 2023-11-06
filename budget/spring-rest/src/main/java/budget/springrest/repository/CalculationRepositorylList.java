@@ -9,7 +9,8 @@ import java.util.ArrayList;
 
 @Repository
 public class CalculationRepositorylList {
-    private static final String DATA_FILE_PATH = "classpath:budget/utility/savedBudget.json";
+
+    private static final String FILE_PATH = "/budget/utility/src/main/resources/budget/utility/savedBudget.json";
 
     private ArrayList<Calculation> budgets = new ArrayList<>();
 
@@ -87,7 +88,7 @@ public class CalculationRepositorylList {
     // Method to save data to the file
     private void saveDataToFile() {
         try {
-            FileUtility.writeToFile(this.budgets);
+            FileUtility.writeToFile(this.budgets, FILE_PATH);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -96,7 +97,7 @@ public class CalculationRepositorylList {
     // Method to load data from the file
     private void loadDataFromFile() {
         try {
-            FileUtility.readFile(this.budgets);
+            FileUtility.readFile(this.budgets, FILE_PATH);
         } catch (IOException e) {
             e.printStackTrace();
         }

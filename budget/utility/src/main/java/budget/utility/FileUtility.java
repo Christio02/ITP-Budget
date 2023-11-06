@@ -3,11 +3,12 @@ package budget.utility;
 import budget.core.Calculation;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import org.springframework.util.FileCopyUtils;
 
-import java.io.*;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.io.InputStream;
 
@@ -19,12 +20,6 @@ public final class FileUtility {
      * Current directory path.
      */
     private static final String CURRENT_DIR = System.getProperty("user.dir");
-
-    /**
-     * File path for serialization.
-     */
-    private static final String FILE_PATH = CURRENT_DIR
-            + "/utility/src/main/resources/budget/utility/savedBudget.json";
 
 
     /**
@@ -38,12 +33,13 @@ public final class FileUtility {
      * Writes the Calculation object to a file.
      *
      * @param calculations The ArrayList of calculation objects to save
+     * @param path         The path to the file
      * @throws IOException If an input or output exception occurred
      */
-    public static void writeToFile(final ArrayList<Calculation> calculations) throws IOException {
+    public static void writeToFile(final ArrayList<Calculation> calculations, final String path) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-
-        File file = new File(FILE_PATH);
+        String finalPath = CURRENT_DIR + path;
+        File file = new File(finalPath);
 
         // Write the updated data directly to the file, overwriting the existing content
         try (OutputStream outputStream = new FileOutputStream(file)) {
@@ -65,16 +61,20 @@ public final class FileUtility {
      * Reads the Calculation object from a file.
      *
      * @param calculations The ArrayList of calculations to update
+     * @param path         The path to the file
      * @throws IOException If an input or output exception occurred
      */
-    public static void readFile(final ArrayList<Calculation> calculations) throws IOException {
+    public static void readFile(final ArrayList<Calculation> calculations, final String path) throws IOException {
         try {
-            File file = new File(FILE_PATH);
+            String finalPath = CURRENT_DIR + path;
+            File file = new File(finalPath);
             InputStream inputStream = new FileInputStream(file);
 
             ObjectMapper objectMapper = new ObjectMapper();
             calculations.clear();
-            calculations.addAll(objectMapper.readValue(inputStream, new TypeReference<ArrayList<Calculation>>() {}));
+            calculations.addAll(objectMapper.readValue(inputStream, new TypeReference<ArrayList<Calculation>>() {
+
+            }));
 
             inputStream.close();
         } catch (IOException e) {

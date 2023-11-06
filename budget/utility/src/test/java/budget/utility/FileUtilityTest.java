@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,16 +21,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class FileUtilityTest {
 
     private Calculation testCalculation;
-    private Map<String, Calculation> testMap;
 
     private String testName = "Test1";
+
+    private static final String TEST_FILE_PATH = "/../utility/src/main/resources/budget/utility/testBudget.json";
 
 
 
     @BeforeEach
     public void setUp() {
         testCalculation = new Calculation();
-        testMap = new HashMap<>();
         Category food = testCalculation.getCategory("Food");
         Category transport = testCalculation.getCategory("Transportation");
 
@@ -37,69 +38,69 @@ public class FileUtilityTest {
         testCalculation.addAmountToCategory(food, 300);
         testCalculation.addAmountToCategory(transport, 500);
         testCalculation.addAmountToCategory(transport, 2000);
-        testMap.put(testName, testCalculation);
-        String userDir = System.getProperty("user.dir");
-
-
-
     }
+
     @Test
-    public void testNameIsIdentical() throws IOException{
-        FileUtility.writeToFile(testMap, "/../utility/src/main/resources/budget/utility/testBudget.json");
-        Map<String, Calculation> loadMap = new HashMap<>();
-        FileUtility.readFile(loadMap, "/../utility/src/main/resources/budget/utility/testBudget.json");
+    public void testNameIsIdentical() throws IOException {
+        ArrayList<Calculation> testList = new ArrayList<>();
+        testCalculation.setName("Test1");
+        testList.add(testCalculation);
 
-        for (Map.Entry<String, Calculation> entry : loadMap.entrySet() ) {
-            String name = entry.getKey();
-            if (!name.equals("overwrite")) {
-                assertEquals(testName, name);
-            }
+        FileUtility.writeToFile(testList, TEST_FILE_PATH); // Use the test file path
 
+        ArrayList<Calculation> loadList = new ArrayList<>();
+        FileUtility.readFile(loadList, TEST_FILE_PATH); // Use the test file path
 
-        }
+        assertEquals(1, loadList.size());
+
+        Calculation loadedCalculation = loadList.get(0);
+        assertEquals(testName, loadedCalculation.getName());
     }
 
     @Test
     public void testAmountIsIdentical() throws IOException {
-        FileUtility.writeToFile(testMap, "/../utility/src/main/resources/budget/utility/testBudget.json");
-        Map<String, Calculation> loadMap = new HashMap<>();
-        FileUtility.readFile(loadMap, "/../utility/src/main/resources/budget/utility/testBudget.json");
+        ArrayList<Calculation> testList = new ArrayList<>();
+        testList.add(testCalculation);
 
-        for (Map.Entry<String, Calculation> entry: loadMap.entrySet()) {
-            String name = entry.getKey();
-            Calculation calculation = entry.getValue();
-            if (!name.equals("overwrite")) {
-                assertEquals( testCalculation.getCategory("Food").getBudgetHistory(), calculation.getCategory("Food").getBudgetHistory());
-                assertEquals(testCalculation.getCategory("Transportation").getBudgetHistory(), calculation.getCategory("Transportation").getBudgetHistory());
-            }
-        }
+        FileUtility.writeToFile(testList, TEST_FILE_PATH); // Use the test file path
+        ArrayList<Calculation> loadList = new ArrayList<>();
+        FileUtility.readFile(loadList, TEST_FILE_PATH); // Use the test file path
 
+        assertEquals(1, loadList.size());
+
+        Calculation loadedCalculation = loadList.get(0);
+        assertEquals(testCalculation.getCategory("Food").getBudgetHistory(), loadedCalculation.getCategory("Food").getBudgetHistory());
+        assertEquals(testCalculation.getCategory("Transportation").getBudgetHistory(), loadedCalculation.getCategory("Transportation").getBudgetHistory());
     }
 
     @Test
     public void testWriteAndReadFromFile() throws IOException {
-        FileUtility.writeToFile(testMap, "/../utility/src/main/resources/budget/utility/testBudget.json");
+        ArrayList<Calculation> testList = new ArrayList<>();
+        testList.add(testCalculation);
 
+        FileUtility.writeToFile(testList, TEST_FILE_PATH); // Use the test file path
+        ArrayList<Calculation> loadList = new ArrayList<>();
+        FileUtility.readFile(loadList, TEST_FILE_PATH); // Use the test file path
 
-        Map<String, Calculation> loadMap = new HashMap<>();
-        FileUtility.readFile(loadMap, "/../utility/src/main/resources/budget/utility/testBudget.json");
-        Calculation loadCalculation = loadMap.get("Test1");
+        assertEquals(1, loadList.size());
 
-        assertEquals(testCalculation.getCategoriesList().size(), loadCalculation.getCategoriesList().size());
+        Calculation loadedCalculation = loadList.get(0);
+
+        assertEquals(testCalculation.getCategoriesList().size(), loadedCalculation.getCategoriesList().size());
+
         for (int i = 0; i < testCalculation.getCategoriesList().size(); i++) {
-            assertEquals(testCalculation.getCategoriesList().get(i).toString(), loadCalculation.getCategoriesList().get(i).toString());
+            assertEquals(testCalculation.getCategoriesList().get(i).toString(), loadedCalculation.getCategoriesList().get(i).toString());
         }
     }
 
     @AfterAll
     public static void end() {
-        Map<String, Calculation> fileMap = new HashMap<>();
-        Calculation overWriteCalc = new Calculation();
-        fileMap.put("overwrite", overWriteCalc);
-        ObjectMapper mapper = new ObjectMapper();
-        String userDir = System.getProperty("user.dir");
+        // Write a dummy calculation object to the test file
+        ArrayList<Calculation> dummyList = new ArrayList<>();
+        Calculation dummyCalculation = new Calculation();
+        dummyList.add(dummyCalculation);
         try {
-            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(userDir + "/../utility/src/main/resources/budget/utility/testBudget.json"), fileMap);
+            FileUtility.writeToFile(dummyList, TEST_FILE_PATH); // Use the test file path
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
