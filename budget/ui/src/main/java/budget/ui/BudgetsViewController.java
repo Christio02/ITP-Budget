@@ -3,6 +3,7 @@ package budget.ui;
 import budget.core.Calculation;
 import budget.core.Category;
 import budget.utility.Json;
+import com.fasterxml.jackson.core.type.TypeReference;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,15 +13,15 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
-import java.io.BufferedWriter;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
-import budget.utility.FileUtility;
+import java.util.stream.Collectors;
 
 
 public class BudgetsViewController {
@@ -34,10 +35,6 @@ public class BudgetsViewController {
      */
     @FXML
     private ListView<Calculation> calcObject;
-    /**
-     * Local Map of calcualtion objects.
-     */
-    private Map<String, Calculation> calculationMap;
 
     /**
      * Singleton for data retrieval and storing.
@@ -49,26 +46,22 @@ public class BudgetsViewController {
      */
     private String selectedName;
 
+    private ArrayList<Calculation> calculations;
+
     /**
      * Initialize the BudgetsView UI and set up event handling.
      */
     @FXML
     public final void initialize() {
-        System.out.println(data.getCalculations());
-        calculationMap = new HashMap<>();
-
-        calculationMap = data.getCalculations();
+        this.calculations = data.getCalculations();
 
 
         ObservableList<String> listOfCalcNames = FXCollections.observableArrayList();
         ObservableList<Calculation> listOfCalcObjects = FXCollections.observableArrayList();
-        for (Map.Entry<String, Calculation> entry: this.calculationMap.entrySet()) {
-            String entryName = entry.getKey();
-            Calculation calc = entry.getValue();
-            if (!entryName.equals("overwrite")) {
-                listOfCalcNames.add(entryName);
+        for (Calculation calc: this.calculations) {
+                listOfCalcNames.add(calc.getName());
                 listOfCalcObjects.add(calc);
-            }
+
         }
 
        nameCalc.setItems(listOfCalcNames); calcObject.setItems(listOfCalcObjects);
@@ -88,7 +81,7 @@ public class BudgetsViewController {
         nameCalc.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 selectedName = newValue;
-                Calculation selectedCalc = calculationMap.get(selectedName);
+                Calculation selectedCalc = calculations.stream().filter(calc -> calc.getName().equals(selectedName)).findFirst().orElse(null);
                 calcObject.getSelectionModel().select(selectedCalc);
                 calcObject.scrollTo(selectedCalc);
             }
@@ -105,10 +98,10 @@ public class BudgetsViewController {
                 String selectedCalcName = nameCalc.getSelectionModel().getSelectedItem();
 
                 if (selectedCalcName != null) {
-                    Calculation selectedCalc = data.getCalculations().get(selectedCalcName);
+                    Calculation selectedCalc = data.getCalculations().stream().filter(calc -> calc.getName().equals(selectedCalcName)).findFirst().orElse(null);
                     if (selectedCalc != null) {
-                        data.setCalculation(selectedCalc);
                         data.setCalcName(selectedCalcName);
+                        data.setCalculation(selectedCalc);
                         try {
                             ChangeScene.changeToScene(getClass(), event, "budget-view.fxml", 1200, 420);
                         } catch (Exception e) {
@@ -187,46 +180,25 @@ public class BudgetsViewController {
             Calculation selectedCalc = calcObject.getItems().get(selectedIndex);
 
             if (selectedCalc != null) {
-                deleteBudget("http://localhost:8080/budget/" + selectedCalcName);
-                data.deleteEntry(selectedCalcName);
+                data.deleteEntry(selectedCalc);
                 // Remove the selected item from the calculationMap
-                calculationMap.remove(selectedCalcName);
+                calculations.remove(selectedCalc);
+                data.deleteRequest(selectedCalcName);
 
                 // Remove the selected items from the ListViews
                 nameCalc.getItems().remove(selectedIndex);
                 calcObject.getItems().remove(selectedIndex);
-                data.updateMap(calculationMap);
 
                 // Set the selection back to the first item
                 if (!nameCalc.getItems().isEmpty()) {
                     nameCalc.getSelectionModel().selectFirst();
                 }
-
-
             }
         }
 
     }
 
-    private void deleteBudget(String apiUrl) {
-        try {
-            URL url = new URL(apiUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("DELETE");
-            conn.setRequestProperty("Content-Type", "application/json");
-            int responseCode = conn.getResponseCode();
 
-            if (responseCode == HttpURLConnection.HTTP_NO_CONTENT) {
-                System.out.println("Budget was deleted successfully!");
-            } else if (responseCode == HttpURLConnection.HTTP_NOT_FOUND) {
-                System.out.println("Budget not found on the server.");
-            } else {
-                System.out.println("Failed to delete budget. Response code: " + responseCode);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 
 

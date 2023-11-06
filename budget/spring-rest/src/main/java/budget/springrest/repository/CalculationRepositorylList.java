@@ -1,55 +1,64 @@
 package budget.springrest.repository;
 
-
 import budget.core.Calculation;
+import budget.utility.FileUtility;
 import org.springframework.stereotype.Repository;
 
+import java.io.IOException;
 import java.util.ArrayList;
-
-/**
- * The '@Repository' annotation is used to mark this class as a Data Access Object (DAO) or repository.
- * It indicates that this class interacts with a data source, and it enables Spring's exception translation
- * for handling data access-related exceptions. Additionally, '@Repository' facilitates automatic
- * bean creation and is a best practice for code organization.
- */
 
 @Repository
 public class CalculationRepositorylList {
+    private static final String DATA_FILE_PATH = "classpath:budget/utility/savedBudget.json";
 
     private ArrayList<Calculation> budgets = new ArrayList<>();
 
     public CalculationRepositorylList() {
-
+        // Load data from the file when the application opens
+        loadDataFromFile();
     }
 
-    //GET
     public ArrayList<Calculation> findAll() {
         return new ArrayList<>(this.budgets);
     }
 
     public Calculation findByName(String name) {
-        return budgets.stream().filter(calculation -> calculation.getName().equals(name))
-                .findFirst().orElseThrow(() -> new IllegalArgumentException("No budget found by that name!"));
+        return budgets.stream()
+                .filter(calculation -> calculation.getName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No budget found by that name!"));
     }
 
     public Calculation create(Calculation calc) {
+        if (calc.getName().equals("null")) {
+            throw new IllegalArgumentException("Invalid budget name!");
+        }
+//        if (checkDuplicate(calc.getName())) {
+//            throw new IllegalArgumentException("Budget name already exists!");
+//        }
         budgets.add(calc);
+        saveDataToFile(); // Save data to the file after creating
         return calc;
     }
 
     public void update(Calculation calculation) {
         Calculation existingCalc = budgets
-                .stream().filter(c -> c.getName().equals(calculation.getName()))
-                .findFirst().orElseThrow(() -> new IllegalArgumentException("Budget you are trying to update not found"));
+                .stream()
+                .filter(c -> c.getName().equals(calculation.getName()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Budget you are trying to update not found"));
+
         int index = findBudgetIndex(existingCalc.getName());
         budgets.set(index, calculation);
+        saveDataToFile(); // Save data to the file after updating
     }
 
     public void delete(String name) {
         budgets.removeIf(c -> c.getName().equals(name));
-
+        saveDataToFile();
     }
-    public int findBudgetIndex(String name) {
+
+    private int findBudgetIndex(String name) {
         for (int i = 0; i < budgets.size(); i++) {
             if (budgets.get(i).getName().equals(name)) {
                 return i;
@@ -66,39 +75,30 @@ public class CalculationRepositorylList {
         return !name.isEmpty();
     }
 
-
-    /*
-    returns if a budget with the same name already exists in the list
-     */
     public boolean checkDuplicate(String name) {
         for (Calculation calc : this.budgets) {
-            if (calc.getName().equals(name))
+            if (calc.getName().equals(name)) {
                 return true;
+            }
         }
         return false;
     }
 
-    // POST
-    public void addBuget(Calculation calc) {
-
-        if (checkDuplicate(calc.getName())) {
-            throw new IllegalArgumentException("A budget with that name already exists!");
+    // Method to save data to the file
+    private void saveDataToFile() {
+        try {
+            FileUtility.writeToFile(this.budgets);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        else if (checkValidBudgetName(calc.getName())) {
-            this.budgets.add(calc);
-        }
-
-        throw new IllegalArgumentException("Invalid budget name!");
     }
 
-
-    //GET
-    public Calculation getBudgetByName(String name) {
-        return this.budgets.get(findBudgetIndex(name));
+    // Method to load data from the file
+    private void loadDataFromFile() {
+        try {
+            FileUtility.readFile(this.budgets);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
-
-
-
 }
