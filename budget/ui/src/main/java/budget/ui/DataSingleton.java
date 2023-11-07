@@ -11,11 +11,9 @@ import java.net.http.HttpClient;
 import java.io.*;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.stream.Collectors;
+
 
 /**
  * Singleton class for managing data.
