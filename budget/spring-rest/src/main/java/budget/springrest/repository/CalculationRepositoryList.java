@@ -8,13 +8,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 @Repository
-public class CalculationRepositorylList {
+public class CalculationRepositoryList {
 
     private static final String FILE_PATH = "/budget/utility/src/main/resources/budget/utility/savedBudget.json";
 
     private ArrayList<Calculation> budgets = new ArrayList<>();
 
-    public CalculationRepositorylList() {
+    public CalculationRepositoryList() {
         // Load data from the file when the application opens
         loadDataFromFile();
     }
