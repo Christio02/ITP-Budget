@@ -10,7 +10,7 @@ import java.util.ArrayList;
 @Repository
 public class CalculationRepositoryList {
 
-    private static final String FILE_PATH = "/budget/utility/src/main/resources/budget/utility/savedBudget.json";
+    private static final String FILE_PATH = "../../utility/src/main/resources/budget/utility/savedBudget.json";
 
     private ArrayList<Calculation> budgets = new ArrayList<>();
 
