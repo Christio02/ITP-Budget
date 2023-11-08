@@ -55,3 +55,6 @@ build/
 
 # testresults #
 testresults/
+
+# Json files #
+/budget/utility/src/main/resources/*.json
