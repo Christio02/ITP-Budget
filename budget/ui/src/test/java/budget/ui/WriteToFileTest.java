@@ -4,9 +4,8 @@ import budget.core.Calculation;
 import budget.utility.FileUtility;
 import javafx.scene.input.KeyCode;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
-import org.testfx.util.WaitForAsyncUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,7 +29,6 @@ public class WriteToFileTest extends TestFXBase {
     private final String SUM_ID = "#totalSum";
     private final String DEL_BTN = "#deleteBtn";
     private final String NAME_VIEW = "#nameCalc";
-
 
     @Test
     public void testCorrectWrittenToFile() {
@@ -132,5 +130,15 @@ public class WriteToFileTest extends TestFXBase {
         waitForFxEvents();
         clickOn(LOAD_BUDGET_BTN);
         verifyThat(NAME_VIEW, hasItems(1));
+    }
+
+    @AfterAll
+    public static void finish() {
+        ArrayList<Calculation> calc = new ArrayList<>();
+        try {
+            FileUtility.writeToFile(calc, "../../utility/src/main/resources/budget/utility/savedBudget.json");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
