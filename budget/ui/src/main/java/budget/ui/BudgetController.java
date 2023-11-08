@@ -214,8 +214,6 @@ public class BudgetController {
         int totalAmount = calc.getTotalSum();
         for (PieChart.Data data : pieChart.getData()) {
             Node node = data.getNode();
-            String color = getCategoryColor(data.getName());
-            node.setStyle("-fx-pie-color: " + color + ";");
             Label label = (Label) node.getUserData();
             if (label == null) {
                 label = new Label();
@@ -226,16 +224,6 @@ public class BudgetController {
         }
     }
 
-
-    private String getCategoryColor(final String categoryName) {
-        return switch (categoryName) {
-            case "Food" -> "#106bc7";
-            case "Entertainment" -> "#ffe100";
-            case "Transportation" -> "#FF0000";
-            case "Clothing" -> "#00ff1e";
-            default -> "#ff00d9";
-        };
-    }
 
     /**
      * Switch to the main menu view.

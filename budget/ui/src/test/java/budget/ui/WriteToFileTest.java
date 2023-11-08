@@ -1,7 +1,6 @@
 package budget.ui;
 
 import budget.core.Calculation;
-import budget.springrest.SpringRestApplication;
 import budget.utility.FileUtility;
 import javafx.scene.input.KeyCode;
 
@@ -33,12 +32,6 @@ public class WriteToFileTest extends TestFXBase {
     private final String NAME_VIEW = "#nameCalc";
 
 
-    @BeforeAll
-    public static void setUp() {
-        // need to start restserver from here
-        // otherwise the tests will fail
-        SpringRestApplication.main(new String[]{});
-    }
     @Test
     public void testCorrectWrittenToFile() {
         waitForFxEvents();
