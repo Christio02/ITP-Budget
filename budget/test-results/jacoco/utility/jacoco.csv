@@ -1,4 +1,4 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-utility,budget.utility,FileUtility,60,84,4,4,18,19,7,4,4,3
+utility,budget.utility,FileUtility,13,62,0,0,6,16,3,3,3,3
 utility,budget.utility,FileUtility.new TypeReference() {...},0,3,0,0,0,1,0,1,0,1
-utility,budget.utility,Json,20,19,0,0,5,6,4,2,4,2
+utility,budget.utility,Json,39,0,0,0,11,0,6,0,6,0

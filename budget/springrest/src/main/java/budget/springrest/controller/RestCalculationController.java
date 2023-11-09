@@ -39,6 +39,12 @@ public class RestCalculationController {
         }
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping
+    public void clearBudgets() {
+        this.repository.clearBudgets();
+    }
+
     // POST http://localhost:8080/budget (do not need /create)
     // need to return correct response code
     @ResponseStatus(HttpStatus.CREATED)
