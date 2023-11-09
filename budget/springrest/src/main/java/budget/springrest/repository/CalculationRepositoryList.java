@@ -88,6 +88,10 @@ public class CalculationRepositoryList {
         return false;
     }
 
+    public ArrayList<Calculation> getBudgets() {
+        return new ArrayList<>(this.budgets);
+    }
+
     // Method to save data to the file
     private void saveDataToFile() {
         try {

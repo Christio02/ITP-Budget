@@ -1,0 +1,6 @@
+{
+  "timestamp": "2023-11-09T11:14:24.617+00:00",
+  "status": 500,
+  "error": "Internal Server Error",
+  "path": "/budget"
+}
