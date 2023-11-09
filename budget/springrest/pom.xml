@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>budget</groupId>
-    <artifactId>spring-rest</artifactId>
+    <artifactId>springrest</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-rest</name>
     <description>spring-rest</description>
@@ -45,6 +45,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>9</source>
+                    <target>9</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>
