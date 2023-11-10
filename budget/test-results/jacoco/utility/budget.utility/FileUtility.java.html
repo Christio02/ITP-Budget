@@ -4,65 +4,49 @@ import budget.core.Calculation;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.File;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.io.InputStream;
 
 /**
  * This class is responsible for file operations.
  */
 public final class FileUtility {
     /**
-     * Load status.
-     */
-    private static boolean load;
-
-    /**
      * Current directory path.
      */
-<span class="fc" id="L24">    private static final String CURRENT_DIR = System.getProperty(&quot;user.dir&quot;);</span>
+<span class="fc" id="L22">    private static final String CURRENT_DIR = System.getProperty(&quot;user.dir&quot;);</span>
 
-    /**
-     * File path for serialization.
-     */
-<span class="fc" id="L29">    private static final String FILE_PATH = CURRENT_DIR</span>
-            + &quot;/../utility/src/main/resources/budget/utility/savedBudget.json&quot;;
 
     /**
      * Private constructor to hide the implicit public one.
      */
-<span class="nc" id="L35">    private FileUtility() {</span>
-<span class="nc" id="L36">        throw new IllegalStateException(&quot;Utility class&quot;);</span>
+<span class="nc" id="L28">    private FileUtility() {</span>
+<span class="nc" id="L29">        throw new IllegalStateException(&quot;Utility class&quot;);</span>
     }
 
     /**
      * Writes the Calculation object to a file.
      *
-     * @param calcMap The map of calculation objects to save
-     * @param path The path to the file
+     * @param calculations The ArrayList of calculation objects to save
+     * @param path         The path to the file
      * @throws IOException If an input or output exception occurred
      */
-    public static void writeToFile(final Map&lt;String, Calculation&gt; calcMap, final String path) throws IOException {
-<span class="fc" id="L47">        File file = new File(CURRENT_DIR + path);</span>
-        // Check if calcMap is empty
-<span class="pc bpc" id="L49" title="1 of 2 branches missed.">        if (calcMap.isEmpty()) {</span>
-            // If it's empty, create an empty JSON object and write it to the file
-<span class="nc" id="L51">            Json.getMapper().writeValue(file, new HashMap&lt;&gt;());</span>
-        } else {
-            Map&lt;String, Calculation&gt; existingDataMap;
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">            if (file.exists()) {</span>
-<span class="fc" id="L55">                existingDataMap = Json.getMapper().readValue(file, Json.getMapper()</span>
-<span class="fc" id="L56">                        .getTypeFactory().constructMapType(HashMap.class, String.class, Calculation.class));</span>
-            } else {
-<span class="nc" id="L58">                existingDataMap = new HashMap&lt;&gt;();</span>
-            }
-<span class="fc" id="L60">            existingDataMap.putAll(calcMap);</span>
+    public static void writeToFile(final ArrayList&lt;Calculation&gt; calculations, final String path) throws IOException {
+<span class="fc" id="L40">        ObjectMapper objectMapper = new ObjectMapper();</span>
+<span class="fc" id="L41">        String finalPath = CURRENT_DIR + path;</span>
+<span class="fc" id="L42">        File file = new File(finalPath);</span>
 
-            // Write the merged data back to the file
-<span class="fc" id="L63">            Json.getMapper().writerWithDefaultPrettyPrinter().writeValue(file, existingDataMap);</span>
+        // Write the updated data directly to the file, overwriting the existing content
+<span class="fc" id="L45">        try (OutputStream outputStream = new FileOutputStream(file)) {</span>
+<span class="fc" id="L46">            objectMapper.writerWithDefaultPrettyPrinter().writeValue(outputStream, calculations);</span>
         }
-<span class="fc" id="L65">    }</span>
+<span class="fc" id="L48">    }</span>
+
 
     /**
      * Sets the load status.
@@ -70,63 +54,42 @@ public final class FileUtility {
      * @param loadStatus The new load status
      */
     public static void setLoad(final boolean loadStatus) {
-<span class="nc" id="L73">        load = loadStatus;</span>
-<span class="nc" id="L74">    }</span>
+        // Implement your logic for setting the load status here
+<span class="nc" id="L58">    }</span>
 
     /**
      * Reads the Calculation object from a file.
      *
-     * @param calcMap The map of calculations to update
-     * @param path The path to the file
+     * @param calculations The ArrayList of calculations to update
+     * @param path         The path to the file
      * @throws IOException If an input or output exception occurred
      */
-    public static void readFile(final Map&lt;String, Calculation&gt; calcMap, final String path) throws IOException {
-<span class="fc" id="L84">        File file = new File(CURRENT_DIR + path);</span>
-        Map&lt;String, Calculation&gt; mapFromFile =
-<span class="fc" id="L86">                Json.getMapper().readValue(file, new TypeReference</span>
-                        &lt;Map&lt;String, Calculation&gt;&gt;(
-<span class="fc" id="L88">                                ) {</span>
-                });
-<span class="fc" id="L90">        calcMap.clear();</span>
-
-<span class="fc bfc" id="L92" title="All 2 branches covered.">        for (Map.Entry&lt;String, Calculation&gt; entry : mapFromFile.entrySet()) {</span>
-<span class="fc" id="L93">            String name = entry.getKey();</span>
-<span class="fc" id="L94">            Calculation calcObject = entry.getValue();</span>
-<span class="fc" id="L95">            calcMap.put(name, calcObject);</span>
-<span class="fc" id="L96">        }</span>
-<span class="fc" id="L97">    }</span>
-
-    /**
-     * Deletes a budget from the file.
-     * @param name The name of the budget to delete
-     * @param calcMap The map of calculations
-     */
-    public static void deleteBudget(final String name, final Map&lt;String, Calculation&gt; calcMap) {
+    public static void readFile(final ArrayList&lt;Calculation&gt; calculations, final String path) throws IOException {
         try {
-<span class="nc" id="L106">            ObjectMapper mapper = new ObjectMapper();</span>
-<span class="nc" id="L107">            readFile(calcMap, &quot;/../utility/src/main/resources/budget/utility/savedBudget.json&quot;);</span>
+<span class="fc" id="L69">            String finalPath = CURRENT_DIR + path;</span>
+<span class="fc" id="L70">            File file = new File(finalPath);</span>
+<span class="fc" id="L71">            InputStream inputStream = new FileInputStream(file);</span>
 
-<span class="nc bnc" id="L109" title="All 2 branches missed.">            if (calcMap.containsKey(name)) {</span>
-<span class="nc" id="L110">                calcMap.remove(name);</span>
-<span class="nc" id="L111">                System.out.println(&quot;Deleted &quot; + name + &quot; from file&quot;);</span>
-<span class="nc" id="L112">                mapper.writerWithDefaultPrettyPrinter().writeValue(new File(FILE_PATH), calcMap);</span>
-            } else {
-<span class="nc" id="L114">                System.out.println(name + &quot; not found in the file. Nothing was deleted.&quot;);</span>
-            }
+<span class="fc" id="L73">            ObjectMapper objectMapper = new ObjectMapper();</span>
+<span class="fc" id="L74">            calculations.clear();</span>
+<span class="fc" id="L75">            calculations.addAll(objectMapper.readValue(inputStream, new TypeReference&lt;ArrayList&lt;Calculation&gt;&gt;() {</span>
 
-<span class="nc" id="L117">        } catch (IOException e) {</span>
-<span class="nc" id="L118">            e.printStackTrace();</span>
-<span class="nc" id="L119">        }</span>
-<span class="nc" id="L120">    }</span>
+            }));
+
+<span class="fc" id="L79">            inputStream.close();</span>
+<span class="nc" id="L80">        } catch (IOException e) {</span>
+<span class="nc" id="L81">            e.printStackTrace();</span>
+<span class="fc" id="L82">        }</span>
+<span class="fc" id="L83">    }</span>
+
     /**
      * Gets the load status.
      *
      * @return The load status
      */
     public static boolean getLoad() {
-<span class="nc" id="L127">        return load;</span>
+        // Implement your logic for getting the load status here
+<span class="nc" id="L92">        return false;</span>
     }
-
-
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

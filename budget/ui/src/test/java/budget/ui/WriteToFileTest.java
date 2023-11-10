@@ -5,6 +5,7 @@ import budget.utility.FileUtility;
 import javafx.scene.input.KeyCode;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -30,8 +31,15 @@ public class WriteToFileTest extends TestFXBase {
     private final String DEL_BTN = "#deleteBtn";
     private final String NAME_VIEW = "#nameCalc";
 
+    private static StartMenuController controller = new StartMenuController();
+
+    @BeforeAll
+    public static void setUp() {
+        DataSingleton.getInstance().sendClearRequest();
+    }
     @Test
     public void testCorrectWrittenToFile() {
+
         waitForFxEvents();
 
         int amount1 = 2000;
@@ -84,9 +92,7 @@ public class WriteToFileTest extends TestFXBase {
         verifyThat(SUM_ID, hasText("5000"));
 
         ArrayList<Calculation> calculations = new ArrayList<>();
-        Calculation calculation = new Calculation();
-        calculations.add(calculation);
-        String path = "../../utility/src/main/resources/budget/utility/testBudget.json";
+        String path = "../../utility/src/main/resources/budget/utility/savedBudget.json";
 
         try {
             FileUtility.writeToFile(calculations, path);
@@ -134,11 +140,7 @@ public class WriteToFileTest extends TestFXBase {
 
     @AfterAll
     public static void finish() {
-        ArrayList<Calculation> calc = new ArrayList<>();
-        try {
-            FileUtility.writeToFile(calc, "../../utility/src/main/resources/budget/utility/savedBudget.json");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        DataSingleton.getInstance().sendClearRequest();
+
     }
 }
