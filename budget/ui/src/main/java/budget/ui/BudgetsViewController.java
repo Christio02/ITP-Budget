@@ -183,7 +183,7 @@ public class BudgetsViewController {
                 data.deleteEntry(selectedCalc);
                 // Remove the selected item from the calculationMap
                 calculations.remove(selectedCalc);
-                data.deleteRequest(selectedCalcName);
+//                data.deleteRequest(selectedCalcName);
 
                 // Remove the selected items from the ListViews
                 nameCalc.getItems().remove(selectedIndex);

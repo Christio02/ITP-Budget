@@ -134,6 +134,7 @@
                         @{jaCoCoArgLine}
                         --add-opens budgetApplication/app=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
                     </argLine>
+
                 </configuration>
             </plugin>
 
@@ -188,8 +189,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-
 
             <!-- Run the checkstyle code quality tool -->
             <plugin>

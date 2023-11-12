@@ -122,8 +122,6 @@ public final class DataSingleton {
 
     public void sendPOSTRequest(Calculation calculation) {
         try {
-
-
             String jsonCalculation = Json.getMapper().writeValueAsString(calculation);
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URL(API_URL).toURI())
@@ -251,6 +249,37 @@ public final class DataSingleton {
             e.printStackTrace();
         }
     }
+
+    public void sendClearRequest() {
+        try {
+            String apiURL = "http://localhost:8080/budget";
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URL(apiURL).toURI())
+                    .DELETE()
+                    .header("Content-Type", "application/json")
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            int responseCode = response.statusCode();
+            String responseBody = response.body();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                System.out.println("Clear request was successful!");
+                System.out.println("Response Body: " + responseBody);
+            } else {
+                System.out.println("Clear request was not successful: " + responseCode);
+            }
+        } catch (URISyntaxException | IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
 
     private void removeCalculationLocally(String name) {
         Iterator<Calculation> calculationIterator = getCalculations().iterator();

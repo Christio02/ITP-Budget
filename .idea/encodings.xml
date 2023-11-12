@@ -3,7 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/budget/core/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/budget/core/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/budget/spring-rest/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/budget/springrest/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/budget/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/budget/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/budget/ui/src/main/java" charset="UTF-8" />

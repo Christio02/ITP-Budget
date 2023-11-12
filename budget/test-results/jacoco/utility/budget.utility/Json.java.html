@@ -15,7 +15,7 @@ public final class Json {
     /**
      * ObjectMapper for JSON operations.
      */
-<span class="fc" id="L18">    private static final ObjectMapper MAPPER = getMapper();</span>
+<span class="nc" id="L18">    private static final ObjectMapper MAPPER = getMapper();</span>
 
     /**
      * The amount to be added to the category.
@@ -35,13 +35,13 @@ public final class Json {
      * @return The ObjectMapper
      */
     public static ObjectMapper getMapper() {
-<span class="fc" id="L38">        ObjectMapper defaultObjectMapper = new ObjectMapper();</span>
-<span class="fc" id="L39">        defaultObjectMapper.</span>
-<span class="fc" id="L40">                configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false</span>
+<span class="nc" id="L38">        ObjectMapper defaultObjectMapper = new ObjectMapper();</span>
+<span class="nc" id="L39">        defaultObjectMapper.</span>
+<span class="nc" id="L40">                configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false</span>
                 );
-<span class="fc" id="L42">        defaultObjectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);</span>
+<span class="nc" id="L42">        defaultObjectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);</span>
 
-<span class="fc" id="L44">        return defaultObjectMapper;</span>
+<span class="nc" id="L44">        return defaultObjectMapper;</span>
     }
 
     /**
