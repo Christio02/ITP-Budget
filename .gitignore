@@ -12,6 +12,8 @@ target/
 *.iml
 *.ipr
 
+.idea/httpRequests/
+.idea/checkstyleidea-libs/
 
 
 # User-specific stuff

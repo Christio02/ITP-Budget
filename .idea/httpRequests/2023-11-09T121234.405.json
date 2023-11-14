@@ -1,6 +1,0 @@
-{
-  "timestamp": "2023-11-09T11:12:34.720+00:00",
-  "status": 405,
-  "error": "Method Not Allowed",
-  "path": "/budget"
-}
