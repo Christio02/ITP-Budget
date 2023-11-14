@@ -16,7 +16,7 @@ public class Calculation {
     /**
      * This cis a list that stores categories.
      */
-<span class="pc" id="L19">    private final ArrayList&lt;Category&gt; categoriesList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L19">    private final ArrayList&lt;Category&gt; categoriesList = new ArrayList&lt;&gt;();</span>
     private String name;
 
     /*
@@ -36,23 +36,23 @@ public class Calculation {
      * Creates a new Calculation object, with given name
      */
     @JsonCreator
-<span class="nc" id="L39">    public Calculation(String name) {</span>
-<span class="nc" id="L40">        this.categoriesList.add(new Category(&quot;Food&quot;));</span>
-<span class="nc" id="L41">        this.categoriesList.add(new Category(&quot;Transportation&quot;));</span>
-<span class="nc" id="L42">        this.categoriesList.add(new Category(&quot;Entertainment&quot;));</span>
-<span class="nc" id="L43">        this.categoriesList.add(new Category(&quot;Clothing&quot;));</span>
-<span class="nc" id="L44">        this.categoriesList.add(new Category(&quot;Other&quot;));</span>
-<span class="nc" id="L45">        this.name = name;</span>
+<span class="fc" id="L39">    public Calculation(String name) {</span>
+<span class="fc" id="L40">        this.categoriesList.add(new Category(&quot;Food&quot;));</span>
+<span class="fc" id="L41">        this.categoriesList.add(new Category(&quot;Transportation&quot;));</span>
+<span class="fc" id="L42">        this.categoriesList.add(new Category(&quot;Entertainment&quot;));</span>
+<span class="fc" id="L43">        this.categoriesList.add(new Category(&quot;Clothing&quot;));</span>
+<span class="fc" id="L44">        this.categoriesList.add(new Category(&quot;Other&quot;));</span>
+<span class="fc" id="L45">        this.name = name;</span>
 
-<span class="nc" id="L47">    }</span>
+<span class="fc" id="L47">    }</span>
 
 
     public void setName(String name) {
-<span class="nc" id="L51">        this.name = name;</span>
-<span class="nc" id="L52">    }</span>
+<span class="fc" id="L51">        this.name = name;</span>
+<span class="fc" id="L52">    }</span>
 
     public String getName() {
-<span class="nc" id="L55">        return this.name;</span>
+<span class="fc" id="L55">        return this.name;</span>
     }
 
 
@@ -131,41 +131,36 @@ public class Calculation {
 
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L134" title="All 2 branches missed.">        if (this == obj) {</span>
-<span class="nc" id="L135">            return true;</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L135">            return true;</span>
         }
-<span class="nc bnc" id="L137" title="All 4 branches missed.">        if (obj == null || getClass() != obj.getClass()) {</span>
-<span class="nc" id="L138">            return false;</span>
+<span class="fc bfc" id="L137" title="All 4 branches covered.">        if (obj == null || getClass() != obj.getClass()) {</span>
+<span class="fc" id="L138">            return false;</span>
         }
-<span class="nc" id="L140">        Calculation calculation = (Calculation) obj;</span>
+<span class="fc" id="L140">        Calculation calculation = (Calculation) obj;</span>
         // Replace field1, field2, etc. with the actual fields you want to compare.
         // Use Objects.equals for fields that could be null.
-<span class="nc" id="L143">        return Objects.equals(name, calculation.getName());</span>
+<span class="fc" id="L143">        return Objects.equals(name, calculation.getName());</span>
     }
     @Override
     public String toString() {
-<span class="nc" id="L147">        StringBuilder result = new StringBuilder();</span>
-<span class="nc" id="L148">        result.append(&quot;Calculation Name: &quot;).append(name).append(&quot;\n&quot;);</span>
-<span class="nc" id="L149">        result.append(&quot;Total Sum: &quot;).append(getTotalSum()).append(&quot;\n&quot;);</span>
-<span class="nc" id="L150">        result.append(&quot;Categories:\n&quot;);</span>
+<span class="fc" id="L147">        StringBuilder result = new StringBuilder();</span>
+<span class="fc" id="L148">        result.append(&quot;Calculation Name: &quot;).append(name).append(&quot;\n&quot;);</span>
+<span class="fc" id="L149">        result.append(&quot;Total Sum: &quot;).append(getTotalSum()).append(&quot;\n&quot;);</span>
+<span class="fc" id="L150">        result.append(&quot;Categories:\n&quot;);</span>
 
-<span class="nc bnc" id="L152" title="All 2 branches missed.">        for (Category category : categoriesList) {</span>
-<span class="nc" id="L153">            result.append(category.getCategoryName()).append(&quot;: &quot;).append(category.getAmount()).append(&quot;\n&quot;);</span>
-<span class="nc" id="L154">        }</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        for (Category category : categoriesList) {</span>
+<span class="fc" id="L153">            result.append(category.getCategoryName()).append(&quot;: &quot;).append(category.getAmount()).append(&quot;\n&quot;);</span>
+<span class="fc" id="L154">        }</span>
 
-<span class="nc" id="L156">        return result.toString();</span>
+<span class="fc" id="L156">        return result.toString();</span>
     }
 
 
 
 
 
-    public static void main(String[] args) {
-<span class="nc" id="L164">        Calculation calculation = new Calculation(&quot;Hello&quot;);</span>
-<span class="nc" id="L165">        calculation.addAmountToCategory(calculation.getCategory(&quot;Food&quot;), 2000);</span>
-<span class="nc" id="L166">        System.out.println(calculation);</span>
 
-<span class="nc" id="L168">    }</span>
 
 
 }

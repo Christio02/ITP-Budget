@@ -160,12 +160,7 @@ public class Calculation {
 
 
 
-    public static void main(String[] args) {
-        Calculation calculation = new Calculation("Hello");
-        calculation.addAmountToCategory(calculation.getCategory("Food"), 2000);
-        System.out.println(calculation);
 
-    }
 
 
 }
