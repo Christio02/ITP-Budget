@@ -153,12 +153,12 @@ public final class DataSingleton {
 
     public void sendPUTRequest(String name) {
 
-        String decodedName = URLEncoder.encode(name, StandardCharsets.UTF_8);
+        String encodedName = URLEncoder.encode(name, StandardCharsets.UTF_8);
 
         try {
             String jsonCalc = Json.getMapper().writeValueAsString(calculation);
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI(API_URL + "/" + decodedName))
+                    .uri(new URI(API_URL + "/" + encodedName))
                     .header("Content-Type", "application/json")
                     .PUT(HttpRequest.BodyPublishers.ofString(jsonCalc))
                     .build();
