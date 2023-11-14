@@ -178,7 +178,11 @@ public final class DataSingleton {
     }
     public void getRequest(boolean getAll, String name, Calculation calc) {
         try {
-            String apiUrl = "http://localhost:8080/budget" + (getAll ? "" : "/" + name);
+            String decodedName = null;
+            if (name != null) {
+                decodedName = URLEncoder.encode(name, StandardCharsets.UTF_8);
+            }
+            String apiUrl = "http://localhost:8080/budget" + (getAll ? "" : "/" + decodedName);
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                     .uri(new URI(apiUrl))
                     .header("Content-Type", "application/json")

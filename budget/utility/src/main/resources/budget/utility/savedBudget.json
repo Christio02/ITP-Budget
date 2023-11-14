@@ -1,1 +1,97 @@
-[ ]
+[ {
+  "categoriesList" : [ {
+    "categoryName" : "Food",
+    "amount" : 2000,
+    "budgetHistory" : [ ]
+  }, {
+    "categoryName" : "Transportation",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  }, {
+    "categoryName" : "Entertainment",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  }, {
+    "categoryName" : "Clothing",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  }, {
+    "categoryName" : "Other",
+    "amount" : 200,
+    "budgetHistory" : [ 200 ]
+  } ],
+  "name" : "Test2",
+  "totalSum" : 2200
+}, {
+  "categoriesList" : [ {
+    "categoryName" : "Food",
+    "amount" : 2000,
+    "budgetHistory" : [ 2000 ]
+  }, {
+    "categoryName" : "Transportation",
+    "amount" : 2000,
+    "budgetHistory" : [ 2000 ]
+  }, {
+    "categoryName" : "Entertainment",
+    "amount" : 500,
+    "budgetHistory" : [ 500 ]
+  }, {
+    "categoryName" : "Clothing",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  }, {
+    "categoryName" : "Other",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  } ],
+  "name" : "hello",
+  "totalSum" : 4500
+}, {
+  "categoriesList" : [ {
+    "categoryName" : "Food",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  }, {
+    "categoryName" : "Transportation",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  }, {
+    "categoryName" : "Entertainment",
+    "amount" : 2000,
+    "budgetHistory" : [ 2000 ]
+  }, {
+    "categoryName" : "Clothing",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  }, {
+    "categoryName" : "Other",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  } ],
+  "name" : "Chris budget",
+  "totalSum" : 2000
+}, {
+  "categoriesList" : [ {
+    "categoryName" : "Food",
+    "amount" : 2000,
+    "budgetHistory" : [ 2000 ]
+  }, {
+    "categoryName" : "Transportation",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  }, {
+    "categoryName" : "Entertainment",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  }, {
+    "categoryName" : "Clothing",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  }, {
+    "categoryName" : "Other",
+    "amount" : 0,
+    "budgetHistory" : [ ]
+  } ],
+  "name" : "test hello",
+  "totalSum" : 2000
+} ]
