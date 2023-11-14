@@ -1,4 +1,4 @@
-package budget.springrest.controller;
+package budget.springrest;
 
 import budget.core.Calculation;
 import budget.core.Category;

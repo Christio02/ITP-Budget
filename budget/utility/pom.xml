@@ -97,14 +97,15 @@
                     <excludeFilterFile>../config/spotbugs/exclude.xml</excludeFilterFile>
                 </configuration>
             </plugin>
-
-
             <!-- Configure jacoco code coverage -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <configuration>
                     <propertyName>jaCoCoArgLine</propertyName>
+                    <excludes>
+                        <exclude>budget/utility/Json.class</exclude>
+                    </excludes>
                 </configuration>
 
             </plugin>

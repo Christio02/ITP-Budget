@@ -44,6 +44,24 @@
             <version>1.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.junit.jupiter</groupId>-->
+<!--            <artifactId>junit-jupiter-api</artifactId>-->
+<!--            <version>5.10.0</version>-->
+<!--            <scope>test</scope> &lt;!&ndash; Add test scope &ndash;&gt;-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.junit.jupiter</groupId>-->
+<!--            <artifactId>junit-jupiter-engine</artifactId>-->
+<!--            <version>5.10.0</version>-->
+<!--            <scope>test</scope> &lt;!&ndash; Add test scope &ndash;&gt;-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.junit.jupiter</groupId>-->
+<!--            <artifactId>junit-jupiter-params</artifactId>-->
+<!--            <version>5.10.0</version>-->
+<!--            <scope>test</scope> &lt;!&ndash; Add test scope &ndash;&gt;-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
@@ -68,10 +86,10 @@
                 <version>3.1.2</version>
                 <configuration>
                     <argLine>
-                        @{jaCoCoArgLine}
-                        --add-opens budgetApplication/app=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                        -Xmx512m
+                        --add-opens  budget/ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                        -javaagent:${settings.localRepository}/org/jacoco/org.jacoco.agent/0.8.8/org.jacoco.agent-0.8.8-runtime.jar=destfile=target/jacoco.exec
                     </argLine>
-
                 </configuration>
             </plugin>
             <!-- Run the checkstyle code quality tool -->
@@ -90,15 +108,18 @@
                     <excludeFilterFile>../config/spotbugs/exclude.xml</excludeFilterFile>
                 </configuration>
             </plugin>
-
-
             <!-- Configure jacoco code coverage -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.10</version>
                 <configuration>
                     <propertyName>jaCoCoArgLine</propertyName>
+                    <excludes>
+                        <exclude>./utility/src/main/java/budget/utility/Json.java</exclude>
+                    </excludes>
                 </configuration>
+
                 <executions>
                     <execution>
                         <id>jacoco-prepare-agent</id>
@@ -129,6 +150,11 @@
                 </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
     </build>
 
 </project>
