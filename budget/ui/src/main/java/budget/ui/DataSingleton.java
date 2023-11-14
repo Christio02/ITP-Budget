@@ -14,6 +14,10 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 
 /**
  * Singleton class for managing data.
@@ -148,10 +152,13 @@ public final class DataSingleton {
     }
 
     public void sendPUTRequest(String name) {
+
+        String encodedName = URLEncoder.encode(name, StandardCharsets.UTF_8);
+
         try {
             String jsonCalc = Json.getMapper().writeValueAsString(calculation);
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI(API_URL + "/" + name))
+                    .uri(new URI(API_URL + "/" + encodedName))
                     .header("Content-Type", "application/json")
                     .PUT(HttpRequest.BodyPublishers.ofString(jsonCalc))
                     .build();
@@ -171,7 +178,11 @@ public final class DataSingleton {
     }
     public void getRequest(boolean getAll, String name, Calculation calc) {
         try {
-            String apiUrl = "http://localhost:8080/budget" + (getAll ? "" : "/" + name);
+            String decodedName = null;
+            if (name != null) {
+                decodedName = URLEncoder.encode(name, StandardCharsets.UTF_8);
+            }
+            String apiUrl = "http://localhost:8080/budget" + (getAll ? "" : "/" + decodedName);
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                     .uri(new URI(apiUrl))
                     .header("Content-Type", "application/json")
@@ -228,7 +239,8 @@ public final class DataSingleton {
 
     public void deleteRequest(final String name) {
         try {
-            String apiUrl = API_URL + "/" + name;
+            String encodedName = URLEncoder.encode(name, StandardCharsets.UTF_8.toString());
+            String apiUrl = API_URL + "/" + encodedName;
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(apiUrl))
                     .header("Content-Type", "application/json")

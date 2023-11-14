@@ -14,6 +14,7 @@ bare fungerer når man er inne i riktig directory"
 Du må derretter cd inn i _ui_ mappen, for så å kjøre "mvn javafx:run" for å kjøre applikasjonen.
 
 
+
 ### Versjoner
 Vi bruker java 17.0.5 og maven 3.11.0 for å kjøre prosjektet.  
 Vi bruker også versjon 4.7.3.6 av spotbugs, versjon0.8.7 av Jacoco og versjon 10.3.4 av checkstyle.

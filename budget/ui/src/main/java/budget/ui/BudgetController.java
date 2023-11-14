@@ -262,6 +262,7 @@ public class BudgetController {
      */
     @FXML
     public void addAmount() {
+        System.out.println(calc.getName());
         try {
             int amountToAdd = Integer.parseInt(input.getText());
             String newCategory = selector.getValue();
@@ -325,6 +326,7 @@ public class BudgetController {
 
     private void createNewBudget() {
         this.calc.setName(budgetTitle.getText());
+        System.out.println(calc.getName());
         dataSingleton.addCalculation(this.calc);
     }
 
