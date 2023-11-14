@@ -37,7 +37,7 @@ public class TableTest extends  TestFXBase{
         Calculation overWriteCalc = new Calculation();
         fileMap.put("overwrite", overWriteCalc);
         String userDir = System.getProperty("user.dir");
-        String path = userDir + "/../utility/src/main/resources/budget/utility/savedBudget.json";
+        String path = userDir + "/../utility/src/main/resources/budget/utility/testBudget.json";
         File file = new File(path);
         try {
             ObjectMapper mapper = new ObjectMapper();

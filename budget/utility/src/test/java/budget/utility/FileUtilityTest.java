@@ -97,8 +97,6 @@ public class FileUtilityTest {
     public static void end() {
         // Write a dummy calculation object to the test file
         ArrayList<Calculation> dummyList = new ArrayList<>();
-        Calculation dummyCalculation = new Calculation();
-        dummyList.add(dummyCalculation);
         try {
             FileUtility.writeToFile(dummyList, TEST_FILE_PATH); // Use the test file path
         } catch (IOException e) {

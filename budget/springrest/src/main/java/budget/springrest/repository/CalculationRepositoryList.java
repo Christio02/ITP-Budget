@@ -9,8 +9,9 @@ import java.util.ArrayList;
 
 @Repository
 public class CalculationRepositoryList {
+    private static String FILE_PATH = "../../utility/src/main/resources/budget/utility/savedBudget.json";
 
-    private static final String FILE_PATH = "../../utility/src/main/resources/budget/utility/savedBudget.json";
+
 
     private ArrayList<Calculation> budgets = new ArrayList<>();
 
@@ -34,9 +35,6 @@ public class CalculationRepositoryList {
         if (calc.getName().equals("null")) {
             throw new IllegalArgumentException("Invalid budget name!");
         }
-//        if (checkDuplicate(calc.getName())) {
-//            throw new IllegalArgumentException("Budget name already exists!");
-//        }
         budgets.add(calc);
         saveDataToFile(); // Save data to the file after creating
         return calc;
@@ -68,6 +66,11 @@ public class CalculationRepositoryList {
         return -1;
     }
 
+    public void clearBudgets() {
+        this.budgets.clear();
+        saveDataToFile();
+    }
+
     public boolean hasBudget(String name) {
         return findBudgetIndex(name) > 0;
     }
@@ -83,6 +86,10 @@ public class CalculationRepositoryList {
             }
         }
         return false;
+    }
+
+    public ArrayList<Calculation> getBudgets() {
+        return new ArrayList<>(this.budgets);
     }
 
     // Method to save data to the file

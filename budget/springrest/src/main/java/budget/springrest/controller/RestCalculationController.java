@@ -33,10 +33,17 @@ public class RestCalculationController {
     @GetMapping("/{name}")
     public Calculation findByName(@PathVariable String name) {
         if (repository.hasBudget(name)) {
+            System.out.println("Budget found!");
             return repository.findByName(name);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No budget found by that name!");
         }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping
+    public void clearBudgets() {
+        this.repository.clearBudgets();
     }
 
     // POST http://localhost:8080/budget (do not need /create)
