@@ -10,8 +10,10 @@ Vi har laget et plantUML diagram for å vise arkitekturen til prosjektet vårt:
 ## Diagrammer
 
 ### Klassediagram
+![Classdiagram](Class_Diagram_2.png)
 
 ### Pakkediagram
+![Packagediagram](Final_Package_Diagram.png)
 
 ### Sekvensdiagram
 ![Sekvensdiagram](sekvensdiagram.png)
