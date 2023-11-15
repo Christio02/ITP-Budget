@@ -44,24 +44,6 @@
             <version>1.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.junit.jupiter</groupId>-->
-<!--            <artifactId>junit-jupiter-api</artifactId>-->
-<!--            <version>5.10.0</version>-->
-<!--            <scope>test</scope> &lt;!&ndash; Add test scope &ndash;&gt;-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.junit.jupiter</groupId>-->
-<!--            <artifactId>junit-jupiter-engine</artifactId>-->
-<!--            <version>5.10.0</version>-->
-<!--            <scope>test</scope> &lt;!&ndash; Add test scope &ndash;&gt;-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.junit.jupiter</groupId>-->
-<!--            <artifactId>junit-jupiter-params</artifactId>-->
-<!--            <version>5.10.0</version>-->
-<!--            <scope>test</scope> &lt;!&ndash; Add test scope &ndash;&gt;-->
-<!--        </dependency>-->
     </dependencies>
 
     <build>
@@ -117,6 +99,7 @@
                     <propertyName>jaCoCoArgLine</propertyName>
                     <excludes>
                         <exclude>./utility/src/main/java/budget/utility/Json.java</exclude>
+                        <exclude>./springrest/src/main/java/budget/springrest/SpringRestApplication.java</exclude>
                     </excludes>
                 </configuration>
 

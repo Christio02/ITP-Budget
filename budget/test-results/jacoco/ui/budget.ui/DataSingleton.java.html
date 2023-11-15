@@ -14,6 +14,10 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 
 /**
  * Singleton class for managing data.
@@ -22,7 +26,7 @@ public final class DataSingleton {
     /**
      * Field for instance of class.
      */
-<span class="fc" id="L25">    private static final DataSingleton INSTANCE = new DataSingleton();</span>
+<span class="fc" id="L29">    private static final DataSingleton INSTANCE = new DataSingleton();</span>
     private static final String API_URL = &quot;http://localhost:8080/budget&quot;;
 
     /**
@@ -37,19 +41,19 @@ public final class DataSingleton {
     /**
      * Map data.
      */
-<span class="fc" id="L40">    private ArrayList&lt;Calculation&gt; calculations = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L44">    private ArrayList&lt;Calculation&gt; calculations = new ArrayList&lt;&gt;();</span>
 
     private final HttpClient client;
     /**
      * private constructor for retrieving instance.
      */
-<span class="fc" id="L46">    private DataSingleton() {</span>
-<span class="fc" id="L47">        client = HttpClient.newBuilder()</span>
-<span class="fc" id="L48">                .version(HttpClient.Version.HTTP_2)</span>
-<span class="fc" id="L49">                .followRedirects(HttpClient.Redirect.NORMAL)</span>
-<span class="fc" id="L50">                .build();</span>
+<span class="fc" id="L50">    private DataSingleton() {</span>
+<span class="fc" id="L51">        client = HttpClient.newBuilder()</span>
+<span class="fc" id="L52">                .version(HttpClient.Version.HTTP_2)</span>
+<span class="fc" id="L53">                .followRedirects(HttpClient.Redirect.NORMAL)</span>
+<span class="fc" id="L54">                .build();</span>
 
-<span class="fc" id="L52">    }</span>
+<span class="fc" id="L56">    }</span>
 
     /**
      * Get the singleton instance of DataSingleton.
@@ -57,15 +61,15 @@ public final class DataSingleton {
      * @return The DataSingleton instance.
      */
     public static DataSingleton getInstance() {
-<span class="fc" id="L60">        return INSTANCE;</span>
+<span class="fc" id="L64">        return INSTANCE;</span>
     }
 
     /**
      * Clear the map of Calculations.
      */
     public void clearList() {
-<span class="nc" id="L67">        this.calculations.clear();</span>
-<span class="nc" id="L68">    }</span>
+<span class="nc" id="L71">        this.calculations.clear();</span>
+<span class="nc" id="L72">    }</span>
 
 
     /**
@@ -74,8 +78,8 @@ public final class DataSingleton {
      * @param newCalculation The Calculation to set.
      */
     public void setCalculation(final Calculation newCalculation) {
-<span class="fc" id="L77">        this.calculation = newCalculation;</span>
-<span class="fc" id="L78">    }</span>
+<span class="fc" id="L81">        this.calculation = newCalculation;</span>
+<span class="fc" id="L82">    }</span>
 
     /**
      * Get the current Calculation.
@@ -84,8 +88,8 @@ public final class DataSingleton {
      */
 
     public Calculation getCalculation() {
-<span class="fc" id="L87">        getRequest(false, this.calcName, calculation);</span>
-<span class="fc" id="L88">        return this.calculation;</span>
+<span class="fc" id="L91">        getRequest(false, this.calcName, calculation);</span>
+<span class="fc" id="L92">        return this.calculation;</span>
     }
 
     /**
@@ -94,15 +98,15 @@ public final class DataSingleton {
      * @param newCalcName The name to set.
      */
     public void setCalcName(final String newCalcName) {
-<span class="fc" id="L97">        this.calcName = newCalcName;</span>
-<span class="fc" id="L98">    }</span>
+<span class="fc" id="L101">        this.calcName = newCalcName;</span>
+<span class="fc" id="L102">    }</span>
     /**
      * Get the Calculation name.
      *
      * @return The Calculation name.
      */
     public String getCalcName() {
-<span class="fc" id="L105">        return this.calcName;</span>
+<span class="fc" id="L109">        return this.calcName;</span>
     }
 
     /**
@@ -112,8 +116,8 @@ public final class DataSingleton {
      */
     public ArrayList&lt;Calculation&gt; getCalculations() {
 
-<span class="fc" id="L115">        getRequest(true, null, null);</span>
-<span class="fc" id="L116">        return this.calculations;</span>
+<span class="fc" id="L119">        getRequest(true, null, null);</span>
+<span class="fc" id="L120">        return this.calculations;</span>
     }
 
 
@@ -122,158 +126,166 @@ public final class DataSingleton {
 
     public void sendPOSTRequest(Calculation calculation) {
         try {
-<span class="fc" id="L125">            String jsonCalculation = Json.getMapper().writeValueAsString(calculation);</span>
-<span class="fc" id="L126">            HttpRequest request = HttpRequest.newBuilder()</span>
-<span class="fc" id="L127">                    .uri(new URL(API_URL).toURI())</span>
-<span class="fc" id="L128">                    .POST(HttpRequest.BodyPublishers.ofString(jsonCalculation))</span>
-<span class="fc" id="L129">                    .header(&quot;Content-Type&quot;, &quot;application/json&quot;)</span>
-<span class="fc" id="L130">                    .build();</span>
+<span class="fc" id="L129">            String jsonCalculation = Json.getMapper().writeValueAsString(calculation);</span>
+<span class="fc" id="L130">            HttpRequest request = HttpRequest.newBuilder()</span>
+<span class="fc" id="L131">                    .uri(new URL(API_URL).toURI())</span>
+<span class="fc" id="L132">                    .POST(HttpRequest.BodyPublishers.ofString(jsonCalculation))</span>
+<span class="fc" id="L133">                    .header(&quot;Content-Type&quot;, &quot;application/json&quot;)</span>
+<span class="fc" id="L134">                    .build();</span>
 
-<span class="fc" id="L132">            HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
+<span class="fc" id="L136">            HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
 
-<span class="fc" id="L134">            int responseCode = response.statusCode();</span>
-<span class="fc" id="L135">            String responseBody = response.body();</span>
+<span class="fc" id="L138">            int responseCode = response.statusCode();</span>
+<span class="fc" id="L139">            String responseBody = response.body();</span>
 
-<span class="pc bpc" id="L137" title="4 of 6 branches missed.">            if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED || responseCode == HttpURLConnection.HTTP_NO_CONTENT) {</span>
-<span class="fc" id="L138">                System.out.println(&quot;Request was successful!&quot;);</span>
-<span class="fc" id="L139">                System.out.println(&quot;Response Body: &quot; + responseBody);</span>
+<span class="pc bpc" id="L141" title="4 of 6 branches missed.">            if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED || responseCode == HttpURLConnection.HTTP_NO_CONTENT) {</span>
+<span class="fc" id="L142">                System.out.println(&quot;Request was successful!&quot;);</span>
+<span class="fc" id="L143">                System.out.println(&quot;Response Body: &quot; + responseBody);</span>
             } else {
-<span class="nc" id="L141">                System.out.println(&quot;Request was not successful for POST &quot; + responseCode);</span>
+<span class="nc" id="L145">                System.out.println(&quot;Request was not successful for POST &quot; + responseCode);</span>
             }
-<span class="nc" id="L143">        } catch (MalformedURLException | JsonProcessingException | URISyntaxException e) {</span>
-<span class="nc" id="L144">            e.printStackTrace();</span>
-<span class="nc" id="L145">        } catch (IOException | InterruptedException e) {</span>
-<span class="nc" id="L146">            throw new RuntimeException(e);</span>
-<span class="pc" id="L147">        }</span>
-<span class="fc" id="L148">    }</span>
+<span class="nc" id="L147">        } catch (MalformedURLException | JsonProcessingException | URISyntaxException e) {</span>
+<span class="nc" id="L148">            e.printStackTrace();</span>
+<span class="nc" id="L149">        } catch (IOException | InterruptedException e) {</span>
+<span class="nc" id="L150">            throw new RuntimeException(e);</span>
+<span class="pc" id="L151">        }</span>
+<span class="fc" id="L152">    }</span>
 
     public void sendPUTRequest(String name) {
+
+<span class="fc" id="L156">        String encodedName = URLEncoder.encode(name, StandardCharsets.UTF_8);</span>
+
         try {
-<span class="nc" id="L152">            String jsonCalc = Json.getMapper().writeValueAsString(calculation);</span>
-<span class="nc" id="L153">            HttpRequest request = HttpRequest.newBuilder()</span>
-<span class="nc" id="L154">                    .uri(new URI(API_URL + &quot;/&quot; + name))</span>
-<span class="nc" id="L155">                    .header(&quot;Content-Type&quot;, &quot;application/json&quot;)</span>
-<span class="nc" id="L156">                    .PUT(HttpRequest.BodyPublishers.ofString(jsonCalc))</span>
-<span class="nc" id="L157">                    .build();</span>
+<span class="fc" id="L159">            String jsonCalc = Json.getMapper().writeValueAsString(calculation);</span>
+<span class="fc" id="L160">            HttpRequest request = HttpRequest.newBuilder()</span>
+<span class="fc" id="L161">                    .uri(new URI(API_URL + &quot;/&quot; + encodedName))</span>
+<span class="fc" id="L162">                    .header(&quot;Content-Type&quot;, &quot;application/json&quot;)</span>
+<span class="fc" id="L163">                    .PUT(HttpRequest.BodyPublishers.ofString(jsonCalc))</span>
+<span class="fc" id="L164">                    .build();</span>
 
-<span class="nc" id="L159">            HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
+<span class="fc" id="L166">            HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
 
-<span class="nc" id="L161">            int responseCode = response.statusCode();</span>
+<span class="fc" id="L168">            int responseCode = response.statusCode();</span>
 
-<span class="nc bnc" id="L163" title="All 6 branches missed.">            if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED || responseCode == HttpURLConnection.HTTP_NO_CONTENT) {</span>
-<span class="nc" id="L164">                System.out.println(&quot;PUT Request was successful!&quot;);</span>
+<span class="pc bpc" id="L170" title="3 of 6 branches missed.">            if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED || responseCode == HttpURLConnection.HTTP_NO_CONTENT) {</span>
+<span class="fc" id="L171">                System.out.println(&quot;PUT Request was successful!&quot;);</span>
             } else {
-<span class="nc" id="L166">                System.out.println(&quot;PUT Request was not successful. Response Code: &quot; + responseCode);</span>
+<span class="nc" id="L173">                System.out.println(&quot;PUT Request was not successful. Response Code: &quot; + responseCode);</span>
             }
-<span class="nc" id="L168">        } catch (URISyntaxException | IOException | InterruptedException e) {</span>
-<span class="nc" id="L169">            e.printStackTrace();</span>
-<span class="nc" id="L170">        }</span>
-<span class="nc" id="L171">    }</span>
+<span class="nc" id="L175">        } catch (URISyntaxException | IOException | InterruptedException e) {</span>
+<span class="nc" id="L176">            e.printStackTrace();</span>
+<span class="fc" id="L177">        }</span>
+<span class="fc" id="L178">    }</span>
     public void getRequest(boolean getAll, String name, Calculation calc) {
         try {
-<span class="fc bfc" id="L174" title="All 2 branches covered.">            String apiUrl = &quot;http://localhost:8080/budget&quot; + (getAll ? &quot;&quot; : &quot;/&quot; + name);</span>
-<span class="fc" id="L175">            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()</span>
-<span class="fc" id="L176">                    .uri(new URI(apiUrl))</span>
-<span class="fc" id="L177">                    .header(&quot;Content-Type&quot;, &quot;application/json&quot;)</span>
-<span class="fc" id="L178">                    .GET();</span>
-
-<span class="fc" id="L180">            HttpResponse&lt;String&gt; response = client.send(requestBuilder.build(), HttpResponse.BodyHandlers.ofString());</span>
-<span class="fc" id="L181">            int responseCode = response.statusCode();</span>
-
-<span class="fc bfc" id="L183" title="All 2 branches covered.">            if (responseCode == HttpURLConnection.HTTP_OK) {</span>
-<span class="fc" id="L184">                String responseBody = response.body();</span>
-<span class="fc" id="L185">                System.out.println(&quot;GET Request was successful!&quot;);</span>
-<span class="pc bpc" id="L186" title="1 of 2 branches missed.">                if (getAll) {</span>
-<span class="fc" id="L187">                    this.calculations = Json.getMapper().readValue(responseBody, new TypeReference&lt;ArrayList&lt;Calculation&gt;&gt;() {});</span>
-                } else {
-<span class="nc" id="L189">                    this.calculation = Json.getMapper().readValue(responseBody, Calculation.class);</span>
-                }
-<span class="fc" id="L191">            } else {</span>
-<span class="fc" id="L192">                System.out.println(&quot;GET Request was not successful. Response Code: &quot; + responseCode);</span>
+<span class="fc" id="L181">            String decodedName = null;</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">            if (name != null) {</span>
+<span class="fc" id="L183">                decodedName = URLEncoder.encode(name, StandardCharsets.UTF_8);</span>
             }
-<span class="nc" id="L194">        } catch (URISyntaxException | IOException | InterruptedException e) {</span>
-<span class="nc" id="L195">            e.printStackTrace();</span>
-<span class="fc" id="L196">        }</span>
-<span class="fc" id="L197">    }</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">            String apiUrl = &quot;http://localhost:8080/budget&quot; + (getAll ? &quot;&quot; : &quot;/&quot; + decodedName);</span>
+<span class="fc" id="L186">            HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()</span>
+<span class="fc" id="L187">                    .uri(new URI(apiUrl))</span>
+<span class="fc" id="L188">                    .header(&quot;Content-Type&quot;, &quot;application/json&quot;)</span>
+<span class="fc" id="L189">                    .GET();</span>
+
+<span class="fc" id="L191">            HttpResponse&lt;String&gt; response = client.send(requestBuilder.build(), HttpResponse.BodyHandlers.ofString());</span>
+<span class="fc" id="L192">            int responseCode = response.statusCode();</span>
+
+<span class="fc bfc" id="L194" title="All 2 branches covered.">            if (responseCode == HttpURLConnection.HTTP_OK) {</span>
+<span class="fc" id="L195">                String responseBody = response.body();</span>
+<span class="fc" id="L196">                System.out.println(&quot;GET Request was successful!&quot;);</span>
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">                if (getAll) {</span>
+<span class="fc" id="L198">                    this.calculations = Json.getMapper().readValue(responseBody, new TypeReference&lt;ArrayList&lt;Calculation&gt;&gt;() {});</span>
+                } else {
+<span class="nc" id="L200">                    this.calculation = Json.getMapper().readValue(responseBody, Calculation.class);</span>
+                }
+<span class="fc" id="L202">            } else {</span>
+<span class="fc" id="L203">                System.out.println(&quot;GET Request was not successful. Response Code: &quot; + responseCode);</span>
+            }
+<span class="nc" id="L205">        } catch (URISyntaxException | IOException | InterruptedException e) {</span>
+<span class="nc" id="L206">            e.printStackTrace();</span>
+<span class="fc" id="L207">        }</span>
+<span class="fc" id="L208">    }</span>
 
 
     public void addCalculation(final Calculation calc) {
-<span class="fc" id="L201">        this.calculations.add(calc);</span>
-<span class="fc" id="L202">        sendPOSTRequest(calc);</span>
-<span class="fc" id="L203">    }</span>
+<span class="fc" id="L212">        this.calculations.add(calc);</span>
+<span class="fc" id="L213">        sendPOSTRequest(calc);</span>
+<span class="fc" id="L214">    }</span>
 
     private boolean checkIfExists(String name) {
-<span class="nc" id="L206">        return !this.calculations.stream()</span>
-<span class="nc bnc" id="L207" title="All 2 branches missed.">                .filter(p -&gt; p.getName().equals(name)).toList().isEmpty();</span>
+<span class="nc" id="L217">        return !this.calculations.stream()</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">                .filter(p -&gt; p.getName().equals(name)).toList().isEmpty();</span>
     }
 
     public void updateCalculation(final Calculation calc) {
-<span class="nc" id="L211">       int index = -1;</span>
-<span class="nc bnc" id="L212" title="All 2 branches missed.">        for (int i = 0; i &lt; calculations.size(); i++) {</span>
-<span class="nc bnc" id="L213" title="All 2 branches missed.">            if (calculations.get(i).getName().equals(calc.getName())) {</span>
-<span class="nc" id="L214">                index = i;</span>
-<span class="nc" id="L215">                break;</span>
+<span class="fc" id="L222">       int index = -1;</span>
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">        for (int i = 0; i &lt; calculations.size(); i++) {</span>
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">            if (calculations.get(i).getName().equals(calc.getName())) {</span>
+<span class="fc" id="L225">                index = i;</span>
+<span class="fc" id="L226">                break;</span>
             }
         }
-<span class="nc bnc" id="L218" title="All 2 branches missed.">        if (index != -1) {</span>
-<span class="nc" id="L219">            this.calculations.set(index, calc);</span>
-<span class="nc" id="L220">            sendPUTRequest(calc.getName());</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">        if (index != -1) {</span>
+<span class="fc" id="L230">            this.calculations.set(index, calc);</span>
+<span class="fc" id="L231">            sendPUTRequest(calc.getName());</span>
         }
-<span class="nc" id="L222">    }</span>
+<span class="fc" id="L233">    }</span>
 
     public void deleteEntry(final Calculation calc) {
-<span class="fc" id="L225">        this.calculations.remove(calc);</span>
-<span class="fc" id="L226">        deleteRequest(calc.getName());</span>
-<span class="fc" id="L227">    }</span>
+<span class="fc" id="L236">        this.calculations.remove(calc);</span>
+<span class="fc" id="L237">        deleteRequest(calc.getName());</span>
+<span class="fc" id="L238">    }</span>
 
     public void deleteRequest(final String name) {
         try {
-<span class="fc" id="L231">            String apiUrl = API_URL + &quot;/&quot; + name;</span>
-<span class="fc" id="L232">            HttpRequest request = HttpRequest.newBuilder()</span>
-<span class="fc" id="L233">                    .uri(new URI(apiUrl))</span>
-<span class="fc" id="L234">                    .header(&quot;Content-Type&quot;, &quot;application/json&quot;)</span>
-<span class="fc" id="L235">                    .DELETE()</span>
-<span class="fc" id="L236">                    .build();</span>
+<span class="fc" id="L242">            String encodedName = URLEncoder.encode(name, StandardCharsets.UTF_8.toString());</span>
+<span class="fc" id="L243">            String apiUrl = API_URL + &quot;/&quot; + encodedName;</span>
+<span class="fc" id="L244">            HttpRequest request = HttpRequest.newBuilder()</span>
+<span class="fc" id="L245">                    .uri(new URI(apiUrl))</span>
+<span class="fc" id="L246">                    .header(&quot;Content-Type&quot;, &quot;application/json&quot;)</span>
+<span class="fc" id="L247">                    .DELETE()</span>
+<span class="fc" id="L248">                    .build();</span>
 
-<span class="fc" id="L238">            HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
+<span class="fc" id="L250">            HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
 
-<span class="fc" id="L240">            int responseCode = response.statusCode();</span>
+<span class="fc" id="L252">            int responseCode = response.statusCode();</span>
 
-<span class="pc bpc" id="L242" title="3 of 6 branches missed.">            if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED || responseCode == HttpURLConnection.HTTP_NO_CONTENT) {</span>
-<span class="fc" id="L243">                removeCalculationLocally(name);</span>
-<span class="fc" id="L244">                System.out.println(&quot;Calculation was deleted correctly&quot;);</span>
+<span class="pc bpc" id="L254" title="3 of 6 branches missed.">            if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED || responseCode == HttpURLConnection.HTTP_NO_CONTENT) {</span>
+<span class="fc" id="L255">                removeCalculationLocally(name);</span>
+<span class="fc" id="L256">                System.out.println(&quot;Calculation was deleted correctly&quot;);</span>
             } else {
-<span class="nc" id="L246">                System.out.println(&quot;Request was not successful &quot; + responseCode);</span>
+<span class="nc" id="L258">                System.out.println(&quot;Request was not successful &quot; + responseCode);</span>
             }
-<span class="nc" id="L248">        } catch (URISyntaxException | IOException | InterruptedException e) {</span>
-<span class="nc" id="L249">            e.printStackTrace();</span>
-<span class="fc" id="L250">        }</span>
-<span class="fc" id="L251">    }</span>
+<span class="nc" id="L260">        } catch (URISyntaxException | IOException | InterruptedException e) {</span>
+<span class="nc" id="L261">            e.printStackTrace();</span>
+<span class="fc" id="L262">        }</span>
+<span class="fc" id="L263">    }</span>
 
     public void sendClearRequest() {
         try {
-<span class="fc" id="L255">            String apiURL = &quot;http://localhost:8080/budget&quot;;</span>
-<span class="fc" id="L256">            HttpRequest request = HttpRequest.newBuilder()</span>
-<span class="fc" id="L257">                    .uri(new URL(apiURL).toURI())</span>
-<span class="fc" id="L258">                    .DELETE()</span>
-<span class="fc" id="L259">                    .header(&quot;Content-Type&quot;, &quot;application/json&quot;)</span>
-<span class="fc" id="L260">                    .build();</span>
+<span class="fc" id="L267">            String apiURL = &quot;http://localhost:8080/budget&quot;;</span>
+<span class="fc" id="L268">            HttpRequest request = HttpRequest.newBuilder()</span>
+<span class="fc" id="L269">                    .uri(new URL(apiURL).toURI())</span>
+<span class="fc" id="L270">                    .DELETE()</span>
+<span class="fc" id="L271">                    .header(&quot;Content-Type&quot;, &quot;application/json&quot;)</span>
+<span class="fc" id="L272">                    .build();</span>
 
-<span class="fc" id="L262">            HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
+<span class="fc" id="L274">            HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
 
-<span class="fc" id="L264">            int responseCode = response.statusCode();</span>
-<span class="fc" id="L265">            String responseBody = response.body();</span>
+<span class="fc" id="L276">            int responseCode = response.statusCode();</span>
+<span class="fc" id="L277">            String responseBody = response.body();</span>
 
-<span class="pc bpc" id="L267" title="1 of 2 branches missed.">            if (responseCode == HttpURLConnection.HTTP_OK) {</span>
-<span class="fc" id="L268">                System.out.println(&quot;Clear request was successful!&quot;);</span>
-<span class="fc" id="L269">                System.out.println(&quot;Response Body: &quot; + responseBody);</span>
+<span class="pc bpc" id="L279" title="1 of 2 branches missed.">            if (responseCode == HttpURLConnection.HTTP_OK) {</span>
+<span class="fc" id="L280">                System.out.println(&quot;Clear request was successful!&quot;);</span>
+<span class="fc" id="L281">                System.out.println(&quot;Response Body: &quot; + responseBody);</span>
             } else {
-<span class="nc" id="L271">                System.out.println(&quot;Clear request was not successful: &quot; + responseCode);</span>
+<span class="nc" id="L283">                System.out.println(&quot;Clear request was not successful: &quot; + responseCode);</span>
             }
-<span class="nc" id="L273">        } catch (URISyntaxException | IOException | InterruptedException e) {</span>
-<span class="nc" id="L274">            e.printStackTrace();</span>
-<span class="fc" id="L275">        }</span>
-<span class="fc" id="L276">    }</span>
+<span class="nc" id="L285">        } catch (URISyntaxException | IOException | InterruptedException e) {</span>
+<span class="nc" id="L286">            e.printStackTrace();</span>
+<span class="fc" id="L287">        }</span>
+<span class="fc" id="L288">    }</span>
 
 
 
@@ -282,14 +294,14 @@ public final class DataSingleton {
 
 
     private void removeCalculationLocally(String name) {
-<span class="fc" id="L285">        Iterator&lt;Calculation&gt; calculationIterator = getCalculations().iterator();</span>
-<span class="fc bfc" id="L286" title="All 2 branches covered.">        while (calculationIterator.hasNext()) {</span>
-<span class="fc" id="L287">            Calculation calculation = calculationIterator.next();</span>
-<span class="pc bpc" id="L288" title="1 of 2 branches missed.">            if (calculation.getName().equals(name)) {</span>
-<span class="nc" id="L289">                calculationIterator.remove();</span>
-<span class="nc" id="L290">                break;</span>
+<span class="fc" id="L297">        Iterator&lt;Calculation&gt; calculationIterator = getCalculations().iterator();</span>
+<span class="fc bfc" id="L298" title="All 2 branches covered.">        while (calculationIterator.hasNext()) {</span>
+<span class="fc" id="L299">            Calculation calculation = calculationIterator.next();</span>
+<span class="pc bpc" id="L300" title="1 of 2 branches missed.">            if (calculation.getName().equals(name)) {</span>
+<span class="nc" id="L301">                calculationIterator.remove();</span>
+<span class="nc" id="L302">                break;</span>
             }
-<span class="fc" id="L292">        }</span>
-<span class="fc" id="L293">    }</span>
+<span class="fc" id="L304">        }</span>
+<span class="fc" id="L305">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

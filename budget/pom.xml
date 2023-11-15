@@ -113,7 +113,7 @@
                     <configuration>
                         <propertyName>jaCoCoArgLine</propertyName>
                         <excludes>
-                            <exclude>./utility/src/main/java/budget/utility/Json.java</exclude>
+                            <exclude>budget/springrest/SpringRestApplication.class</exclude>
                         </excludes>
                     </configuration>
 

@@ -71,22 +71,6 @@ public class CalculationRepositoryList {
         saveDataToFile();
     }
 
-    public boolean hasBudget(String name) {
-        return findBudgetIndex(name) > 0;
-    }
-
-    public boolean checkValidBudgetName(String name) {
-        return !name.isEmpty();
-    }
-
-    public boolean checkDuplicate(String name) {
-        for (Calculation calc : this.budgets) {
-            if (calc.getName().equals(name)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     public ArrayList<Calculation> getBudgets() {
         return new ArrayList<>(this.budgets);

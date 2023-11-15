@@ -1,10 +1,10 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 ui,budget.ui,BudgetsViewController,6,265,8,12,2,57,8,14,0,12
 ui,budget.ui,DataSingleton.new TypeReference() {...},0,6,0,0,0,1,0,1,0,1
-ui,budget.ui,BudgetController,71,417,3,29,22,88,7,27,4,14
+ui,budget.ui,BudgetController,53,445,1,31,16,96,4,30,3,15
 ui,budget.ui,ChangeScene,0,36,0,0,0,8,0,1,0,1
 ui,budget.ui,StartMenuController.new Object() {...},0,16,0,0,0,5,0,3,0,3
 ui,budget.ui,BudgetsViewController.new ListCell() {...},0,86,1,7,0,15,1,5,0,2
 ui,budget.ui,BudgetApplication,4,34,0,0,2,7,1,2,1,2
-ui,budget.ui,DataSingleton,155,279,24,14,44,87,21,18,5,15
+ui,budget.ui,DataSingleton,75,376,18,22,23,113,19,21,3,17
 ui,budget.ui,StartMenuController,43,178,8,10,17,41,8,7,0,6

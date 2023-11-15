@@ -3,6 +3,8 @@ package budget.springrest.controller;
 import budget.core.Calculation;
 import budget.springrest.repository.CalculationRepositoryList;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -31,41 +33,43 @@ public class RestCalculationController {
 
     // GET http://localhost:8080/name(Mitt budsjett)
     @GetMapping("/{name}")
-    public Calculation findByName(@PathVariable String name) {
-        if (repository.hasBudget(name)) {
-            System.out.println("Budget found!");
-            return repository.findByName(name);
+    public ResponseEntity<Calculation> findByName(@PathVariable String name) {
+//        if (repository.hasBudget(name)) {
+//            System.out.println("Budget found!");
+//            return repository.findByName(name);
+//        } else {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No budget found by that name!");
+//        }
+        Calculation calcFromServer = repository.findByName(name);
+        if (calcFromServer != null) {
+            return ResponseEntity.ok(calcFromServer);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No budget found by that name!");
+            return ResponseEntity.notFound().build();
         }
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping
-    public void clearBudgets() {
-        this.repository.clearBudgets();
+    public ResponseEntity<Void> clearBudgets() {
+        repository.clearBudgets();
+        return ResponseEntity.ok().build();
     }
 
-    // POST http://localhost:8080/budget (do not need /create)
-    // need to return correct response code
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Calculation create(@RequestBody Calculation calculation) {
-        return this.repository.create(calculation);
+    public ResponseEntity<Calculation> create(@RequestBody Calculation calculation) {
+        Calculation createdCalculation = repository.create(calculation);
+        return new ResponseEntity<>(createdCalculation, HttpStatus.CREATED);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{name}")
-    public void update(@RequestBody Calculation calc) {
-        this.repository.update(calc);
+    public ResponseEntity<Void> update(@PathVariable String name, @RequestBody Calculation calculation) {
+        repository.update(calculation);
+        return ResponseEntity.noContent().build();
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{name}")
-    public void delete(@PathVariable String name) {
-        this.repository.delete(name);
+    public ResponseEntity<Void> delete(@PathVariable String name) {
+        repository.delete(name);
+        return ResponseEntity.noContent().build();
     }
-
-
 
 }

@@ -262,27 +262,28 @@ import java.util.ArrayList;
      */
     @FXML
     public void addAmount() {
+<span class="fc" id="L265">        System.out.println(calc.getName());</span>
         try {
-<span class="fc" id="L266">            int amountToAdd = Integer.parseInt(input.getText());</span>
-<span class="fc" id="L267">            String newCategory = selector.getValue();</span>
+<span class="fc" id="L267">            int amountToAdd = Integer.parseInt(input.getText());</span>
+<span class="fc" id="L268">            String newCategory = selector.getValue();</span>
 
-<span class="fc bfc" id="L269" title="All 2 branches covered.">            for (Category cat : categoryList) {</span>
-<span class="fc bfc" id="L270" title="All 2 branches covered.">                if (cat.getCategoryName().equals(newCategory)) {</span>
-<span class="fc" id="L271">                    calc.addAmountToCategory(cat, amountToAdd);</span>
-<span class="fc" id="L272">                    table.refresh();</span>
-<span class="fc" id="L273">                    input.clear();</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">            for (Category cat : categoryList) {</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">                if (cat.getCategoryName().equals(newCategory)) {</span>
+<span class="fc" id="L272">                    calc.addAmountToCategory(cat, amountToAdd);</span>
+<span class="fc" id="L273">                    table.refresh();</span>
+<span class="fc" id="L274">                    input.clear();</span>
                 }
-<span class="fc" id="L275">            }</span>
-<span class="fc" id="L276">            totalSum.setText(Integer.toString(calc.getTotalSum()));</span>
-<span class="fc" id="L277">            populatePieChart();</span>
-<span class="nc" id="L278">        } catch (NumberFormatException e) {</span>
-<span class="nc" id="L279">            showAlertDialog(&quot;Invalid input&quot;, &quot;Please enter a valid integer.&quot;);</span>
-<span class="nc" id="L280">        } catch (IllegalArgumentException e) {</span>
-<span class="nc" id="L281">            showAlertDialog(&quot;Invalid input&quot;, &quot;The amount must be a positive integer.&quot;);</span>
-<span class="pc" id="L282">        }</span>
+<span class="fc" id="L276">            }</span>
+<span class="fc" id="L277">            totalSum.setText(Integer.toString(calc.getTotalSum()));</span>
+<span class="fc" id="L278">            populatePieChart();</span>
+<span class="nc" id="L279">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L280">            showAlertDialog(&quot;Invalid input&quot;, &quot;Please enter a valid integer.&quot;);</span>
+<span class="nc" id="L281">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L282">            showAlertDialog(&quot;Invalid input&quot;, &quot;The amount must be a positive integer.&quot;);</span>
+<span class="pc" id="L283">        }</span>
 
 
-<span class="fc" id="L285">    }</span>
+<span class="fc" id="L286">    }</span>
 
     /**
      * Show an alert dialog with the given title and content.
@@ -290,12 +291,12 @@ import java.util.ArrayList;
      * @param content The content of the alert dialog
      */
     private void showAlertDialog(final String title, final String content) {
-<span class="nc" id="L293">        Alert alert = new Alert(Alert.AlertType.ERROR);</span>
-<span class="nc" id="L294">        alert.setTitle(title);</span>
-<span class="nc" id="L295">        alert.setHeaderText(null);</span>
-<span class="nc" id="L296">        alert.setContentText(content);</span>
-<span class="nc" id="L297">        alert.showAndWait();</span>
-<span class="nc" id="L298">    }</span>
+<span class="nc" id="L294">        Alert alert = new Alert(Alert.AlertType.ERROR);</span>
+<span class="nc" id="L295">        alert.setTitle(title);</span>
+<span class="nc" id="L296">        alert.setHeaderText(null);</span>
+<span class="nc" id="L297">        alert.setContentText(content);</span>
+<span class="nc" id="L298">        alert.showAndWait();</span>
+<span class="nc" id="L299">    }</span>
 
     /**
      * Save the current budget to a file.
@@ -304,35 +305,36 @@ import java.util.ArrayList;
     public final void saveBudget() {
 
 
-<span class="pc bpc" id="L307" title="1 of 2 branches missed.">        if (checkDuplicate(this.calc.getName())) {</span>
-<span class="nc" id="L308">            System.out.println(&quot;Oppdaterer budsjett!&quot;);</span>
-<span class="nc" id="L309">            updateBudget();</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">        if (checkDuplicate(this.calc.getName())) {</span>
+<span class="fc" id="L309">            System.out.println(&quot;Oppdaterer budsjett!&quot;);</span>
+<span class="fc" id="L310">            updateBudget();</span>
 
         } else {
-<span class="fc" id="L312">            System.out.println(&quot;Legger til nytt budsjett!&quot;);</span>
-<span class="fc" id="L313">            createNewBudget();</span>
+<span class="fc" id="L313">            System.out.println(&quot;Legger til nytt budsjett!&quot;);</span>
+<span class="fc" id="L314">            createNewBudget();</span>
         }
-<span class="fc" id="L315">    }</span>
+<span class="fc" id="L316">    }</span>
 
     private boolean checkDuplicate(String name) {
-<span class="fc bfc" id="L318" title="All 2 branches covered.">        for (Calculation calc : this.calculations) {</span>
-<span class="pc bpc" id="L319" title="1 of 2 branches missed.">            if (calc.getName().equals(name)) {</span>
-<span class="nc" id="L320">                return true;</span>
+<span class="fc bfc" id="L319" title="All 2 branches covered.">        for (Calculation calc : this.calculations) {</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">            if (calc.getName().equals(name)) {</span>
+<span class="fc" id="L321">                return true;</span>
             }
-<span class="fc" id="L322">        }</span>
-<span class="fc" id="L323">        return false;</span>
+<span class="fc" id="L323">        }</span>
+<span class="fc" id="L324">        return false;</span>
     }
 
     private void createNewBudget() {
-<span class="fc" id="L327">        this.calc.setName(budgetTitle.getText());</span>
-<span class="fc" id="L328">        dataSingleton.addCalculation(this.calc);</span>
-<span class="fc" id="L329">    }</span>
+<span class="fc" id="L328">        this.calc.setName(budgetTitle.getText());</span>
+<span class="fc" id="L329">        System.out.println(calc.getName());</span>
+<span class="fc" id="L330">        dataSingleton.addCalculation(this.calc);</span>
+<span class="fc" id="L331">    }</span>
 
 
     private void updateBudget() {
-<span class="nc" id="L333">        System.out.println(this.calc);  // Debug: Print calc before sending</span>
-<span class="nc" id="L334">        dataSingleton.updateCalculation(this.calc);</span>
-<span class="nc" id="L335">    }</span>
+<span class="fc" id="L335">        System.out.println(this.calc);  // Debug: Print calc before sending</span>
+<span class="fc" id="L336">        dataSingleton.updateCalculation(this.calc);</span>
+<span class="fc" id="L337">    }</span>
 
 
 
