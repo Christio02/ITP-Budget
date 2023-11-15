@@ -1,19 +1,0 @@
-
-m	java:S116"SRename this field "TABLE_ID" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(úÉ«Òýÿÿÿÿ
-k	java:S116"VRename this field "SELECTOR_ID" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(È¼òï
-h	java:S116"SRename this field "INPUT_ID" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÎÒóˆ
-k	java:S116"QRename this field "SUM_ID" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢³Çûùÿÿÿÿ
-r	java:S116"XRename this field "SUBMIT_BTN_ID" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“üÅ‹ùÿÿÿÿ
-n	java:S116"YRename this field "NEW_BUDGET_BTN" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(×‡‰á
-<
-java:S1170"!Make this final field static too.(úÉ«Òýÿÿÿÿ
-7
-java:S1170"!Make this final field static too.(È¼òï
-7
-java:S1170"!Make this final field static too.(ÎÒóˆ
-<
-java:S1170"!Make this final field static too.(¢³Çûùÿÿÿÿ
-<
-java:S1170"!Make this final field static too.(“üÅ‹ùÿÿÿÿ
-7
-java:S1170"!Make this final field static too.(×‡‰á

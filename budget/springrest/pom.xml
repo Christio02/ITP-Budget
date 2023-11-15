@@ -68,10 +68,10 @@
                 <version>3.1.2</version>
                 <configuration>
                     <argLine>
-                        @{jaCoCoArgLine}
-                        --add-opens budgetApplication/app=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                        -Xmx512m
+                        --add-opens  budget/ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                        -javaagent:${settings.localRepository}/org/jacoco/org.jacoco.agent/0.8.8/org.jacoco.agent-0.8.8-runtime.jar=destfile=target/jacoco.exec
                     </argLine>
-
                 </configuration>
             </plugin>
             <!-- Run the checkstyle code quality tool -->
@@ -90,15 +90,19 @@
                     <excludeFilterFile>../config/spotbugs/exclude.xml</excludeFilterFile>
                 </configuration>
             </plugin>
-
-
             <!-- Configure jacoco code coverage -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.10</version>
                 <configuration>
                     <propertyName>jaCoCoArgLine</propertyName>
+                    <excludes>
+                        <exclude>./utility/src/main/java/budget/utility/Json.java</exclude>
+                        <exclude>./springrest/src/main/java/budget/springrest/SpringRestApplication.java</exclude>
+                    </excludes>
                 </configuration>
+
                 <executions>
                     <execution>
                         <id>jacoco-prepare-agent</id>
@@ -113,11 +117,6 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
-                        <configuration>
-                            <outputDirectory>
-                                ${project.basedir}/../test-results/jacoco/${project.name}
-                            </outputDirectory>
-                        </configuration>
                     </execution>
                     <execution>
                         <id>jacoco-report-test</id>
@@ -129,6 +128,11 @@
                 </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
     </build>
 
 </project>

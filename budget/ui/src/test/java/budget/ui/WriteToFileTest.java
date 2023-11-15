@@ -91,14 +91,14 @@ public class WriteToFileTest extends TestFXBase {
         verifyThat(TABLE_ID, containsRow(food, amount1));
         verifyThat(SUM_ID, hasText("5000"));
 
-        ArrayList<Calculation> calculations = new ArrayList<>();
-        String path = "../../utility/src/main/resources/budget/utility/savedBudget.json";
-
-        try {
-            FileUtility.writeToFile(calculations, path);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        ArrayList<Calculation> calculations = new ArrayList<>();
+//        String path = "./../../utility/src/main/resources/budget/utility/savedBudget.json";
+//
+//        try {
+//            FileUtility.writeToFile(calculations, path);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     @Test
