@@ -1,8 +1,5 @@
 package budget.ui;
 import budget.core.Calculation;
-import budget.core.Category;
-import budget.utility.Json;
-import com.fasterxml.jackson.core.type.TypeReference;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import budget.utility.FileUtility;
@@ -12,17 +9,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Alert;
-
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * Controller class for the start menu in the budget application.
@@ -43,11 +33,15 @@ public class StartMenuController {
      * A singleton instance for managing data related to budget calculations.
      */
     private DataSingleton data = DataSingleton.getInstance();
+
+    /**
+     * List of calculations.
+     */
+    private  ArrayList<Calculation> calculations;
+
     /**
      * Initializes the controller, loading existing budget data if available.
      */
-
-    public ArrayList<Calculation> calculations;
     @FXML
     public final void initialize() {
 
@@ -153,5 +147,4 @@ public class StartMenuController {
         FileUtility.setLoad(true);
         ChangeScene.changeToScene(getClass(), event, "load-budgets.fxml", 612, 400);
     }
-
 }
