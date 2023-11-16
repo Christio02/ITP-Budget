@@ -60,6 +60,7 @@ public final class DataSingleton {
      *
      * @return The DataSingleton instance.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("MS_EXPOSE_REP")
     public static DataSingleton getInstance() {
         return INSTANCE;
     }
@@ -78,7 +79,7 @@ public final class DataSingleton {
      * @param newCalculation The Calculation to set.
      */
     public void setCalculation(final Calculation newCalculation) {
-        this.calculation = newCalculation;
+        this.calculation = new Calculation(newCalculation);
     }
 
     /**
@@ -89,7 +90,7 @@ public final class DataSingleton {
 
     public Calculation getCalculation() {
         getRequest(false, this.calcName, calculation);
-        return this.calculation;
+        return new Calculation(this.calculation);
     }
 
     /**
@@ -117,7 +118,7 @@ public final class DataSingleton {
     public ArrayList<Calculation> getCalculations() {
 
         getRequest(true, null, null);
-        return this.calculations;
+        return new ArrayList<>(this.calculations);
     }
 
 
@@ -151,9 +152,9 @@ public final class DataSingleton {
         }
     }
 
-    public void sendPUTRequest(String name) {
+    public void sendPUTRequest(Calculation calculation) {
 
-        String encodedName = URLEncoder.encode(name, StandardCharsets.UTF_8);
+        String encodedName = URLEncoder.encode(calculation.getName(), StandardCharsets.UTF_8);
 
         try {
             String jsonCalc = Json.getMapper().writeValueAsString(calculation);
@@ -228,7 +229,7 @@ public final class DataSingleton {
         }
         if (index != -1) {
             this.calculations.set(index, calc);
-            sendPUTRequest(calc.getName());
+            sendPUTRequest(calc);
         }
     }
 

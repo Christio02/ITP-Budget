@@ -89,23 +89,10 @@ public class StartMenuController {
             return false;
         }
 
-        /*
-         * A reference to the result of the dialog.
-         * Anonymous class to allow for the use of a mutable variable.
-         */
-        var ref = new Object() {
-            private String thisKey = "";
-            public void setThisKey(final String key) {
-                this.thisKey = key;
-            }
-            public String getThisKey() {
-                return this.thisKey;
-            }
-        };
-        result.ifPresent(ref::setThisKey);
+        String key = result.get();
         Pattern pattern = Pattern.compile("[^a-zA-Z0-9]*");
-        Matcher matcher = pattern.matcher(ref.getThisKey());
-        if (ref.getThisKey().isEmpty() || !matcher.find()) {
+        Matcher matcher = pattern.matcher(key);
+        if (key.isEmpty() || !matcher.find()) {
             shouldLoad = false;
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Invalid input!");
@@ -118,7 +105,7 @@ public class StartMenuController {
 
         boolean budgetExists = false;
         for (Calculation calc : calculations) {
-            if (calc != null && ref.getThisKey().equals(calc.getName())) {
+            if (calc != null && key.equals(calc.getName())) {
                 budgetExists = true;
                 break;
 
@@ -132,8 +119,8 @@ public class StartMenuController {
             errorAlert.showAndWait();
 
         } else {
-            data.setCalculation(new Calculation());
-            data.setCalcName(ref.getThisKey());
+            data.addCalculation(new Calculation(key));
+            data.setCalcName(key);
             FileUtility.setLoad(false);
         }
         return shouldLoad;

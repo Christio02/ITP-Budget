@@ -61,10 +61,14 @@ public class FileUtilityTest {
     public void testAmountIsIdentical() throws IOException {
         ArrayList<Calculation> testList = new ArrayList<>();
         testList.add(testCalculation);
+        System.out.println(testList.get(0).getCategory("Food").getBudgetHistory());
+
 
         FileUtility.writeToFile(testList, TEST_FILE_PATH); // Use the test file path
         ArrayList<Calculation> loadList = new ArrayList<>();
+
         FileUtility.readFile(loadList, TEST_FILE_PATH); // Use the test file path
+        System.out.println(loadList.toString());
 
         assertEquals(1, loadList.size());
 

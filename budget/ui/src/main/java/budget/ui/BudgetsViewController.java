@@ -174,7 +174,6 @@ public class BudgetsViewController {
         int selectedIndex = nameCalc.getSelectionModel().getSelectedIndex();
 
         if (selectedIndex >= 0 && result.isPresent() && result.get().equals(confirm)) {
-            String selectedCalcName = nameCalc.getItems().get(selectedIndex);
 
             // Check if the selected item is also in calcObject
             Calculation selectedCalc = calcObject.getItems().get(selectedIndex);
