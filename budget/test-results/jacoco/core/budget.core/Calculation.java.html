@@ -2,7 +2,6 @@
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -14,45 +13,68 @@ import java.util.Objects;
 public class Calculation {
 
     /**
-     * This cis a list that stores categories.
+     * This is a list that stores categories.
      */
-<span class="fc" id="L19">    private final ArrayList&lt;Category&gt; categoriesList = new ArrayList&lt;&gt;();</span>
+<span class="pc" id="L18">    private ArrayList&lt;Category&gt; categoriesList = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * Name of calculation.
+     */
     private String name;
 
-    /*
+    /**
      * Creates a new Calculation object.
      */
     @JsonCreator
-<span class="fc" id="L26">    public Calculation() {</span>
-<span class="fc" id="L27">        this.categoriesList.add(new Category(&quot;Food&quot;));</span>
-<span class="fc" id="L28">        this.categoriesList.add(new Category(&quot;Transportation&quot;));</span>
-<span class="fc" id="L29">        this.categoriesList.add(new Category(&quot;Entertainment&quot;));</span>
-<span class="fc" id="L30">        this.categoriesList.add(new Category(&quot;Clothing&quot;));</span>
-<span class="fc" id="L31">        this.categoriesList.add(new Category(&quot;Other&quot;));</span>
-<span class="fc" id="L32">        name = null;</span>
-<span class="fc" id="L33">    }</span>
+<span class="fc" id="L29">    public Calculation() {</span>
+<span class="fc" id="L30">        this.categoriesList.add(new Category(&quot;Food&quot;));</span>
+<span class="fc" id="L31">        this.categoriesList.add(new Category(&quot;Transportation&quot;));</span>
+<span class="fc" id="L32">        this.categoriesList.add(new Category(&quot;Entertainment&quot;));</span>
+<span class="fc" id="L33">        this.categoriesList.add(new Category(&quot;Clothing&quot;));</span>
+<span class="fc" id="L34">        this.categoriesList.add(new Category(&quot;Other&quot;));</span>
+<span class="fc" id="L35">        name = null;</span>
+<span class="fc" id="L36">    }</span>
 
-    /*
-     * Creates a new Calculation object, with given name
+    /**
+     * Creates a new Calculation object, with given name.
+     * @param newName the name of calculation.
      */
     @JsonCreator
-<span class="fc" id="L39">    public Calculation(String name) {</span>
-<span class="fc" id="L40">        this.categoriesList.add(new Category(&quot;Food&quot;));</span>
-<span class="fc" id="L41">        this.categoriesList.add(new Category(&quot;Transportation&quot;));</span>
-<span class="fc" id="L42">        this.categoriesList.add(new Category(&quot;Entertainment&quot;));</span>
-<span class="fc" id="L43">        this.categoriesList.add(new Category(&quot;Clothing&quot;));</span>
-<span class="fc" id="L44">        this.categoriesList.add(new Category(&quot;Other&quot;));</span>
-<span class="fc" id="L45">        this.name = name;</span>
+<span class="fc" id="L43">    public Calculation(final String newName) {</span>
+<span class="fc" id="L44">        this.categoriesList.add(new Category(&quot;Food&quot;));</span>
+<span class="fc" id="L45">        this.categoriesList.add(new Category(&quot;Transportation&quot;));</span>
+<span class="fc" id="L46">        this.categoriesList.add(new Category(&quot;Entertainment&quot;));</span>
+<span class="fc" id="L47">        this.categoriesList.add(new Category(&quot;Clothing&quot;));</span>
+<span class="fc" id="L48">        this.categoriesList.add(new Category(&quot;Other&quot;));</span>
+<span class="fc" id="L49">        this.name = newName;</span>
 
-<span class="fc" id="L47">    }</span>
+<span class="fc" id="L51">    }</span>
 
+    /**
+     * A constructor that creates a deep copy of object (spotbugs error).
+     * @param  other calculation
+     *
+     */
+<span class="nc" id="L58">    public Calculation(final Calculation other) {</span>
+<span class="nc" id="L59">        this.name = other.getName();</span>
+<span class="nc" id="L60">        this.categoriesList = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L61">        this.categoriesList.addAll(other.getCategoriesList());</span>
+<span class="nc" id="L62">    }</span>
 
-    public void setName(String name) {
-<span class="fc" id="L51">        this.name = name;</span>
-<span class="fc" id="L52">    }</span>
+    /**
+     * Sets current name of budget.
+     * @param newName sets name
+     */
+    public void setName(final String newName) {
+<span class="fc" id="L69">        this.name = newName;</span>
+<span class="fc" id="L70">    }</span>
 
+    /**
+     * Gets current name.
+     * @return String name.
+     */
     public String getName() {
-<span class="fc" id="L55">        return this.name;</span>
+<span class="fc" id="L77">        return this.name;</span>
     }
 
 
@@ -61,16 +83,16 @@ public class Calculation {
     /**
      * Adds the specified amount to the specified category.
      *
-     * @param category The category to add the amount to
-     * @param amount   The amount to add to the category
-     * @throws IllegalArgumentException if the amount is negative
+     * @param category The category to add the amount to.
+     * @param amount   The amount to add to the category.
+     * @throws IllegalArgumentException if the amount is negative.
      */
     public void addAmountToCategory(final Category category, final int amount) {
-<span class="fc bfc" id="L69" title="All 2 branches covered.">        if (!checkAmountIsCorrect(amount)) {</span>
-<span class="fc" id="L70">            throw new IllegalArgumentException(&quot;Amount cannot be negative.&quot;);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        if (!checkAmountIsCorrect(amount)) {</span>
+<span class="fc" id="L92">            throw new IllegalArgumentException(&quot;Amount cannot be negative.&quot;);</span>
         }
-<span class="fc" id="L72">        category.addAmount(amount);</span>
-<span class="fc" id="L73">    }</span>
+<span class="fc" id="L94">        category.addAmount(amount);</span>
+<span class="fc" id="L95">    }</span>
 
     /**
      * Retrieves sum for a specific category.
@@ -79,7 +101,7 @@ public class Calculation {
      * @return The sum of all amounts added to the specified category
      */
     public int getSum(final Category category) {
-<span class="fc" id="L82">        return category.getAmount();</span>
+<span class="fc" id="L104">        return category.getAmount();</span>
     }
 
     /**
@@ -89,10 +111,10 @@ public class Calculation {
      * @return The category with the specified name or null if not found
      */
     public Category getCategory(final String categoryName) {
-<span class="fc" id="L92">        return this.categoriesList.stream()</span>
-<span class="fc" id="L93">                .filter(cat -&gt; cat.getCategoryName().equals(categoryName))</span>
-<span class="fc" id="L94">                .findAny()</span>
-<span class="fc" id="L95">                .orElse(null);</span>
+<span class="fc" id="L114">        return this.categoriesList.stream()</span>
+<span class="fc" id="L115">                .filter(cat -&gt; cat.getCategoryName().equals(categoryName))</span>
+<span class="fc" id="L116">                .findAny()</span>
+<span class="fc" id="L117">                .orElse(null);</span>
     }
 
     /**
@@ -101,59 +123,76 @@ public class Calculation {
      * @return The total sum of all categories
      */
     public int getTotalSum() {
-<span class="fc" id="L104">        int sum = 0;</span>
+<span class="fc" id="L126">        int sum = 0;</span>
 
-<span class="fc bfc" id="L106" title="All 2 branches covered.">        for (Category cat : categoriesList) {</span>
-<span class="fc" id="L107">            sum += cat.getAmount();</span>
-<span class="fc" id="L108">        }</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        for (Category cat : categoriesList) {</span>
+<span class="fc" id="L129">            sum += cat.getAmount();</span>
+<span class="fc" id="L130">        }</span>
 
-<span class="fc" id="L110">        return sum;</span>
+<span class="fc" id="L132">        return sum;</span>
     }
 
     /**
      * Check if the amount is positive.
      *
-     * @param amount The amount to check
-     * @return True if the amount is positive, false otherwise
+     * @param amount The amount to check.
+     * @return True if the amount is positive, false otherwise.
      */
     private boolean checkAmountIsCorrect(final int amount) {
-<span class="fc bfc" id="L120" title="All 2 branches covered.">        return amount &gt;= 0;</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        return amount &gt;= 0;</span>
     }
 
     /**
      * Get the list of categories.
      *
-     * @return The list of categories
+     * @return The list of categories.
      */
     public ArrayList&lt;Category&gt; getCategoriesList() {
-<span class="fc" id="L129">        return categoriesList;</span>
+<span class="fc" id="L151">        return new ArrayList&lt;&gt;(categoriesList);</span>
     }
 
+    /**
+     * Equals method.
+     * @param obj other object.
+     * @return boolean if other equal is true or false.
+     */
     @Override
-    public boolean equals(Object obj) {
-<span class="fc bfc" id="L134" title="All 2 branches covered.">        if (this == obj) {</span>
-<span class="fc" id="L135">            return true;</span>
+    public boolean equals(final Object obj) {
+<span class="fc bfc" id="L161" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L162">            return true;</span>
         }
-<span class="fc bfc" id="L137" title="All 4 branches covered.">        if (obj == null || getClass() != obj.getClass()) {</span>
-<span class="fc" id="L138">            return false;</span>
+<span class="fc bfc" id="L164" title="All 4 branches covered.">        if (obj == null || getClass() != obj.getClass()) {</span>
+<span class="fc" id="L165">            return false;</span>
         }
-<span class="fc" id="L140">        Calculation calculation = (Calculation) obj;</span>
-        // Replace field1, field2, etc. with the actual fields you want to compare.
+<span class="fc" id="L167">        Calculation calculation = (Calculation) obj;</span>
         // Use Objects.equals for fields that could be null.
-<span class="fc" id="L143">        return Objects.equals(name, calculation.getName());</span>
+<span class="fc" id="L169">        return Objects.equals(name, calculation.getName());</span>
     }
+    /**
+    Works same as regular hashCode, implemented so that equals have reliable method.
+     @return hash of calculation name.
+     */
+    @Override
+    public int hashCode() {
+<span class="nc" id="L177">        return Objects.hash(name);</span>
+    }
+
+    /**
+     * A custom toString for object.
+     * @return string of object.
+     */
     @Override
     public String toString() {
-<span class="fc" id="L147">        StringBuilder result = new StringBuilder();</span>
-<span class="fc" id="L148">        result.append(&quot;Calculation Name: &quot;).append(name).append(&quot;\n&quot;);</span>
-<span class="fc" id="L149">        result.append(&quot;Total Sum: &quot;).append(getTotalSum()).append(&quot;\n&quot;);</span>
-<span class="fc" id="L150">        result.append(&quot;Categories:\n&quot;);</span>
+<span class="fc" id="L186">        StringBuilder result = new StringBuilder();</span>
+<span class="fc" id="L187">        result.append(&quot;Calculation Name: &quot;).append(name).append(&quot;\n&quot;);</span>
+<span class="fc" id="L188">        result.append(&quot;Total Sum: &quot;).append(getTotalSum()).append(&quot;\n&quot;);</span>
+<span class="fc" id="L189">        result.append(&quot;Categories:\n&quot;);</span>
 
-<span class="fc bfc" id="L152" title="All 2 branches covered.">        for (Category category : categoriesList) {</span>
-<span class="fc" id="L153">            result.append(category.getCategoryName()).append(&quot;: &quot;).append(category.getAmount()).append(&quot;\n&quot;);</span>
-<span class="fc" id="L154">        }</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">        for (Category category : categoriesList) {</span>
+<span class="fc" id="L192">            result.append(category.getCategoryName()).append(&quot;: &quot;).append(category.getAmount()).append(&quot;\n&quot;);</span>
+<span class="fc" id="L193">        }</span>
 
-<span class="fc" id="L156">        return result.toString();</span>
+<span class="fc" id="L195">        return result.toString();</span>
     }
 
 
