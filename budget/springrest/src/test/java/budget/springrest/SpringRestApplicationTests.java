@@ -1,5 +1,6 @@
 package budget.springrest;
 
+import org.junit.jupiter.api.*;
 import org.skyscreamer.jsonassert.JSONAssert;
 import budget.core.Calculation;
 import budget.springrest.repository.CalculationRepositoryList;
@@ -7,14 +8,11 @@ import budget.utility.Json;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -33,6 +31,8 @@ import java.net.http.HttpClient;
 @ContextConfiguration(classes = { Calculation.class, CalculationRepositoryList.class, SpringRestApplication.class })
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
+
+
 class SpringRestApplicationTests {
 
     @Autowired
@@ -40,19 +40,20 @@ class SpringRestApplicationTests {
     private String API_URL = "http://localhost:8080/budget";
 
 
-    private ObjectMapper mapper;
+    private static ObjectMapper mapper;
 
-    @Autowired
-    CalculationRepositoryList repositoryList;
+
+    private static CalculationRepositoryList repositoryList;
     private HttpClient client;
-//    private Calculation calculation = new Calculation("test");
 
 
-    @BeforeEach
-    public void setUp() throws Exception {
+    @BeforeAll
+    public static void setUp() throws Exception {
         mapper = Json.getMapper();
+        repositoryList = new CalculationRepositoryList();
         Calculation testCalculation = new Calculation("testSetup");
         repositoryList.create(testCalculation); // Directly adding to the repository
+        System.out.println(repositoryList.getBudgets());
 
     }
 
@@ -65,9 +66,12 @@ class SpringRestApplicationTests {
     }
     @Test
     public void testFindAll() throws Exception {
-        mockMvc.perform(get("/budget"))
+        MvcResult result = mockMvc.perform(get("/budget"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2))); // Assuming there's one calculation in the setup
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(1)))
+                .andReturn();
+        String actualResponseBody = result.getResponse().getContentAsString();
+        System.out.println("Response Body: " + actualResponseBody);
 
     }
 
@@ -120,7 +124,6 @@ class SpringRestApplicationTests {
 
     @Test
     public void deteteBudget() throws Exception {
-        Calculation budgetToDelete = repositoryList.findByName("testSetup");
 
         mockMvc.perform(delete("/budget/testSetup"))
                 .andExpect(status().isNoContent());

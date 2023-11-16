@@ -3,22 +3,27 @@
     "categoriesList" : [ {
       "categoryName" : "Food",
       "amount" : 0,
+      "addedAmounts" : [ ],
       "budgetHistory" : [ ]
     }, {
       "categoryName" : "Transportation",
       "amount" : 0,
+      "addedAmounts" : [ ],
       "budgetHistory" : [ ]
     }, {
       "categoryName" : "Entertainment",
       "amount" : 0,
+      "addedAmounts" : [ ],
       "budgetHistory" : [ ]
     }, {
       "categoryName" : "Clothing",
       "amount" : 0,
+      "addedAmounts" : [ ],
       "budgetHistory" : [ ]
     }, {
       "categoryName" : "Other",
       "amount" : 0,
+      "addedAmounts" : [ ],
       "budgetHistory" : [ ]
     } ],
     "name" : null,

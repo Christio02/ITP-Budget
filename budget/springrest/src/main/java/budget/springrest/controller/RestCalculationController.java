@@ -22,7 +22,7 @@ public class RestCalculationController {
 
 
     public RestCalculationController(CalculationRepositoryList repository) { // uses constructor injection
-        this.repository = repository;
+        this.repository = new CalculationRepositoryList(repository);
     }
 
     // GET http://localhost:8080/budget (returns all budgets)
@@ -34,12 +34,6 @@ public class RestCalculationController {
     // GET http://localhost:8080/name(Mitt budsjett)
     @GetMapping("/{name}")
     public ResponseEntity<Calculation> findByName(@PathVariable String name) {
-//        if (repository.hasBudget(name)) {
-//            System.out.println("Budget found!");
-//            return repository.findByName(name);
-//        } else {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No budget found by that name!");
-//        }
         Calculation calcFromServer = repository.findByName(name);
         if (calcFromServer != null) {
             return ResponseEntity.ok(calcFromServer);

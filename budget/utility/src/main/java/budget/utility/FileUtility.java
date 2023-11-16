@@ -21,6 +21,7 @@ public final class FileUtility {
      */
     private static final String CURRENT_DIR = System.getProperty("user.dir");
 
+    private static boolean load;
 
     /**
      * Private constructor to hide the implicit public one.
@@ -65,22 +66,21 @@ public final class FileUtility {
      * @throws IOException If an input or output exception occurred
      */
     public static void readFile(final ArrayList<Calculation> calculations, final String path) throws IOException {
-        try {
-            String finalPath = CURRENT_DIR + path;
-            File file = new File(finalPath);
-            InputStream inputStream = new FileInputStream(file);
+        String finalPath = CURRENT_DIR + path;
+        File file = new File(finalPath);
 
+        // Using try-with-resources to ensure the inputStream is closed properly
+        try (InputStream inputStream = new FileInputStream(file)) {
             ObjectMapper objectMapper = new ObjectMapper();
             calculations.clear();
             calculations.addAll(objectMapper.readValue(inputStream, new TypeReference<ArrayList<Calculation>>() {
-
             }));
-
-            inputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
+            throw e;
         }
     }
+
 
     /**
      * Gets the load status.
@@ -88,7 +88,6 @@ public final class FileUtility {
      * @return The load status
      */
     public static boolean getLoad() {
-        // Implement your logic for getting the load status here
-        return false;
+        return FileUtility.load;
     }
 }

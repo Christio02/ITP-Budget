@@ -20,6 +20,13 @@ public class CalculationRepositoryList {
         loadDataFromFile();
     }
 
+    public CalculationRepositoryList(CalculationRepositoryList repositoryList) {
+        this.budgets = new ArrayList<>();
+        for (Calculation calculation : repositoryList.budgets) {
+            this.budgets.add(new Calculation(calculation));
+        }
+    }
+
     public ArrayList<Calculation> findAll() {
         return new ArrayList<>(this.budgets);
     }
@@ -27,7 +34,7 @@ public class CalculationRepositoryList {
     public Calculation findByName(String name) {
         return budgets.stream()
                 .filter(calculation -> calculation.getName().equals(name))
-                .findFirst()
+                .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("No budget found by that name!"));
     }
 

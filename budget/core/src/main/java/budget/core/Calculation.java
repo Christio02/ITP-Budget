@@ -16,7 +16,7 @@ public class Calculation {
     /**
      * This cis a list that stores categories.
      */
-    private final ArrayList<Category> categoriesList = new ArrayList<>();
+    private ArrayList<Category> categoriesList = new ArrayList<>();
     private String name;
 
     /*
@@ -32,8 +32,9 @@ public class Calculation {
         name = null;
     }
 
-    /*
+    /**
      * Creates a new Calculation object, with given name
+     * @param name the name of calculation
      */
     @JsonCreator
     public Calculation(String name) {
@@ -46,6 +47,16 @@ public class Calculation {
 
     }
 
+    /**
+     * A constructor that creates a deep copy of object (spotbugs error)
+     *
+     *
+     */
+    public Calculation(Calculation other) {
+        this.name = other.getName();
+        this.categoriesList = new ArrayList<>();
+        this.categoriesList.addAll(other.getCategoriesList());
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -126,7 +137,7 @@ public class Calculation {
      * @return The list of categories
      */
     public ArrayList<Category> getCategoriesList() {
-        return categoriesList;
+        return new ArrayList<>(categoriesList);
     }
 
     @Override
@@ -141,6 +152,10 @@ public class Calculation {
         // Replace field1, field2, etc. with the actual fields you want to compare.
         // Use Objects.equals for fields that could be null.
         return Objects.equals(name, calculation.getName());
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
     @Override
     public String toString() {

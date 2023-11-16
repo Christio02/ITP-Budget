@@ -1,12 +1,14 @@
 package budget.core;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 
 /**
  * This class is responsible for representing a budget category.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Category {
 
     /**
@@ -21,6 +23,7 @@ public class Category {
      * List of added amounts to the category.
      */
 
+    @JsonProperty
     private ArrayList<Integer> addedAmounts = new ArrayList<>();
 
     /**
@@ -68,7 +71,7 @@ public class Category {
      * @return List of added amounts
      */
     public ArrayList<Integer> getBudgetHistory() {
-        return this.addedAmounts;
+        return new ArrayList<>(this.addedAmounts);
     }
 
     /**

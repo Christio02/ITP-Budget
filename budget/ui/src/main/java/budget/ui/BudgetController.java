@@ -115,13 +115,12 @@ public class BudgetController {
     /**
      * Initialize the controller and set up the UI.
      */
-
-    private ArrayList<Calculation> calculations;
     @FXML
     public final void initialize() {
         calc = dataSingleton.getCalculation();
-        this.calculations = dataSingleton.getCalculations();
-        System.out.println(calculations.toString());
+        System.out.println(dataSingleton.getCalculation().getName());
+        System.out.println(dataSingleton.getCalcName());
+
         setupUI();
         populatePieChart();
     }
@@ -316,7 +315,7 @@ public class BudgetController {
     }
 
     private boolean checkDuplicate(String name) {
-        for (Calculation calc : this.calculations) {
+        for (Calculation calc : dataSingleton.getCalculations()) {
             if (calc.getName().equals(name)) {
                 return true;
             }
@@ -325,7 +324,7 @@ public class BudgetController {
     }
 
     private void createNewBudget() {
-        this.calc.setName(budgetTitle.getText());
+        this.calc.setName(dataSingleton.getCalcName());
         System.out.println(calc.getName());
         dataSingleton.addCalculation(this.calc);
     }
