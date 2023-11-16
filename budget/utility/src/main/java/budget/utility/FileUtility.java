@@ -21,6 +21,9 @@ public final class FileUtility {
      */
     private static final String CURRENT_DIR = System.getProperty("user.dir");
 
+    /**
+     * Load boolean that tells controllers if they should load new or exisiting budget.
+     */
     private static boolean load;
 
     /**
@@ -55,7 +58,7 @@ public final class FileUtility {
      * @param loadStatus The new load status
      */
     public static void setLoad(final boolean loadStatus) {
-        // Implement your logic for setting the load status here
+        FileUtility.load = loadStatus;
     }
 
     /**

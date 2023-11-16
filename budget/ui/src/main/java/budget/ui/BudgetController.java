@@ -112,12 +112,15 @@ public class BudgetController {
      * Singleton for data retrieval and storing.
      */
     private final DataSingleton dataSingleton = DataSingleton.getInstance();
+
+
+
     /**
      * Initialize the controller and set up the UI.
      */
     @FXML
     public final void initialize() {
-        calc = dataSingleton.getCalculation();
+        this.calc = dataSingleton.getCalculation();
         System.out.println(dataSingleton.getCalculation().getName());
         System.out.println(dataSingleton.getCalcName());
 
@@ -165,6 +168,9 @@ public class BudgetController {
 
     }
 
+    /**
+     * Populates the piechart on the budget with the amounts put in by the user.
+     */
     @SuppressWarnings("checkstyle:magicnumber")
     private void populatePieChart() {
         // Hvis pieChart ikke har noen data, initialiser den med alle kategorier
@@ -200,6 +206,12 @@ public class BudgetController {
         pieChart.setTitle("Budget Distribution");
     }
 
+    /**
+     *
+     * @param categoryName name of category you wish to get data of
+     * @return the piechart data of the category, null if no category with given name can be found
+     */
+
     private PieChart.Data findDataByName(final String categoryName) {
         for (PieChart.Data data : pieChart.getData()) {
             if (data.getName().equals(categoryName)) {
@@ -208,6 +220,10 @@ public class BudgetController {
         }
         return null;
     }
+
+    /**
+     * adjusts the piechart to display the correct proportions of each category.
+     */
 
     private void updateColorsAndLabels() {
         int totalAmount = calc.getTotalSum();
@@ -314,9 +330,9 @@ public class BudgetController {
         }
     }
 
-    private boolean checkDuplicate(String name) {
-        for (Calculation calc : dataSingleton.getCalculations()) {
-            if (calc.getName().equals(name)) {
+    private boolean checkDuplicate(final String name) {
+        for (Calculation calculation : dataSingleton.getCalculations()) {
+            if (calculation.getName().equals(name)) {
                 return true;
             }
         }
@@ -334,8 +350,6 @@ public class BudgetController {
         System.out.println(this.calc);  // Debug: Print calc before sending
         dataSingleton.updateCalculation(this.calc);
     }
-
-
 
 
 }

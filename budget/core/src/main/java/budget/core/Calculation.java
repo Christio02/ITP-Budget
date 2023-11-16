@@ -2,7 +2,6 @@ package budget.core;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -14,12 +13,16 @@ import java.util.Objects;
 public class Calculation {
 
     /**
-     * This cis a list that stores categories.
+     * This is a list that stores categories.
      */
     private ArrayList<Category> categoriesList = new ArrayList<>();
+
+    /**
+     * Name of calculation.
+     */
     private String name;
 
-    /*
+    /**
      * Creates a new Calculation object.
      */
     @JsonCreator
@@ -33,35 +36,43 @@ public class Calculation {
     }
 
     /**
-     * Creates a new Calculation object, with given name
-     * @param name the name of calculation
+     * Creates a new Calculation object, with given name.
+     * @param newName the name of calculation.
      */
     @JsonCreator
-    public Calculation(String name) {
+    public Calculation(final String newName) {
         this.categoriesList.add(new Category("Food"));
         this.categoriesList.add(new Category("Transportation"));
         this.categoriesList.add(new Category("Entertainment"));
         this.categoriesList.add(new Category("Clothing"));
         this.categoriesList.add(new Category("Other"));
-        this.name = name;
+        this.name = newName;
 
     }
 
     /**
-     * A constructor that creates a deep copy of object (spotbugs error)
-     *
+     * A constructor that creates a deep copy of object (spotbugs error).
+     * @param  other calculation
      *
      */
-    public Calculation(Calculation other) {
+    public Calculation(final Calculation other) {
         this.name = other.getName();
         this.categoriesList = new ArrayList<>();
         this.categoriesList.addAll(other.getCategoriesList());
     }
 
-    public void setName(String name) {
-        this.name = name;
+    /**
+     * Sets current name of budget.
+     * @param newName sets name
+     */
+    public void setName(final String newName) {
+        this.name = newName;
     }
 
+    /**
+     * Gets current name.
+     * @return String name.
+     */
     public String getName() {
         return this.name;
     }
@@ -72,9 +83,9 @@ public class Calculation {
     /**
      * Adds the specified amount to the specified category.
      *
-     * @param category The category to add the amount to
-     * @param amount   The amount to add to the category
-     * @throws IllegalArgumentException if the amount is negative
+     * @param category The category to add the amount to.
+     * @param amount   The amount to add to the category.
+     * @throws IllegalArgumentException if the amount is negative.
      */
     public void addAmountToCategory(final Category category, final int amount) {
         if (!checkAmountIsCorrect(amount)) {
@@ -124,8 +135,8 @@ public class Calculation {
     /**
      * Check if the amount is positive.
      *
-     * @param amount The amount to check
-     * @return True if the amount is positive, false otherwise
+     * @param amount The amount to check.
+     * @return True if the amount is positive, false otherwise.
      */
     private boolean checkAmountIsCorrect(final int amount) {
         return amount >= 0;
@@ -134,14 +145,19 @@ public class Calculation {
     /**
      * Get the list of categories.
      *
-     * @return The list of categories
+     * @return The list of categories.
      */
     public ArrayList<Category> getCategoriesList() {
         return new ArrayList<>(categoriesList);
     }
 
+    /**
+     * Equals method.
+     * @param obj other object.
+     * @return boolean if other equal is true or false.
+     */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -149,14 +165,22 @@ public class Calculation {
             return false;
         }
         Calculation calculation = (Calculation) obj;
-        // Replace field1, field2, etc. with the actual fields you want to compare.
         // Use Objects.equals for fields that could be null.
         return Objects.equals(name, calculation.getName());
     }
+    /**
+    Works same as regular hashCode, implemented so that equals have reliable method.
+     @return hash of calculation name.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(name);
     }
+
+    /**
+     * A custom toString for object.
+     * @return string of object.
+     */
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();

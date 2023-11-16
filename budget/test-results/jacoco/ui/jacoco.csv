@@ -1,0 +1,9 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+ui,budget.ui,BudgetsViewController,6,258,8,12,2,58,8,14,0,12
+ui,budget.ui,DataSingleton.new TypeReference() {...},0,6,0,0,0,1,0,1,0,1
+ui,budget.ui,BudgetController,77,423,3,29,23,89,7,27,4,14
+ui,budget.ui,ChangeScene,0,36,0,0,0,8,0,1,0,1
+ui,budget.ui,BudgetsViewController.new ListCell() {...},12,74,2,6,2,13,2,4,0,2
+ui,budget.ui,BudgetApplication,4,34,0,0,2,7,1,2,1,2
+ui,budget.ui,DataSingleton,52,388,15,23,21,113,15,22,1,17
+ui,budget.ui,StartMenuController,43,167,8,10,17,40,8,7,0,6

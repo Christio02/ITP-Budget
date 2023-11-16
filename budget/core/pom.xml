@@ -84,9 +84,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.1.2</version> <!-- Specify the Checkstyle Plugin version -->
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
+
             </plugin>
 
             <!-- Run the spotbugs code quality tool -->

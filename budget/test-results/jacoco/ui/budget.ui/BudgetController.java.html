@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BudgetController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ui</a> &gt; <a href="index.source.html" class="el_package">budget.ui</a> &gt; <span class="el_source">BudgetController.java</span></div><h1>BudgetController.java</h1><pre class="source lang-java linenums">package budget.ui;
+import budget.core.Calculation;
+import budget.core.Category;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.text.Text;
+import javafx.scene.image.ImageView;
+import javafx.scene.chart.PieChart;
+
+import java.util.ArrayList;
+
+
+<span class="fc" id="L19">public class BudgetController {</span>
+    /**
+     * The table for displaying categories and their amounts.
+     */
+    @FXML
+    private TableView&lt;Category&gt; table;
+
+    /**
+     * The button for saving the current budget.
+     */
+    @FXML
+    private Button saveBtn;
+
+    /**
+     * The icon for the save button.
+     */
+    @FXML
+    private ImageView saveIcon;
+    /**
+     * The divider position for the SplitPane.
+     */
+    private static final double SPLIT_PANE_DIVIDER_POSITION = 0.4;
+
+    /**
+     * The input field for adding amounts to categories.
+     */
+    @FXML
+    private TextField input;
+
+    /**
+     * The PieChart for displaying the budget distribution.
+     */
+    @FXML
+    private PieChart pieChart;
+
+    /**
+     * The button for adding amounts to categories.
+     */
+    @FXML
+    private Button inputBtn;
+
+    /**
+     * The table column for category names.
+     */
+    @FXML
+    private TableColumn&lt;Category, String&gt; category;
+
+    /**
+     * The table column for category amounts.
+     */
+    @FXML
+    private TableColumn&lt;Category, Integer&gt; amountUsed;
+
+    /**
+     * The SplitPane for the budget view.
+     */
+    @FXML
+    private SplitPane splitPane;
+
+    /**
+     * The ComboBox for selecting categories.
+     */
+    @FXML
+    private ComboBox&lt;String&gt; selector;
+
+    /**
+     * The text for displaying the total sum of the budget.
+     */
+    @FXML
+    private Text totalSum;
+    /**
+     *  The button for returning to the main menu.
+     */
+    @FXML
+    private Button returnMenuBtn;
+
+    /**
+     * Title of the budget.
+     */
+    @FXML
+    private Text budgetTitle;
+
+    /**
+     * List of categories.
+     */
+<span class="fc" id="L104">    private final ObservableList&lt;Category&gt; categoryList = FXCollections.observableArrayList();</span>
+
+    /**
+     * The current calculation.
+     */
+    private Calculation calc;
+
+    /**
+     * Singleton for data retrieval and storing.
+     */
+<span class="fc" id="L114">    private final DataSingleton dataSingleton = DataSingleton.getInstance();</span>
+
+
+
+    /**
+     * Initialize the controller and set up the UI.
+     */
+    @FXML
+    public final void initialize() {
+<span class="fc" id="L123">        this.calc = dataSingleton.getCalculation();</span>
+<span class="fc" id="L124">        System.out.println(dataSingleton.getCalculation().getName());</span>
+<span class="fc" id="L125">        System.out.println(dataSingleton.getCalcName());</span>
+
+<span class="fc" id="L127">        setupUI();</span>
+<span class="fc" id="L128">        populatePieChart();</span>
+<span class="fc" id="L129">    }</span>
+
+    /**
+     * Set up the UI components and their behaviors.
+     */
+    private void setupUI() {
+        // Set up the category selection ComboBox
+<span class="fc" id="L136">        ObservableList&lt;String&gt; categoryOptions = FXCollections.observableArrayList(</span>
+                &quot;Food&quot;, &quot;Entertainment&quot;, &quot;Transportation&quot;, &quot;Clothing&quot;, &quot;Other&quot;
+        );
+<span class="fc" id="L139">        selector.setItems(categoryOptions);</span>
+
+        // Set up the table columns
+<span class="fc" id="L142">        category.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;categoryName&quot;));</span>
+<span class="fc" id="L143">        amountUsed.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;amount&quot;));</span>
+
+        // Add categories to the list and set the table
+<span class="fc" id="L146">        categoryList.addAll(calc.getCategoriesList());</span>
+<span class="fc" id="L147">        table.setItems(categoryList);</span>
+
+        // Set the divider position for the SplitPane
+<span class="fc" id="L150">        splitPane.getDividers().get(0).positionProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="fc" id="L151">            splitPane.setDividerPosition(0, SPLIT_PANE_DIVIDER_POSITION);</span>
+<span class="fc" id="L152">        });</span>
+
+        // Set hover effects for the save button
+<span class="fc" id="L155">        saveBtn.setOnMouseEntered(event -&gt; {</span>
+<span class="fc" id="L156">            Image hoverImage = new Image(getClass().getResource(&quot;/budget/images/saveIconHover.png&quot;).toString());</span>
+<span class="fc" id="L157">            saveIcon.setImage(hoverImage);</span>
+<span class="fc" id="L158">        });</span>
+
+<span class="fc" id="L160">        saveBtn.setOnMouseExited(event -&gt; {</span>
+<span class="fc" id="L161">            Image normalImage = new Image(getClass().getResource(&quot;/budget/images/saveIcon.png&quot;).toString());</span>
+<span class="fc" id="L162">            saveIcon.setImage(normalImage);</span>
+<span class="fc" id="L163">        });</span>
+
+<span class="fc" id="L165">        budgetTitle.setText(dataSingleton.getCalcName());</span>
+<span class="fc" id="L166">        totalSum.setText(Integer.toString(calc.getTotalSum()));</span>
+
+
+<span class="fc" id="L169">    }</span>
+
+    /**
+     * Populates the piechart on the budget with the amounts put in by the user.
+     */
+    @SuppressWarnings(&quot;checkstyle:magicnumber&quot;)
+    private void populatePieChart() {
+        // Hvis pieChart ikke har noen data, initialiser den med alle kategorier
+<span class="fc bfc" id="L177" title="All 2 branches covered.">        if (pieChart.getData().isEmpty()) {</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">            for (Category cat : calc.getCategoriesList()) {</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">                if (cat.getAmount() &gt; 0) {</span>
+<span class="fc" id="L180">                    PieChart.Data data = new PieChart.Data(cat.getCategoryName(), cat.getAmount());</span>
+<span class="fc" id="L181">                    pieChart.getData().add(data);</span>
+                }
+<span class="fc" id="L183">            }</span>
+        } else {
+            // Oppdater eksisterende data
+<span class="fc bfc" id="L186" title="All 2 branches covered.">            for (Category cat : calc.getCategoriesList()) {</span>
+<span class="fc" id="L187">                PieChart.Data existingData = findDataByName(cat.getCategoryName());</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">                if (existingData != null) {</span>
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">                    if (cat.getAmount() &gt; 0) {</span>
+<span class="fc" id="L190">                        existingData.setPieValue(cat.getAmount());</span>
+                    } else {
+                        // Fjern kategorien fra piecharten hvis dens verdi er 0
+<span class="nc" id="L193">                        pieChart.getData().remove(existingData);</span>
+                    }
+<span class="fc bfc" id="L195" title="All 2 branches covered.">                } else if (cat.getAmount() &gt; 0) {</span>
+                    // Hvis data for denne kategorien ikke finnes, og den har en verdi større enn 0, legg den til
+<span class="fc" id="L197">                    PieChart.Data data = new PieChart.Data(cat.getCategoryName(), cat.getAmount());</span>
+<span class="fc" id="L198">                    pieChart.getData().add(data);</span>
+                }
+<span class="fc" id="L200">            }</span>
+        }
+
+        // Sett fargene og oppdater labels
+<span class="fc" id="L204">        updateColorsAndLabels();</span>
+
+<span class="fc" id="L206">        pieChart.setTitle(&quot;Budget Distribution&quot;);</span>
+<span class="fc" id="L207">    }</span>
+
+    /**
+     *
+     * @param categoryName name of category you wish to get data of
+     * @return the piechart data of the category, null if no category with given name can be found
+     */
+
+    private PieChart.Data findDataByName(final String categoryName) {
+<span class="fc bfc" id="L216" title="All 2 branches covered.">        for (PieChart.Data data : pieChart.getData()) {</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">            if (data.getName().equals(categoryName)) {</span>
+<span class="fc" id="L218">                return data;</span>
+            }
+<span class="fc" id="L220">        }</span>
+<span class="fc" id="L221">        return null;</span>
+    }
+
+    /**
+     * adjusts the piechart to display the correct proportions of each category.
+     */
+
+    private void updateColorsAndLabels() {
+<span class="fc" id="L229">        int totalAmount = calc.getTotalSum();</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">        for (PieChart.Data data : pieChart.getData()) {</span>
+<span class="fc" id="L231">            Node node = data.getNode();</span>
+<span class="fc" id="L232">            Label label = (Label) node.getUserData();</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">            if (label == null) {</span>
+<span class="fc" id="L234">                label = new Label();</span>
+<span class="fc" id="L235">                node.setUserData(label);</span>
+            }
+<span class="fc" id="L237">            final int percentageDenominator = 100;</span>
+<span class="fc" id="L238">            label.setText(String.format(&quot;%.1f%%&quot;, (data.getPieValue() / totalAmount) * percentageDenominator));</span>
+<span class="fc" id="L239">        }</span>
+<span class="fc" id="L240">    }</span>
+
+
+    /**
+     * Switch to the main menu view.
+     *
+     * @param event The event triggering the action.
+     * @throws Exception If there is an error during scene change.
+     */
+    @SuppressWarnings(&quot;magicnumber&quot;)
+    @FXML
+    private void loadMainMenu(final ActionEvent event) throws Exception {
+<span class="fc" id="L252">        ChangeScene.changeToScene(getClass(), event, &quot;startmenu-fxml.fxml&quot;, 600, 425);</span>
+<span class="fc" id="L253">    }</span>
+
+    /**
+     * Add a new calculation to the data.
+     *
+     * @param newCalc The new calculation to add.
+     */
+    public final void addCalculation(final Calculation newCalc) {
+<span class="nc" id="L261">        String name = this.budgetTitle.getText();</span>
+<span class="nc" id="L262">        this.calc.setName(name);</span>
+<span class="nc" id="L263">        dataSingleton.addCalculation(newCalc);</span>
+<span class="nc" id="L264">    }</span>
+
+    /**
+     * Get the list of calculations.
+     *
+     * @return A map of calculation names to Calculation objects.
+     */
+    public final ArrayList&lt;Calculation&gt; getCalculations() {
+<span class="nc" id="L272">        return dataSingleton.getCalculations();</span>
+    }
+
+    /**
+     * Add an amount to the selected category.
+     */
+    @FXML
+    public void addAmount() {
+<span class="fc" id="L280">        System.out.println(calc.getName());</span>
+        try {
+<span class="fc" id="L282">            int amountToAdd = Integer.parseInt(input.getText());</span>
+<span class="fc" id="L283">            String newCategory = selector.getValue();</span>
+
+<span class="fc bfc" id="L285" title="All 2 branches covered.">            for (Category cat : categoryList) {</span>
+<span class="fc bfc" id="L286" title="All 2 branches covered.">                if (cat.getCategoryName().equals(newCategory)) {</span>
+<span class="fc" id="L287">                    calc.addAmountToCategory(cat, amountToAdd);</span>
+<span class="fc" id="L288">                    table.refresh();</span>
+<span class="fc" id="L289">                    input.clear();</span>
+                }
+<span class="fc" id="L291">            }</span>
+<span class="fc" id="L292">            totalSum.setText(Integer.toString(calc.getTotalSum()));</span>
+<span class="fc" id="L293">            populatePieChart();</span>
+<span class="nc" id="L294">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L295">            showAlertDialog(&quot;Invalid input&quot;, &quot;Please enter a valid integer.&quot;);</span>
+<span class="nc" id="L296">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L297">            showAlertDialog(&quot;Invalid input&quot;, &quot;The amount must be a positive integer.&quot;);</span>
+<span class="pc" id="L298">        }</span>
+
+
+<span class="fc" id="L301">    }</span>
+
+    /**
+     * Show an alert dialog with the given title and content.
+     * @param title The title of the alert dialog
+     * @param content The content of the alert dialog
+     */
+    private void showAlertDialog(final String title, final String content) {
+<span class="nc" id="L309">        Alert alert = new Alert(Alert.AlertType.ERROR);</span>
+<span class="nc" id="L310">        alert.setTitle(title);</span>
+<span class="nc" id="L311">        alert.setHeaderText(null);</span>
+<span class="nc" id="L312">        alert.setContentText(content);</span>
+<span class="nc" id="L313">        alert.showAndWait();</span>
+<span class="nc" id="L314">    }</span>
+
+    /**
+     * Save the current budget to a file.
+     */
+    @FXML
+    public final void saveBudget() {
+
+
+<span class="pc bpc" id="L323" title="1 of 2 branches missed.">        if (checkDuplicate(this.calc.getName())) {</span>
+<span class="fc" id="L324">            System.out.println(&quot;Oppdaterer budsjett!&quot;);</span>
+<span class="fc" id="L325">            updateBudget();</span>
+
+        } else {
+<span class="nc" id="L328">            System.out.println(&quot;Legger til nytt budsjett!&quot;);</span>
+<span class="nc" id="L329">            createNewBudget();</span>
+        }
+<span class="fc" id="L331">    }</span>
+
+    private boolean checkDuplicate(final String name) {
+<span class="pc bpc" id="L334" title="1 of 2 branches missed.">        for (Calculation calculation : dataSingleton.getCalculations()) {</span>
+<span class="fc bfc" id="L335" title="All 2 branches covered.">            if (calculation.getName().equals(name)) {</span>
+<span class="fc" id="L336">                return true;</span>
+            }
+<span class="fc" id="L338">        }</span>
+<span class="nc" id="L339">        return false;</span>
+    }
+
+    private void createNewBudget() {
+<span class="nc" id="L343">        this.calc.setName(dataSingleton.getCalcName());</span>
+<span class="nc" id="L344">        System.out.println(calc.getName());</span>
+<span class="nc" id="L345">        dataSingleton.addCalculation(this.calc);</span>
+<span class="nc" id="L346">    }</span>
+
+
+    private void updateBudget() {
+<span class="fc" id="L350">        System.out.println(this.calc);  // Debug: Print calc before sending</span>
+<span class="fc" id="L351">        dataSingleton.updateCalculation(this.calc);</span>
+<span class="fc" id="L352">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

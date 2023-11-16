@@ -16,7 +16,7 @@ public class CalculationTest {
 
     @Test
     public void testCalculationObjectIsCreatedCorrectly() {
-        assertEquals(null, calculation.getName());
+        assertNull(calculation.getName());
         assertEquals(5, calculation.getCategoriesList().size());
         Calculation calculation1 = new Calculation("test");
         assertEquals("test", calculation1.getName());

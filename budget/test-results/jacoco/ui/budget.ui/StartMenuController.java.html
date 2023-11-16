@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StartMenuController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ui</a> &gt; <a href="index.source.html" class="el_package">budget.ui</a> &gt; <span class="el_source">StartMenuController.java</span></div><h1>StartMenuController.java</h1><pre class="source lang-java linenums">package budget.ui;
+import budget.core.Calculation;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import budget.utility.FileUtility;
+import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.Alert;
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Controller class for the start menu in the budget application.
+ */
+<span class="fc" id="L20">public class StartMenuController {</span>
+
+    /**
+     * A dialog for entering a unique budget name.
+     */
+    private Dialog&lt;String&gt; dialog;
+
+    /**
+     * Button for loading a budget.
+     */
+    @FXML
+    private Button loadBudgetBtn;
+    /**
+     * A singleton instance for managing data related to budget calculations.
+     */
+<span class="fc" id="L35">    private DataSingleton data = DataSingleton.getInstance();</span>
+
+    /**
+     * List of calculations.
+     */
+    private  ArrayList&lt;Calculation&gt; calculations;
+
+    /**
+     * Initializes the controller, loading existing budget data if available.
+     */
+    @FXML
+    public final void initialize() {
+
+<span class="fc" id="L48">        this.calculations = data.getCalculations();</span>
+
+<span class="fc" id="L50">        dialog = new Dialog&lt;&gt;();</span>
+<span class="fc" id="L51">        dialog.setTitle(&quot;Set budget name&quot;);</span>
+<span class="fc" id="L52">        dialog.setHeaderText(&quot;Please provide a unique name for budget&quot;);</span>
+
+<span class="fc" id="L54">        TextField inputText = new TextField();</span>
+<span class="fc" id="L55">        inputText.setPromptText(&quot;Write name here...&quot;);</span>
+<span class="fc" id="L56">        inputText.setId(&quot;nameInput&quot;);</span>
+<span class="fc" id="L57">        dialog.getDialogPane().setContent(inputText);</span>
+
+<span class="fc" id="L59">        ButtonType okButton = new ButtonType(&quot;OK&quot;, ButtonBar.ButtonData.OK_DONE);</span>
+<span class="fc" id="L60">        ButtonType cancelButton = new ButtonType(&quot;Cancel&quot;, ButtonBar.ButtonData.CANCEL_CLOSE);</span>
+<span class="fc" id="L61">        dialog.getDialogPane().getButtonTypes().addAll(okButton, cancelButton);</span>
+
+
+        // Result converter to handle the OK button click
+<span class="fc" id="L65">        dialog.setResultConverter(buttonType -&gt; {</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">            if (buttonType == okButton) {</span>
+<span class="fc" id="L67">                return inputText.getText();</span>
+            }
+<span class="nc" id="L69">            return null;</span>
+        });
+
+<span class="fc" id="L72">    }</span>
+
+
+    /**
+     * Displays a dialog for entering a unique budget name.
+     * @return True if the budget can be loaded, false otherwise.
+     */
+    public final boolean popUpOnLoadBudgets() {
+<span class="fc" id="L80">        boolean shouldLoad = true;</span>
+<span class="fc" id="L81">        Optional&lt;String&gt; result = dialog.showAndWait();</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">        if (!result.isPresent()) {</span>
+<span class="nc" id="L83">            return false;</span>
+        }
+
+<span class="fc" id="L86">        String key = result.get();</span>
+<span class="fc" id="L87">        Pattern pattern = Pattern.compile(&quot;[^a-zA-Z0-9]*&quot;);</span>
+<span class="fc" id="L88">        Matcher matcher = pattern.matcher(key);</span>
+<span class="pc bpc" id="L89" title="2 of 4 branches missed.">        if (key.isEmpty() || !matcher.find()) {</span>
+<span class="nc" id="L90">            shouldLoad = false;</span>
+<span class="nc" id="L91">            Alert alert = new Alert(Alert.AlertType.ERROR);</span>
+<span class="nc" id="L92">            alert.setHeaderText(&quot;Invalid input!&quot;);</span>
+<span class="nc" id="L93">            alert.setContentText(&quot;Name is empty or name contains non-numerical characters!&quot;);</span>
+
+<span class="nc" id="L95">            alert.showAndWait();</span>
+<span class="nc" id="L96">            return shouldLoad;</span>
+
+        }
+
+<span class="fc" id="L100">        boolean budgetExists = false;</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        for (Calculation calc : calculations) {</span>
+<span class="pc bpc" id="L102" title="2 of 4 branches missed.">            if (calc != null &amp;&amp; key.equals(calc.getName())) {</span>
+<span class="nc" id="L103">                budgetExists = true;</span>
+<span class="nc" id="L104">                break;</span>
+
+            }
+<span class="fc" id="L107">        }</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">        if (budgetExists) {</span>
+<span class="nc" id="L109">            shouldLoad = false;</span>
+<span class="nc" id="L110">            Alert errorAlert = new Alert(Alert.AlertType.ERROR);</span>
+<span class="nc" id="L111">            errorAlert.setHeaderText(&quot;Error, could not create new budget&quot;);</span>
+<span class="nc" id="L112">            errorAlert.setContentText(&quot;Budget with that name already exists!&quot;);</span>
+<span class="nc" id="L113">            errorAlert.showAndWait();</span>
+
+<span class="nc" id="L115">        } else {</span>
+<span class="fc" id="L116">            data.addCalculation(new Calculation(key));</span>
+<span class="fc" id="L117">            data.setCalcName(key);</span>
+<span class="fc" id="L118">            FileUtility.setLoad(false);</span>
+        }
+<span class="fc" id="L120">        return shouldLoad;</span>
+
+
+    }
+    /**
+     * Handles the event when the &quot;Load New Budget&quot; button is clicked.
+     * @param event The ActionEvent triggered by the button click.
+     * @throws Exception if an exception occurs during the operation.
+     */
+    @SuppressWarnings(&quot;magicnumber&quot;)
+    @FXML
+    private void loadNewBudget(final ActionEvent event) throws Exception {
+<span class="fc" id="L132">        FileUtility.setLoad(false);</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">        if (!popUpOnLoadBudgets()) {</span>
+<span class="nc" id="L134">            return;</span>
+        }
+<span class="fc" id="L136">        ChangeScene.changeToScene(getClass(), event, &quot;budget-view.fxml&quot;, 1200, 420);</span>
+
+<span class="fc" id="L138">    }</span>
+    /**
+     * Handles the event when the &quot;Load Previous Budget&quot; button is clicked.
+     * @param event The ActionEvent triggered by the button click.
+     * @throws Exception if an exception occurs during the operation.
+     */
+    @SuppressWarnings(&quot;magicnumber&quot;)
+    @FXML
+    private void loadPrevBudget(final ActionEvent event) throws Exception {
+<span class="fc" id="L147">        FileUtility.setLoad(true);</span>
+<span class="fc" id="L148">        ChangeScene.changeToScene(getClass(), event, &quot;load-budgets.fxml&quot;, 612, 400);</span>
+<span class="fc" id="L149">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

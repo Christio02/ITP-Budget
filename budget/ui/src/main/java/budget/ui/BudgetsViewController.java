@@ -2,8 +2,6 @@ package budget.ui;
 
 import budget.core.Calculation;
 import budget.core.Category;
-import budget.utility.Json;
-import com.fasterxml.jackson.core.type.TypeReference;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,16 +10,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 public class BudgetsViewController {
@@ -46,6 +36,9 @@ public class BudgetsViewController {
      */
     private String selectedName;
 
+    /**
+     * List of calculations.
+     */
     private ArrayList<Calculation> calculations;
 
     /**
@@ -98,7 +91,9 @@ public class BudgetsViewController {
                 String selectedCalcName = nameCalc.getSelectionModel().getSelectedItem();
 
                 if (selectedCalcName != null) {
-                    Calculation selectedCalc = data.getCalculations().stream().filter(calc -> calc.getName().equals(selectedCalcName)).findFirst().orElse(null);
+                    Calculation selectedCalc = data.getCalculations().
+                            stream().filter(calc -> calc.getName().equals(selectedCalcName)).
+                            findFirst().orElse(null);
                     if (selectedCalc != null) {
                         data.setCalcName(selectedCalcName);
                         data.setCalculation(selectedCalc);
