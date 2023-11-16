@@ -15,7 +15,10 @@ fra budget folderen.
 
 Så kan **mvn test** kjøres fra budget folderen slik at testene gjennomføres 
 
-
+### Brukerhistorier 
+1. Som bruker ønsker jeg å opprette et budjett, slik at jeg kan holde oversikt over utgiftene mine innen ulike kategorier og kunne se hvor mye jeg til sammen har brukt
+2. Som en bruker ønsker jeg å kunne lage flere budsjetter, navngi dem, og velge hvilke jeg ønsker å endre på. Slik at jeg kan separere personlige og profesjonelle budsjett
+3. Som bruker ønsker jeg en visuell oversikt over budsjettet mitt, slik at jeg kan få ett raskt overblikk over hvor mye hver utgiftskategori utgjør av den totale summen.
 
 ### Appdesign
 
