@@ -7,7 +7,7 @@ module budget.ui {
     requires java.net.http;
     requires com.github.spotbugs.annotations;
 
-    opens budget.ui to javafx.fxml, javafx.graphics, javafx.controls, com.fasterxml.jackson.databind, budget.utility;
+    opens budget.ui to javafx.fxml, javafx.graphics, javafx.controls, com.fasterxml.jackson.databind;
 
 
 }

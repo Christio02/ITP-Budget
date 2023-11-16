@@ -3,11 +3,10 @@
 ## Fil lagring
 
 Istedenfor at GUI lagrer til fil, så vil serveren heller laste opp fra fil når den
-starter og laste ned hver gang brukeren trykker på lagre-knappen. Så vi har fortsatt bare
-dokumentmetafor
+starter og laste ned hver gang brukeren trykker på lagre-knappen. Så appen følger fremdeles en 
+dokumentmetafor innen lagring
 
 ## Arbeidsvaner
-
 
 Under denne releasen har vi fokusert utviklet oss enda mer innenfor arbeidsvanenene våre.
 I programmet Notion har vi lagd et springboard som ble benyttet til å klassifisere
