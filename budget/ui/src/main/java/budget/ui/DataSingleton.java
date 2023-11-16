@@ -68,7 +68,6 @@ public final class DataSingleton {
      *
      * @return The DataSingleton instance.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("MS_EXPOSE_REP")
     public static DataSingleton getInstance() {
         return INSTANCE;
     }

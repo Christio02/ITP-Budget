@@ -190,28 +190,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.panteleyev</groupId>
-                <artifactId>jpackage-maven-plugin</artifactId>
-                <version>1.6.0</version>
-                <configuration>
-                    <name>Budget</name>
-                    <appVersion>1.0.0</appVersion>
-                    <vendor>gr2340</vendor>
-                    <destination>target/dist</destination>
-                    <module>budget.ui/budget.ui.BudgetApplication</module>
-                    <runtimeImage>target/budget</runtimeImage>
-                    <javaOptions>
-                        <option>-Dfile.encoding=UTF-8</option>
-                    </javaOptions>
-                    <linuxShortcut>true</linuxShortcut>
-                    <linuxMenuGroup>Budget</linuxMenuGroup>
-                    <winDirChooser>true</winDirChooser>
-                    <winShortcut>true</winShortcut>
-                    <winMenu>true</winMenu>
-                    <winMenuGroup>Budget</winMenuGroup>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <configuration>

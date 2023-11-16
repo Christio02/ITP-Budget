@@ -152,8 +152,7 @@
                     <artifactId>spotbugs-maven-plugin</artifactId>
                     <version>4.7.3.2</version>
                     <configuration>
-                       <!-- <xmlOutput>true</xmlOutput>
-                        <xmlOutputDirectory>${project.basedir}/../test-results/spotbugs/${project.artifactId}</xmlOutputDirectory> -->
+                        <excludeFilterFile>./config/spotbugs/exclude.xml</excludeFilterFile>
                         <xmlOutput>false</xmlOutput>
                         <htmlOutput>true</htmlOutput>
                     </configuration>
