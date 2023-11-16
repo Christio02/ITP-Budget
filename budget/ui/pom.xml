@@ -149,9 +149,30 @@
                     <noHeaderFiles>true</noHeaderFiles>
                     <stripDebug>true</stripDebug>
                     <noManPages>true</noManPages>
-                    <launcher>ui</launcher>
-                    <jlinkImageName>ui</jlinkImageName>
-                    <jlinkZipName>ui</jlinkZipName>
+                    <launcher>budgetfx</launcher>
+                    <jlinkImageName>budgetfx</jlinkImageName>
+                    <jlinkZipName>budgetfx</jlinkZipName>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.panteleyev</groupId>
+                <artifactId>jpackage-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <configuration>
+                    <name>Budget</name>
+                    <appVersion>1.0.0</appVersion>
+                    <vendor>gr2340</vendor>
+                    <destination>target/dist</destination>
+                    <module>budget.ui/budget.ui.BudgetApplication</module>
+                    <runtimeImage>target/budgetfx</runtimeImage>
+                    <javaOptions>
+                        <option>-Dfile.encoding=UTF-8</option>
+                    </javaOptions>
+                    <linuxShortcut>true</linuxShortcut>
+                    <linuxMenuGroup>Budget</linuxMenuGroup>
+                    <winDirChooser>true</winDirChooser>
+                    <winShortcut>true</winShortcut>
+
                 </configuration>
             </plugin>
             <plugin>
